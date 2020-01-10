@@ -10,7 +10,7 @@ public class Startseite extends AppCompatActivity {
 
     private LinearLayout profil;
     private LinearLayout newsfeed;
-
+    private LinearLayout erstellen;
     private LinearLayout friends;
 
     @Override
@@ -39,6 +39,14 @@ public class Startseite extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Startseite.this, RowFriends.class);
+                startActivity(intent);
+            }
+        });
+        erstellen = findViewById(R.id.erstellen);
+        erstellen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Startseite.this, Eventerstellen.class);
                 startActivity(intent);
             }
         });
