@@ -41,7 +41,7 @@ public class Eventerstellen extends AppCompatActivity {
         datum =findViewById(R.id.etUsername);
         zeit =findViewById(R.id.etPassword);
         ort =findViewById(R.id.etRePassword);
-       // String names = name.getText().toString();
+        String names = name.getText().toString();
 
 
         share.setOnClickListener(new View.OnClickListener() {
