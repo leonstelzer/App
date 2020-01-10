@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "969850369313",
+    "firebase_url": "https://appevent-13578.firebaseio.com",
+    "project_id": "appevent-13578",
+    "storage_bucket": "appevent-13578.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:969850369313:android:8282e92b5539db307f7a60",
+        "android_client_info": {
+          "package_name": "com.mind.simplelogin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "969850369313-5saup5mq8mbl4qpmatktbua5cfainc51.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ-kIGkfNEUktjsybWJWa8gXWbhO3ZML4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "969850369313-5saup5mq8mbl4qpmatktbua5cfainc51.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
