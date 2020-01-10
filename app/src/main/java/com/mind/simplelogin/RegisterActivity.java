@@ -57,6 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressBar progressBar;
     String userID;
     FirebaseFirestore fStore;
+    public static final String TAG = "YOUR-TAG-NAME";
 
 
 
@@ -69,19 +70,18 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
 
-        rlayout     = findViewById(R.id.rlayout);
-        animation   = AnimationUtils.loadAnimation(this,R.anim.uptodown);
+        rlayout = findViewById(R.id.rlayout);
+        animation = AnimationUtils.loadAnimation(this, R.anim.uptodown);
         rlayout.setAnimation(animation);
-        login      = findViewById(R.id.btLogin);
-        eemail      = findViewById(R.id.etEmail);
-        ename      = findViewById(R.id.etUsername);
-        epassswort      = findViewById(R.id.etPassword);
-        ewpasswort      = findViewById(R.id.etRePassword);
+        login = findViewById(R.id.btLogin);
+        eemail = findViewById(R.id.etEmail);
+        ename = findViewById(R.id.etUsername);
+        epassswort = findViewById(R.id.etPassword);
+        ewpasswort = findViewById(R.id.etRePassword);
 
 
         fAuth = FirebaseAuth.getInstance();
         // progressBar = findViewById(R.id.progressBar);
-
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -90,50 +90,51 @@ public class RegisterActivity extends AppCompatActivity {
                 final String email = eemail.getText().toString().trim();
                 String password = epassswort.getText().toString().trim();
                 final String fullName = ename.getText().toString();
-                 String wpasswort    = ewpasswort.getText().toString();
+                String wpasswort = ewpasswort.getText().toString();
 
-                if(TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     eemail.setError("Email is Required.");
                     return;
                 }
 
-                if(TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     epassswort.setError("Password is Required.");
                     return;
-                }
-
-                else if(TextUtils.isEmpty(fullName)){
+                } else if (TextUtils.isEmpty(fullName)) {
                     epassswort.setError("Benutzername muss gewählt sein");
                     return;
-                }
-
-                else if(password.length() < 6){
+                } else if (password.length() < 6) {
                     epassswort.setError("Password Must be >= 6 Characters");
                     return;
                 }
-                else if(password != wpasswort){
-                    ewpasswort.setError("Muss gleich sein");
-                    return;
-                }
 
-
-
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
-//                            DocumentReference documentReference = fStore.collection("users").document(userID);
- //                           Map<String,Object> user = new HashMap<>();
-  //                          user.put("fName",fullName);
-   //                         user.put("email",email);
+                            userID = fAuth.getCurrentUser().getUid();
+                            DocumentReference documentReference = fStore.collection("users").document(userID);
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("fName", fullName);
+                            user.put("email", email);
 
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "onSuccess: user Profile is created for " + userID);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: " + e.toString());
+                                }
+                            });
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
-                            startActivity(new Intent(getApplicationContext(),Startseite.class));
-
-                        }else {
+                        } else {
                             Toast.makeText(RegisterActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });
