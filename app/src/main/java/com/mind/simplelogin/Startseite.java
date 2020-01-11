@@ -5,6 +5,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import javax.annotation.Nullable;
 
 public class Startseite extends AppCompatActivity {
 
@@ -12,11 +25,14 @@ public class Startseite extends AppCompatActivity {
     private LinearLayout newsfeed;
     private LinearLayout erstellen;
     private LinearLayout friends;
+    Button logout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startseite);
+
         profil      = findViewById(R.id.profil);
         profil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +64,22 @@ public class Startseite extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Startseite.this, Eventerstellen.class);
                 startActivity(intent);
+
             }
         });
-    }
+        logout = findViewById(R.id.button);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Startseite.this, MainActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+
+
+
+}
 }

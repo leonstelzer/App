@@ -30,12 +30,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity  {
 
-     Button btRegister;
-     ImageView circle1;
+    Button btRegister;
+    ImageView circle1;
     TextView tvLogin;
-     Button login;
+    Button login;
     EditText mEmail,mPassword;
     FirebaseAuth fAuth;
 
@@ -51,8 +51,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         login = findViewById(R.id.btLogin);
         mEmail = findViewById(R.id.etUsername);
         mPassword = findViewById(R.id.etPassword);
+        fAuth = FirebaseAuth.getInstance();
 
-        btRegister.setOnClickListener(this);
+        if(fAuth.getCurrentUser() != null){
+            startActivity(new Intent(getApplicationContext(),Startseite.class));
+            finish();
+        }
+
+       // btRegister.setOnClickListener(this);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(), Startseite.class));
                         } else {
                             Toast.makeText(MainActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
@@ -90,18 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    public void onClick(View v) {
-        if (v==btRegister){
-            Intent a = new Intent(MainActivity.this, RegisterActivity.class);
-            Pair[] pairs = new Pair[1];
-            pairs[0] = new Pair<View,String> (tvLogin,"login");
-            ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this,pairs);
-            startActivity(a,activityOptions.toBundle());
-        }
 
-    }
 
 
 }
