@@ -71,7 +71,7 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="35dp">
+                    android:paddingBottom="50dp">
 
                     <TextView
                         android:id="@+id/tvEmail"
@@ -145,7 +145,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/etPassword"
                         android:layout_margin="15dp"
-                        android:text="Passwort wiederholen"
+                        android:text="Ort"
                         android:textColor="@color/colorPurple"
                         android:textSize="14sp"
                         android:textStyle="bold" />

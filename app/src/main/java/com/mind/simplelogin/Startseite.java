@@ -25,7 +25,6 @@ public class Startseite extends AppCompatActivity {
     private LinearLayout newsfeed;
     private LinearLayout erstellen;
     private LinearLayout friends;
-    Button logout;
 
 
     @Override
@@ -67,15 +66,7 @@ public class Startseite extends AppCompatActivity {
 
             }
         });
-        logout = findViewById(R.id.button);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Startseite.this, MainActivity.class);
-                startActivity(intent);
 
-            }
-        });
 
 
 

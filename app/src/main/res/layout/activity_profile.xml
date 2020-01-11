@@ -193,6 +193,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tvEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -222,6 +223,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                        android:id="@+id/telefonummer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -251,6 +253,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                        android:id="@+id/interessen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -280,6 +283,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                        android:id="@+id/beschreibung"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"

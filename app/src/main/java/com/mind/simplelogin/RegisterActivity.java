@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
     Menu menu;
     Button login;
     FirebaseAuth fAuth;
-    EditText eemail, ename, epassswort, ewpasswort;
+    EditText eemail, ename, epassswort, eort;
     ProgressBar progressBar;
     String userID;
     FirebaseFirestore fStore;
@@ -77,21 +77,24 @@ public class RegisterActivity extends AppCompatActivity {
         eemail = findViewById(R.id.etEmail);
         ename = findViewById(R.id.etUsername);
         epassswort = findViewById(R.id.etPassword);
-        ewpasswort = findViewById(R.id.etRePassword);
+        eort = findViewById(R.id.etRePassword);
 
 
         fAuth = FirebaseAuth.getInstance();
-        // progressBar = findViewById(R.id.progressBar);
+        fStore = FirebaseFirestore.getInstance();
 
 
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = eemail.getText().toString().trim();
+                final String email = eemail.getText().toString().trim();
                 String password = epassswort.getText().toString().trim();
-                String fullName = ename.getText().toString();
-                String wpasswort = ewpasswort.getText().toString();
+                final String fullname = ename.getText().toString();
+                final String ort = eort.getText().toString();
+                final String interesssen = null;
+                final String beschreibung = null;
+                final String telefonnummer = null;
 
                 if (TextUtils.isEmpty(email)) {
                     eemail.setError("Email is Required.");
@@ -101,11 +104,15 @@ public class RegisterActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(password)) {
                     epassswort.setError("Password is Required.");
                     return;
-                } else if (TextUtils.isEmpty(fullName)) {
+                } else if (TextUtils.isEmpty(fullname)) {
                     epassswort.setError("Benutzername muss gewählt sein");
                     return;
                 } else if (password.length() < 6) {
                     epassswort.setError("Password Must be >= 6 Characters");
+                    return;
+                }
+                else if (TextUtils.isEmpty(ort)) {
+                    epassswort.setError("Ort muss angeben werdwen");
                     return;
                 }
 
@@ -114,6 +121,21 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
+                            userID = fAuth.getCurrentUser().getUid();
+                            DocumentReference documentReference = fStore.collection("users").document(userID);
+                            Map<String,Object> user = new HashMap<>();
+                            user.put("Benutername", fullname);
+                            user.put("EMail", email);
+                            user.put("Ort", ort);
+                            user.put("Interessen", interesssen);
+                            user.put("Beschreibung", beschreibung);
+                            user.put("Telfonnummer", telefonnummer);
+                            documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Log.d(TAG, "New Profil for"+userID);
+                                }
+                            });
                             startActivity(new Intent(getApplicationContext(), Startseite.class));
 
                     }

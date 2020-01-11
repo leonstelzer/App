@@ -206,7 +206,7 @@
 
             </LinearLayout>
             <Button
-                    android:id="@+id/btbestätigen"
+                    android:id="@+id/btlogout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvForgot"
@@ -216,12 +216,15 @@
                     android:background="@drawable/bt_uiborder"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Bestätigen"
+                    android:text="Logout"
                     android:textColor="@color/colorBlue" />
+
 
 
         </LinearLayout>
 
+
     </RelativeLayout>
 
 </RelativeLayout>
+

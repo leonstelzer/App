@@ -53,12 +53,22 @@ public class MainActivity extends AppCompatActivity  {
         mPassword = findViewById(R.id.etPassword);
         fAuth = FirebaseAuth.getInstance();
 
+
+      // Methode dass man direkt eingeloggt wird
         if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),Startseite.class));
-            finish();
+               finish();
         }
 
-       // btRegister.setOnClickListener(this);
+
+        btRegister    = findViewById(R.id.btRegister);
+        btRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
