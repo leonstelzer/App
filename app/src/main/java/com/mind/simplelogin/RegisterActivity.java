@@ -92,9 +92,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = epassswort.getText().toString().trim();
                 final String fullname = ename.getText().toString();
                 final String ort = eort.getText().toString();
-                final String interesssen = null;
-                final String beschreibung = null;
-                final String telefonnummer = null;
+                final String interesssen = "Bitte noch ausfüllen";
+                final String beschreibung = "Bitte noch ausfüllen";
+                final String telefonnummer = "Bitte noch ausfüllen";
 
                 if (TextUtils.isEmpty(email)) {
                     eemail.setError("Email is Required.");
@@ -129,7 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
                             user.put("Ort", ort);
                             user.put("Interessen", interesssen);
                             user.put("Beschreibung", beschreibung);
-                            user.put("Telfonnummer", telefonnummer);
+                            user.put("Telefonnummer", telefonnummer);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

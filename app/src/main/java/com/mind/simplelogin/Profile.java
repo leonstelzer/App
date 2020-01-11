@@ -40,8 +40,8 @@ public class Profile extends AppCompatActivity {
         email    = findViewById(R.id.tvEmail);
         ort    = findViewById(R.id.tv_address);
         beschreibung = findViewById(R.id.beschreibung);
-        telefonummer    = findViewById(R.id.telefonummer);
-        interessen    = findViewById(R.id.interessen);
+        telefonummer = findViewById(R.id.telefonummer);
+        interessen   = findViewById(R.id.interessen);
 
 
         fAuth = FirebaseAuth.getInstance();
