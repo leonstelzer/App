@@ -40,23 +40,7 @@ public class Startseite extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        newsfeed    = findViewById(R.id.newsfeed);
-        newsfeed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Startseite.this, Searchfilter.class);
-                startActivity(intent);
-            }
-        });
 
-        friends = findViewById(R.id.friends);
-        friends.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Startseite.this, RowFriends.class);
-                startActivity(intent);
-            }
-        });
         erstellen = findViewById(R.id.erstellen);
         erstellen.setOnClickListener(new View.OnClickListener() {
             @Override

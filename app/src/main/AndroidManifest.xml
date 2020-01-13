@@ -42,26 +42,13 @@
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
-        <activity
-                android:name=".Activity_Feed"
-                android:theme="@style/AppTheme.FullScreen"
-                android:label="Preferences"
-                />
-        <activity
-                android:name=".Searchfilter"
-                android:theme="@style/AppTheme.FullScreen"
-                android:label="Preferences"
-                />
+
         <activity
                 android:name=".Einstellungen"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
-        <activity
-                android:name=".RowFriends"
-                android:theme="@style/AppTheme.FullScreen"
-                android:label="Preferences"
-                />
+
         <activity
                 android:name=".Eventerstellen"
                 android:theme="@style/AppTheme.FullScreen"
