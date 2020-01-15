@@ -80,7 +80,23 @@ public class ProfilBearbeiten extends AppCompatActivity  {
         bestätigen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String eemail = email.getText().toString().trim();
+                final String efullname = fullName.getText().toString();
+                final String eort = ort.getText().toString();
+                final String einteresssen = interessen.getText().toString();
+                final String ebeschreibung = beschreibung.getText().toString();
+                final String etelefonnummer = telefonummer.getText().toString();
 
+                userId = fAuth.getCurrentUser().getUid();
+                DocumentReference documentReference = fStore.collection("users").document(userId);
+                Map<String,Object> user = new HashMap<>();
+                user.put("Benutername", efullname);
+                user.put("EMail", eemail);
+                user.put("Ort", eort);
+                user.put("Interessen", einteresssen);
+                user.put("Beschreibung", ebeschreibung);
+                user.put("Telefonnummer", etelefonnummer);
+                documentReference.set(user);
 
                 Intent intent = new Intent(ProfilBearbeiten.this, Profile.class);
                 startActivity(intent);
