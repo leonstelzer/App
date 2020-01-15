@@ -158,7 +158,6 @@
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             android:drawablePadding="30dp"
-                            android:inputType="textPassword"
                             android:padding="10dp" />
 
                 </RelativeLayout>
