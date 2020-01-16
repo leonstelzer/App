@@ -2,22 +2,27 @@ package com.mind.simplelogin;
 
 import android.app.Notification;
 import android.app.Person;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.errorprone.annotations.Var;
@@ -31,6 +36,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +58,10 @@ public class ProfilBearbeiten extends AppCompatActivity  {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
+    ImageView user;
+    public Uri imageurl;
+    StorageReference mStorageRef;
+    Button upload;
 
 
 
@@ -63,6 +75,7 @@ public class ProfilBearbeiten extends AppCompatActivity  {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mStorageRef= FirebaseStorage.getInstance().getReference("Images");
 
 
 
@@ -74,34 +87,51 @@ public class ProfilBearbeiten extends AppCompatActivity  {
         telefonummer = findViewById(R.id.tvTel);
         interessen = findViewById(R.id.tvInt);
         beschreibung = findViewById(R.id.tvBesc);
+        user = findViewById(R.id.User);
+        upload = findViewById(R.id.upload);
 
-
-
-        bestätigen.setOnClickListener(new View.OnClickListener() {
+        upload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                final String eemail = email.getText().toString().trim();
-                final String efullname = fullName.getText().toString();
-                final String eort = ort.getText().toString();
-                final String einteresssen = interessen.getText().toString();
-                final String ebeschreibung = beschreibung.getText().toString();
-                final String etelefonnummer = telefonummer.getText().toString();
+            public void onClick(View view) {
+                fileuploader();
 
-                userId = fAuth.getCurrentUser().getUid();
-                DocumentReference documentReference = fStore.collection("users").document(userId);
-                Map<String,Object> user = new HashMap<>();
-                user.put("Benutername", efullname);
-                user.put("EMail", eemail);
-                user.put("Ort", eort);
-                user.put("Interessen", einteresssen);
-                user.put("Beschreibung", ebeschreibung);
-                user.put("Telefonnummer", etelefonnummer);
-                documentReference.set(user);
-
-                Intent intent = new Intent(ProfilBearbeiten.this, Profile.class);
-                startActivity(intent);
             }
         });
+
+        user.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        filechooser();
+
+                                    }
+                                });
+
+
+                bestätigen.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final String eemail = email.getText().toString().trim();
+                        final String efullname = fullName.getText().toString();
+                        final String eort = ort.getText().toString();
+                        final String einteresssen = interessen.getText().toString();
+                        final String ebeschreibung = beschreibung.getText().toString();
+                        final String etelefonnummer = telefonummer.getText().toString();
+
+                        userId = fAuth.getCurrentUser().getUid();
+                        DocumentReference documentReference = fStore.collection("users").document(userId);
+                        Map<String, Object> user = new HashMap<>();
+                        user.put("Benutername", efullname);
+                        user.put("EMail", eemail);
+                        user.put("Ort", eort);
+                        user.put("Interessen", einteresssen);
+                        user.put("Beschreibung", ebeschreibung);
+                        user.put("Telefonnummer", etelefonnummer);
+                        documentReference.set(user);
+
+                        Intent intent = new Intent(ProfilBearbeiten.this, Profile.class);
+                        startActivity(intent);
+                    }
+                });
         DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -122,5 +152,50 @@ public class ProfilBearbeiten extends AppCompatActivity  {
 
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode== 1 && resultCode==RESULT_OK && data != null && data.getData() != null){
+            imageurl=data.getData();
+            user.setImageURI(imageurl);
+        }
+    }
+
+    private void filechooser(){
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, 1);
+
+
+    }
+
+    private String getExtension(Uri uri) {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
+    }
+
+
+    private void fileuploader () {
+            StorageReference Ref = mStorageRef.child(System.currentTimeMillis()+","+getExtension(imageurl));
+        Ref.putFile(imageurl)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        Toast.makeText(ProfilBearbeiten.this, "Image Uploaded", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                    }
+                });
+    }
+
 
 }

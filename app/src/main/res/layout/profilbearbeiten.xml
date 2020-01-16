@@ -22,16 +22,18 @@
                 android:background="@drawable/circle_border">
 
             <ImageView
+                    android:id="@+id/User"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:layout_margin="9dp"
                     android:adjustViewBounds="true"
                     android:background="@drawable/circle"
                     android:padding="3dp"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_user" />
 
+
         </RelativeLayout>
+
 
         <TextView
                 android:id="@+id/tv_name"
@@ -57,6 +59,22 @@
                 android:textAllCaps="true"
                 android:textColor="@color/address"
                 android:textSize="14sp" />
+
+        <Button
+                android:id="@+id/upload"
+                android:layout_width="124dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/bt_uiborder"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Upload"
+                android:textColor="@color/colorBlue" />
 
 
     </RelativeLayout>

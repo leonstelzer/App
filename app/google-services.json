@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "969850369313-2ns0o7v6is53pehp4k2searkjd495vho.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mind.simplelogin",
+            "certificate_hash": "6806488f7354b65171b36396154c87b7e1f7501b"
+          }
+        },
+        {
           "client_id": "969850369313-oehi21gdmstamimej68kehb7pt0dk66l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
