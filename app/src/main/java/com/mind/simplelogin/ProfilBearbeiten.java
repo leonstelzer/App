@@ -41,12 +41,14 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+
 
 import io.grpc.Compressor;
 
@@ -62,21 +64,13 @@ public class ProfilBearbeiten extends AppCompatActivity  {
     EditText ort,beschreibung, telefonummer, interessen;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-
-
-
     String userId;
     ImageView user;
     Uri imageurl;
     StorageReference mStorageRef;
-    Button upload;
+
     private StorageTask uploadtask;
     private Bitmap compressor;
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,26 +92,15 @@ public class ProfilBearbeiten extends AppCompatActivity  {
         interessen = findViewById(R.id.tvInt);
         beschreibung = findViewById(R.id.tvBesc);
         user = findViewById(R.id.User);
-        upload = findViewById(R.id.upload);
 
-
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(uploadtask != null && uploadtask.isInProgress()){
-                    Toast.makeText(ProfilBearbeiten.this, "Upload in Progress", Toast.LENGTH_SHORT).show();
-                }else{
-                    fileuploader();
-
-                }
-
-            }
-        });
 
         user.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         filechooser();
+
+                                        Picasso.get().load(imageurl).into(user);
+
 
                                     }
                                 });
