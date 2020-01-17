@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,12 +39,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
+
+import io.grpc.Compressor;
 
 public class ProfilBearbeiten extends AppCompatActivity  {
 
@@ -57,11 +62,17 @@ public class ProfilBearbeiten extends AppCompatActivity  {
     EditText ort,beschreibung, telefonummer, interessen;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+
+
+
     String userId;
     ImageView user;
-    public Uri imageurl;
+    Uri imageurl;
     StorageReference mStorageRef;
     Button upload;
+    private StorageTask uploadtask;
+    private Bitmap compressor;
+
 
 
 
@@ -75,9 +86,8 @@ public class ProfilBearbeiten extends AppCompatActivity  {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mStorageRef= FirebaseStorage.getInstance().getReference("Images");
-
-
+        mStorageRef= FirebaseStorage.getInstance().getReference().child("Images");
+        DatabaseReference reference = database.getReference();
 
         userId = fAuth.getCurrentUser().getUid();
         fullName = findViewById(R.id.tv_name);
@@ -90,10 +100,16 @@ public class ProfilBearbeiten extends AppCompatActivity  {
         user = findViewById(R.id.User);
         upload = findViewById(R.id.upload);
 
+
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fileuploader();
+                if(uploadtask != null && uploadtask.isInProgress()){
+                    Toast.makeText(ProfilBearbeiten.this, "Upload in Progress", Toast.LENGTH_SHORT).show();
+                }else{
+                    fileuploader();
+
+                }
 
             }
         });
@@ -110,23 +126,38 @@ public class ProfilBearbeiten extends AppCompatActivity  {
                 bestätigen.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        // get Information from Edit Text or fileuploader()
                         final String eemail = email.getText().toString().trim();
                         final String efullname = fullName.getText().toString();
                         final String eort = ort.getText().toString();
                         final String einteresssen = interessen.getText().toString();
                         final String ebeschreibung = beschreibung.getText().toString();
                         final String etelefonnummer = telefonummer.getText().toString();
+                        final String image = imageurl != null ? imageurl.toString() : null;
+
 
                         userId = fAuth.getCurrentUser().getUid();
                         DocumentReference documentReference = fStore.collection("users").document(userId);
-                        Map<String, Object> user = new HashMap<>();
-                        user.put("Benutername", efullname);
-                        user.put("EMail", eemail);
-                        user.put("Ort", eort);
-                        user.put("Interessen", einteresssen);
-                        user.put("Beschreibung", ebeschreibung);
-                        user.put("Telefonnummer", etelefonnummer);
-                        documentReference.set(user);
+
+                        //save edited Information in Database
+
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("Benutername", efullname);
+                            user.put("EMail", eemail);
+                            user.put("Ort", eort);
+                            user.put("Interessen", einteresssen);
+                            user.put("Beschreibung", ebeschreibung);
+                            user.put("Telefonnummer", etelefonnummer);
+                            user.put("Image", image);
+                            documentReference.set(user);
+
+
+
+
+
+
+
 
                         Intent intent = new Intent(ProfilBearbeiten.this, Profile.class);
                         startActivity(intent);
@@ -144,6 +175,7 @@ public class ProfilBearbeiten extends AppCompatActivity  {
                 interessen.setText(documentSnapshot.getString("Interessen"));
                 beschreibung.setText(documentSnapshot.getString("Beschreibung"));
 
+
             }
         });
 
@@ -152,13 +184,14 @@ public class ProfilBearbeiten extends AppCompatActivity  {
 
 
     }
-
+// uploads and open gallery on device
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode== 1 && resultCode==RESULT_OK && data != null && data.getData() != null){
             imageurl=data.getData();
             user.setImageURI(imageurl);
+
         }
     }
 
@@ -180,12 +213,14 @@ public class ProfilBearbeiten extends AppCompatActivity  {
 
     private void fileuploader () {
             StorageReference Ref = mStorageRef.child(System.currentTimeMillis()+","+getExtension(imageurl));
-        Ref.putFile(imageurl)
+        uploadtask = Ref.putFile(imageurl)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
                         // Get a URL to the uploaded content
                         Toast.makeText(ProfilBearbeiten.this, "Image Uploaded", Toast.LENGTH_LONG).show();
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

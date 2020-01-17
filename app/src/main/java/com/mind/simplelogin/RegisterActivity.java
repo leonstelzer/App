@@ -95,6 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String interesssen = "Bitte noch ausfüllen";
                 final String beschreibung = "Bitte noch ausfüllen";
                 final String telefonnummer = "Bitte noch ausfüllen";
+                final String image = "";
 
                 if (TextUtils.isEmpty(email)) {
                     eemail.setError("Email is Required.");
@@ -132,6 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
                             user.put("Interessen", interesssen);
                             user.put("Beschreibung", beschreibung);
                             user.put("Telefonnummer", telefonnummer);
+                            user.put("Image",image);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {

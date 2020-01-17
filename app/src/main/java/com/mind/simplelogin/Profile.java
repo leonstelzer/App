@@ -1,6 +1,8 @@
 package com.mind.simplelogin;
 
 import android.content.Intent;
+import android.provider.CalendarContract;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +15,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -25,11 +32,14 @@ import javax.annotation.Nullable;
 public class Profile extends AppCompatActivity {
     private ImageView bearbeiten;
     private ImageView back;
+    ImageView user;
     TextView fullName,email, ort, beschreibung, telefonummer, interessen;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
-
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference reference= firebaseDatabase.getReference();
+    private DatabaseReference firs = reference.child("Image");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +52,8 @@ public class Profile extends AppCompatActivity {
         beschreibung = findViewById(R.id.beschreibung);
         telefonummer = findViewById(R.id.telefonummer);
         interessen   = findViewById(R.id.interessen);
+        user = findViewById(R.id.user);
+
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -73,7 +85,7 @@ public class Profile extends AppCompatActivity {
 
 
 
-        DocumentReference documentReference = fStore.collection("users").document(userId);
+        final DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -83,6 +95,8 @@ public class Profile extends AppCompatActivity {
                 telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
                 interessen.setText(documentSnapshot.getString("Interessen"));
                 beschreibung.setText(documentSnapshot.getString("Beschreibung"));
+
+
             }
         });
 
