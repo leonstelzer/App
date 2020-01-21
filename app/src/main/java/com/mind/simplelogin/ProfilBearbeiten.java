@@ -98,6 +98,7 @@ public class ProfilBearbeiten extends AppCompatActivity  {
                                     @Override
                                     public void onClick(View view) {
                                         filechooser();
+                                  //      fileuploader();
 
                                         Picasso.get().load(imageurl).into(user);
 
@@ -117,6 +118,7 @@ public class ProfilBearbeiten extends AppCompatActivity  {
                         final String einteresssen = interessen.getText().toString();
                         final String ebeschreibung = beschreibung.getText().toString();
                         final String etelefonnummer = telefonummer.getText().toString();
+                        final String bild = "";
                         final String image = imageurl != null ? imageurl.toString() : null;
 
 
@@ -136,12 +138,6 @@ public class ProfilBearbeiten extends AppCompatActivity  {
                             documentReference.set(user);
 
 
-
-
-
-
-
-
                         Intent intent = new Intent(ProfilBearbeiten.this, Profile.class);
                         startActivity(intent);
                     }
@@ -157,6 +153,7 @@ public class ProfilBearbeiten extends AppCompatActivity  {
                 telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
                 interessen.setText(documentSnapshot.getString("Interessen"));
                 beschreibung.setText(documentSnapshot.getString("Beschreibung"));
+                Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
 
             }
@@ -196,7 +193,7 @@ public class ProfilBearbeiten extends AppCompatActivity  {
 
     private void fileuploader () {
             StorageReference Ref = mStorageRef.child(System.currentTimeMillis()+","+getExtension(imageurl));
-        uploadtask = Ref.putFile(imageurl)
+            uploadtask = Ref.putFile(imageurl)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
