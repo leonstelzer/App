@@ -79,10 +79,8 @@ public class RegisterActivity extends AppCompatActivity {
         epassswort = findViewById(R.id.etPassword);
         eort = findViewById(R.id.etRePassword);
 
-
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-
 
 
         login.setOnClickListener(new View.OnClickListener() {
