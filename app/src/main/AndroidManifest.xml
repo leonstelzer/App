@@ -54,6 +54,7 @@
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
+
     </application>
 
 </manifest>

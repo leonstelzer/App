@@ -25,8 +25,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.squareup.picasso.Picasso;
 
 import javax.annotation.Nullable;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Profile extends AppCompatActivity {
@@ -52,7 +55,7 @@ public class Profile extends AppCompatActivity {
         beschreibung = findViewById(R.id.beschreibung);
         telefonummer = findViewById(R.id.telefonummer);
         interessen   = findViewById(R.id.interessen);
-        user = findViewById(R.id.user);
+        user = findViewById(R.id.User);
 
 
 
@@ -95,6 +98,7 @@ public class Profile extends AppCompatActivity {
                 telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
                 interessen.setText(documentSnapshot.getString("Interessen"));
                 beschreibung.setText(documentSnapshot.getString("Beschreibung"));
+                Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
 
             }

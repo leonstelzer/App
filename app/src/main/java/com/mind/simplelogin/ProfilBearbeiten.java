@@ -52,16 +52,14 @@ import javax.annotation.Nullable;
 
 import io.grpc.Compressor;
 
-public class ProfilBearbeiten extends AppCompatActivity  {
-
-
+public class ProfilBearbeiten extends AppCompatActivity {
 
 
     Button bestätigen;
     private SharedPreferences speicher;
     private SharedPreferences.Editor editor;
-    TextView fullName,email;
-    EditText ort,beschreibung, telefonummer, interessen;
+    TextView fullName, email;
+    EditText ort, beschreibung, telefonummer, interessen;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
@@ -80,12 +78,12 @@ public class ProfilBearbeiten extends AppCompatActivity  {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mStorageRef= FirebaseStorage.getInstance().getReference().child("Images");
+        mStorageRef = FirebaseStorage.getInstance().getReference().child("Images");
         DatabaseReference reference = database.getReference();
 
         userId = fAuth.getCurrentUser().getUid();
         fullName = findViewById(R.id.tv_name);
-        email    = findViewById(R.id.tvEmail);
+        email = findViewById(R.id.tvEmail);
         bestätigen = findViewById(R.id.btbestätigen);
         ort = findViewById(R.id.tv_address);
         telefonummer = findViewById(R.id.tvTel);
@@ -95,53 +93,54 @@ public class ProfilBearbeiten extends AppCompatActivity  {
 
 
         user.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        filechooser();
-                                  //      fileuploader();
+            @Override
+            public void onClick(View view) {
+                filechooser();
+                //      fileuploader();
 
-                                        Picasso.get().load(imageurl).into(user);
-
-
-                                    }
-                                });
+                Picasso.get().load(imageurl).into(user);
 
 
-                bestätigen.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        // get Information from Edit Text or fileuploader()
-                        final String eemail = email.getText().toString().trim();
-                        final String efullname = fullName.getText().toString();
-                        final String eort = ort.getText().toString();
-                        final String einteresssen = interessen.getText().toString();
-                        final String ebeschreibung = beschreibung.getText().toString();
-                        final String etelefonnummer = telefonummer.getText().toString();
-                        final String bild = "";
-                        final String image = imageurl != null ? imageurl.toString() : null;
+            }
+        });
 
 
-                        userId = fAuth.getCurrentUser().getUid();
-                        DocumentReference documentReference = fStore.collection("users").document(userId);
+        bestätigen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                        //save edited Information in Database
-
-                            Map<String, Object> user = new HashMap<>();
-                            user.put("Benutername", efullname);
-                            user.put("EMail", eemail);
-                            user.put("Ort", eort);
-                            user.put("Interessen", einteresssen);
-                            user.put("Beschreibung", ebeschreibung);
-                            user.put("Telefonnummer", etelefonnummer);
-                            user.put("Image", image);
-                            documentReference.set(user);
+                // get Information from Edit Text or fileuploader()
+                final String eemail = email.getText().toString().trim();
+                final String efullname = fullName.getText().toString();
+                final String eort = ort.getText().toString();
+                final String einteresssen = interessen.getText().toString();
+                final String ebeschreibung = beschreibung.getText().toString();
+                final String etelefonnummer = telefonummer.getText().toString();
+                final String bild = "";
+                final String image = imageurl != null ? imageurl.toString() : null;
 
 
-                        Intent intent = new Intent(ProfilBearbeiten.this, Profile.class);
-                        startActivity(intent);
-                    }
-                });
+                userId = fAuth.getCurrentUser().getUid();
+                DocumentReference documentReference = fStore.collection("users").document(userId);
+
+                //save edited Information in Database
+
+                Map<String, Object> user = new HashMap<>();
+                user.put("Benutername", efullname);
+                user.put("EMail", eemail);
+                user.put("Ort", eort);
+                user.put("Interessen", einteresssen);
+                user.put("Beschreibung", ebeschreibung);
+                user.put("Telefonnummer", etelefonnummer);
+               // user.put("Image", image);
+                documentReference.set(user);
+
+
+                Intent intent = new Intent(ProfilBearbeiten.this, Profile.class);
+                startActivity(intent);
+                fileuploader();
+            }
+        });
         DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -160,26 +159,24 @@ public class ProfilBearbeiten extends AppCompatActivity  {
         });
 
 
-
-
-
     }
-// uploads and open gallery on device
+
+    // uploads and open gallery on device
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode== 1 && resultCode==RESULT_OK && data != null && data.getData() != null){
-            imageurl=data.getData();
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageurl = data.getData();
             user.setImageURI(imageurl);
 
         }
     }
 
-    private void filechooser(){
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent, 1);
+    private void filechooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
 
 
     }
@@ -191,26 +188,42 @@ public class ProfilBearbeiten extends AppCompatActivity  {
     }
 
 
-    private void fileuploader () {
-            StorageReference Ref = mStorageRef.child(System.currentTimeMillis()+","+getExtension(imageurl));
-            uploadtask = Ref.putFile(imageurl)
+    private void fileuploader() {
+        final StorageReference Ref = mStorageRef.child(System.currentTimeMillis() + "," + getExtension(imageurl));
+        uploadtask = Ref.putFile(imageurl)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                         // Get a URL to the uploaded content
                         Toast.makeText(ProfilBearbeiten.this, "Image Uploaded", Toast.LENGTH_LONG).show();
+                        // Get a URL to the uploaded content
+                        Ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                // Got the download URL, so write it to the database
+                                userId = fAuth.getCurrentUser().getUid();
+                                DocumentReference documentReference = fStore.collection("users").document(userId);
 
+                                documentReference.update("Image", uri.toString());
+                            }
+                        })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+                                        // Handle unsuccessful uploads
+                                        // ...
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                // Handle unsuccessful uploads
+                                // ...
+                            }
+                        });
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        // ...
-                    }
+
+
                 });
     }
-
-
 }
