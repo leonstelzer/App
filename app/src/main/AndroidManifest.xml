@@ -54,6 +54,17 @@
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
+        <activity
+                android:name=".findFriends"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
+        <activity
+                android:name=".Users"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
+
 
     </application>
 

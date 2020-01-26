@@ -50,6 +50,15 @@ public class Startseite extends AppCompatActivity {
 
             }
         });
+        friends = findViewById(R.id.friends);
+        friends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Startseite.this, findFriends.class);
+                startActivity(intent);
+
+            }
+        });
 
 
 
