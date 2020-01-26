@@ -1,11 +1,13 @@
 package com.mind.simplelogin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +56,10 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "User ID:"+user_id, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(context, "User ID:"+user_id, Toast.LENGTH_SHORT).show();
+                Intent intent;
+                intent = new Intent(view.getContext(), otherProfile.class);
+                intent.putExtra("user_id", user_id);
             }
         });
 
@@ -64,6 +69,8 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
     public int getItemCount() {
         return usersList.size();
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 

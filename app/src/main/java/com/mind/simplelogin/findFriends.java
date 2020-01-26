@@ -1,11 +1,13 @@
 package com.mind.simplelogin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -54,11 +56,15 @@ public class findFriends extends AppCompatActivity {
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED){
 
-                        String user_id = doc.getDocument().getId();
+                        final String user_id = doc.getDocument().getId();
 
                         Users users = doc.getDocument().toObject(Users.class).withId(user_id);
                         usersList.add(users);
                         usersListAdapter.notifyDataSetChanged();
+
+
+
+
 
                     }
 
