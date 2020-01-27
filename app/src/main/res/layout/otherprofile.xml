@@ -58,16 +58,7 @@
                 android:textColor="@color/address"
                 android:textSize="14sp" />
 
-        <ImageView
-                android:id="@+id/bearbeiten"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_settings" />
+
 
         <ImageView
                 android:id="@+id/back"
@@ -298,9 +289,23 @@
                         android:background="@color/grey" />
 
             </LinearLayout>
+            <Button
+                    android:id="@+id/add"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvForgot"
+                    android:layout_alignLeft="@+id/cv"
+                    android:layout_alignRight="@+id/cv"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bt_uiborder"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="Freundschaftanfrage "
+                    android:textColor="@color/colorBlue" />
 
 
         </LinearLayout>
+
 
     </RelativeLayout>
 

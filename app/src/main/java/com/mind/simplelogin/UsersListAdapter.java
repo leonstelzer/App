@@ -2,6 +2,7 @@ package com.mind.simplelogin;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,14 +42,14 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
 
-            viewHolder.nametext.setText(usersList.get(i).getBenutername());
-            viewHolder.orttext.setText(usersList.get(i).getOrt());
-       if (usersList.get(i).getImage().isEmpty() && usersList.get(i).getImage()==null) {
-           viewHolder.image.setImageResource(R.drawable.ic_person);
+        viewHolder.nametext.setText(usersList.get(i).getBenutername());
+        viewHolder.orttext.setText(usersList.get(i).getOrt());
+        //   if (usersList.get(i).getImage().isEmpty() && usersList.get(i).getImage()==null) {
+        //        viewHolder.image.setImageResource(R.drawable.ic_person);
 
-        } else{
-           Picasso.get().load(usersList.get(i).getImage()).into(viewHolder.image);
-        }
+        //    } else{
+        //      Picasso.get().load(usersList.get(i).getImage()).into(viewHolder.image);
+        //    }
 
 
 
@@ -58,9 +59,13 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
             @Override
             public void onClick(View view) {
               //  Toast.makeText(context, "User ID:"+user_id, Toast.LENGTH_SHORT).show();
-                Intent intent;
-                intent = new Intent(view.getContext(), otherProfile.class);
+                Intent intent = new Intent(context, otherProfile.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
                 intent.putExtra("user_id", user_id);
+                context.startActivity(intent);
+
             }
         });
 

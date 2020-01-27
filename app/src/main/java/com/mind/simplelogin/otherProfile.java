@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,22 +31,22 @@ import com.squareup.picasso.Picasso;
 import javax.annotation.Nullable;
 
 public class otherProfile extends AppCompatActivity {
-    private ImageView bearbeiten;
     private ImageView back;
     ImageView user;
     TextView fullName, email, ort, beschreibung, telefonummer, interessen;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
+    Button add;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference reference = firebaseDatabase.getReference();
-    private DatabaseReference firs = reference.child("Image");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
-        bearbeiten = findViewById(R.id.bearbeiten);
+        setContentView(R.layout.otherprofile);
+
         fullName = findViewById(R.id.tv_name);
         email = findViewById(R.id.tvEmail);
         ort = findViewById(R.id.tv_address);
@@ -53,13 +54,13 @@ public class otherProfile extends AppCompatActivity {
         telefonummer = findViewById(R.id.telefonummer);
         interessen = findViewById(R.id.interessen);
         user = findViewById(R.id.User);
+        add = findViewById(R.id.add);
 
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-
-
-        userId = fAuth.getCurrentUser().getUid();
+        userId = getIntent().getStringExtra("user_id");
+        reference = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
 
 
         back = findViewById(R.id.back);
@@ -67,7 +68,7 @@ public class otherProfile extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(otherProfile.this, findFriends.class);
+                Intent intent = new Intent(otherProfile.this, Startseite.class);
                 startActivity(intent);
             }
         });
@@ -91,6 +92,4 @@ public class otherProfile extends AppCompatActivity {
 
 
     }
-
 }
-
