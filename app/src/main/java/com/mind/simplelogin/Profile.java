@@ -57,12 +57,8 @@ public class Profile extends AppCompatActivity {
         interessen   = findViewById(R.id.interessen);
         user = findViewById(R.id.User);
 
-
-
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-
-
         userId = fAuth.getCurrentUser().getUid();
 
 
