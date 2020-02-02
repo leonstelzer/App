@@ -65,6 +65,7 @@ public class Eventerstellen extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
+        final String[] eventid = new String[1];
 
 
 
@@ -102,9 +103,9 @@ public class Eventerstellen extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             Toast.makeText(Eventerstellen.this, "Event Created.", Toast.LENGTH_SHORT).show();
-                            String eventid = documentReference.getId();
+                            eventid[0] = documentReference.getId();
                             Intent intent = new Intent(Eventerstellen.this, myEvent.class);
-                            intent.putExtra("event_id", eventid);
+                            intent.putExtra("event_id", eventid[0]);
                             startActivity(intent);
 
                 //            Intent intent = new Intent(Intent.ACTION_SEND);

@@ -107,6 +107,7 @@ public class otherProfile extends AppCompatActivity {
 
             }
         });
+        final String[] requestid = {null};
 
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +116,7 @@ public class otherProfile extends AppCompatActivity {
                 add.setEnabled(false);
                 String yourid = fAuth.getCurrentUser().getUid();
                 String otherid = getIntent().getStringExtra("user_id");
-                final String[] requestid = {null};
+
 
 
                 if (currentstate.equals("not_friends")) {

@@ -44,12 +44,13 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
 
         viewHolder.nametext.setText(usersList.get(i).getBenutername());
         viewHolder.orttext.setText(usersList.get(i).getOrt());
-        //   if (usersList.get(i).getImage().isEmpty() && usersList.get(i).getImage()==null) {
-        //        viewHolder.image.setImageResource(R.drawable.ic_person);
 
-        //    } else{
-        //      Picasso.get().load(usersList.get(i).getImage()).into(viewHolder.image);
-        //    }
+           if (usersList.get(i).getImage()==null) {
+               viewHolder.image.setImageResource(R.drawable.ic_person);
+
+            } else{
+              Picasso.get().load(usersList.get(i).getImage()).into(viewHolder.image);
+            }
 
 
 

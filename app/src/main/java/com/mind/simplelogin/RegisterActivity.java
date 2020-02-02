@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
                 final String interesssen = "Bitte noch ausfüllen";
                 final String beschreibung = "Bitte noch ausfüllen";
                 final String telefonnummer = "Bitte noch ausfüllen";
-                final String image = "https://firebasestorage.googleapis.com/v0/b/appevent-13578.appspot.com/o/Images%2F1579969742170%2Cjpg?alt=media&token=0e6faf6a-ff7a-43ff-a8f6-d7b2da53fffa";
+                final String image = null;
 
                 if (TextUtils.isEmpty(email)) {
                     eemail.setError("Email is Required.");
