@@ -2,6 +2,7 @@ package com.mind.simplelogin;
 
 import android.content.Intent;
 import android.provider.CalendarContract;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -114,13 +115,15 @@ public class otherProfile extends AppCompatActivity {
                 add.setEnabled(false);
                 String yourid = fAuth.getCurrentUser().getUid();
                 String otherid = getIntent().getStringExtra("user_id");
-                String requestid = "";
+                final String[] requestid = {null};
+
 
                 if (currentstate.equals("not_friends")) {
                     final Map<String, String> request = new HashMap<>();
                     request.put("yourid", yourid);
                     request.put("otherid", otherid);
                     request.put("Type", "req_send");
+
                     fStore.collection("request").add(request).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -128,22 +131,20 @@ public class otherProfile extends AppCompatActivity {
                             currentstate = "req_send";
                             add.setEnabled(true);
                             add.setText("Anfrage löschen");
-                            String requestid = documentReference.getId();
-                            Toast.makeText(otherProfile.this, requestid, Toast.LENGTH_SHORT).show();
+                            requestid[0] = documentReference.getId();
+
+
+
+                            Toast.makeText(otherProfile.this, requestid[0], Toast.LENGTH_SHORT).show();
 
                         }
                     });
+
                 }
 
 
-
-                // Intent intent = new Intent(otherProfile.this, findFriends.class);
-                // startActivity(intent);
-
-
-
                 if (currentstate.equals("req_send")) {
-                    fStore.collection("request").document(requestid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("request").document(requestid[0]).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Gelöscht", Toast.LENGTH_SHORT).show();
