@@ -38,9 +38,9 @@ public class myEvent extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
-        eventid = getIntent().getStringExtra("eventid_id");
+        eventid = getIntent().getStringExtra("event_id");
 
-        // DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("event").child(userId);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("event").child(userId);
 
 
 
