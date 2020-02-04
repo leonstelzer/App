@@ -30,17 +30,17 @@ public class myEvent extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.myevent);
 
-        name = findViewById(R.id.event);
-        ort = findViewById(R.id.etEmail);
-        zeit = findViewById(R.id.etUsername);
-        datum = findViewById(R.id.etPassword);
-        teilnehmer = findViewById(R.id.etRePassword);
+        name = findViewById(R.id.name);
+        ort = findViewById(R.id.einort);
+        zeit = findViewById(R.id.einzeit);
+        datum = findViewById(R.id.eindatum);
+        teilnehmer = findViewById(R.id.einteilnehmer);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
         eventid = getIntent().getStringExtra("event_id");
 
-         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("event").child(userId);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("event").child(userId);
 
 
 

@@ -46,8 +46,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         viewHolder.orttext.setText(usersList.get(i).getOrt());
 
            if (usersList.get(i).getImage()==null) {
-               viewHolder.image.setImageResource(R.drawable.ic_person);
-
+                viewHolder.image.setImageResource(R.drawable.ic_person);
             } else{
               Picasso.get().load(usersList.get(i).getImage()).into(viewHolder.image);
             }

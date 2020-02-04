@@ -65,7 +65,7 @@ public class Eventerstellen extends AppCompatActivity {
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
-        final String[] eventid = new String[1];
+        final String[] eventid = {null};
 
 
 
