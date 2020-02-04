@@ -1,5 +1,6 @@
 package com.mind.simplelogin;
 
+import android.content.Context;
 import android.content.Intent;
 import android.provider.CalendarContract;
 import android.provider.Settings;
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SnapshotMetadata;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -94,7 +96,7 @@ public class otherProfile extends AppCompatActivity {
 
         final DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
+                @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 fullName.setText(documentSnapshot.getString("Benutername"));
                 email.setText(documentSnapshot.getString("EMail"));
@@ -104,9 +106,55 @@ public class otherProfile extends AppCompatActivity {
                 beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
+   
+
+
+
 
             }
+
+
         });
+        final DocumentReference doc = fStore.collection("request").document(String.valueOf(currentuser));
+        doc.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+
+        String reqtyp = documentSnapshot.getString("Type");
+        if(reqtyp == null){
+            currentstate = "not_friends";
+            add.setEnabled(true);
+            add.setText("Anfrage verschicken");
+
+        }
+
+
+        if (reqtyp.equals("received")){
+            currentstate = "req_received";
+            add.setEnabled(true);
+            add.setText("Anfrage annehmen");
+
+        }
+        if (reqtyp.equals("req_send")){
+            currentstate = "req_send";
+            add.setEnabled(true);
+            add.setText("Anfrage löschen");
+
+        }
+        else{
+            currentstate = "not_friends";
+            add.setEnabled(true);
+            add.setText("Anfrage verschicken");
+        }
+
+            }
+
+
+        });
+
+
+
         final String[] requestid = {null};
 
 
@@ -125,9 +173,23 @@ public class otherProfile extends AppCompatActivity {
                     request.put("otherid", otherid);
                     request.put("Type", "req_send");
 
-                    fStore.collection("request").add(request).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+
+                    final Map<String, String> request1 = new HashMap<>();
+                    request1.put("otherid", yourid);
+                    request1.put("yourid", otherid);
+                    request1.put("Type", "received");
+
+                    fStore.collection("request").document(otherid).set(request1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(DocumentReference documentReference) {
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(otherProfile.this, "Versendet", Toast.LENGTH_SHORT).show();
+
+                        }
+                    });
+
+                    fStore.collection("request").document(yourid).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Versendet", Toast.LENGTH_SHORT).show();
                             currentstate = "req_send";
                             add.setEnabled(true);
@@ -135,8 +197,6 @@ public class otherProfile extends AppCompatActivity {
                             requestid[0] = documentReference.getId();
 
 
-
-                            Toast.makeText(otherProfile.this, requestid[0], Toast.LENGTH_SHORT).show();
 
                         }
                     });

@@ -1,7 +1,10 @@
 package com.mind.simplelogin;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,6 +27,7 @@ public class myEvent extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, eventid;
+    Button share;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,7 @@ public class myEvent extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
         eventid = getIntent().getStringExtra("event_id");
+        share  = findViewById(R.id.btnShare);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("event").child(userId);
 
@@ -60,6 +65,21 @@ public class myEvent extends AppCompatActivity {
 
             }
         });
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("Text/plain");
+                String shareBody = "file:///C:/Users/AMD/Desktop/App/Anfrage.html";
+                String shareSubject = "jtzdfuz";
+                intent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                intent.putExtra(Intent.EXTRA_SUBJECT, shareBody);
+                startActivity(Intent.createChooser(intent, "Share"));
+
+            }
+        });
+
 
     }
 
