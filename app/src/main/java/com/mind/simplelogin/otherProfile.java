@@ -73,7 +73,7 @@ public class otherProfile extends AppCompatActivity {
         interessen = findViewById(R.id.interessen);
         user = findViewById(R.id.User);
         add = findViewById(R.id.add);
-        currentstate = "not_friends";
+        currentstate = null;
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -82,6 +82,8 @@ public class otherProfile extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference().child("users").child(userId);
         currentuser = FirebaseAuth.getInstance().getCurrentUser();
 
+        String yourid = fAuth.getCurrentUser().getUid();
+        final String otherid = getIntent().getStringExtra("user_id");
 
         back = findViewById(R.id.back);
 
@@ -107,55 +109,47 @@ public class otherProfile extends AppCompatActivity {
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
    
-
-
-
-
-            }
+                }
 
 
         });
-        final DocumentReference doc = fStore.collection("request").document(String.valueOf(currentuser));
-        doc.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-
-
-        String reqtyp = documentSnapshot.getString("Type");
-        if(reqtyp == null){
-            currentstate = "not_friends";
-            add.setEnabled(true);
-            add.setText("Anfrage verschicken");
-
-        }
-
-
-        if (reqtyp.equals("received")){
-            currentstate = "req_received";
-            add.setEnabled(true);
-            add.setText("Anfrage annehmen");
-
-        }
-        if (reqtyp.equals("req_send")){
-            currentstate = "req_send";
-            add.setEnabled(true);
-            add.setText("Anfrage löschen");
-
-        }
-        else{
-            currentstate = "not_friends";
-            add.setEnabled(true);
-            add.setText("Anfrage verschicken");
-        }
-
-            }
-
-
-        });
-
 
 
         final String[] requestid = {null};
+        final DocumentReference doc = fStore.collection("request").document(yourid+otherid);
+        doc.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                String reqtyp = null;
+                reqtyp = documentSnapshot.getString("Type");
+
+                if (reqtyp == null){
+                    currentstate = "not_friends";
+                    add.setEnabled(true);
+                    add.setText("Freundschaftanfrage verschicken");
+                    return;
+                }
+
+                if (reqtyp.equals("received")){
+                    currentstate = "req_received";
+                    add.setEnabled(true);
+                    add.setText("Anfrage annehmen");
+                }
+                else if (reqtyp.equals("req_send") ){
+                    currentstate = "req_send";
+                    add.setEnabled(true);
+                    add.setText("Anfrage löschen");
+                }
+                else{
+                    currentstate = "not_friends";
+                    add.setEnabled(true);
+                    add.setText("Freundschaftanfrage verschicken");
+                }
+
+            }
+
+
+        });
 
 
         add.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +173,7 @@ public class otherProfile extends AppCompatActivity {
                     request1.put("yourid", otherid);
                     request1.put("Type", "received");
 
-                    fStore.collection("request").document(otherid).set(request1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("request").document(otherid+yourid).set(request1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Versendet", Toast.LENGTH_SHORT).show();
@@ -187,7 +181,7 @@ public class otherProfile extends AppCompatActivity {
                         }
                     });
 
-                    fStore.collection("request").document(yourid).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("request").document(yourid+otherid).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Versendet", Toast.LENGTH_SHORT).show();
@@ -205,7 +199,7 @@ public class otherProfile extends AppCompatActivity {
 
 
                 if (currentstate.equals("req_send")) {
-                    fStore.collection("request").document(requestid[0]).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("request").document(otherid+yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Gelöscht", Toast.LENGTH_SHORT).show();
@@ -222,9 +216,24 @@ public class otherProfile extends AppCompatActivity {
 
                         }
                     });
+                    fStore.collection("request").document(yourid+otherid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(otherProfile.this, "Nö", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
                 }
             }
         });
+
 
     }
 

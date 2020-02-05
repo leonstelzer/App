@@ -92,6 +92,7 @@ public class Eventerstellen extends AppCompatActivity {
                     String date = datum.getText().toString();
                     String time = zeit.getText().toString();
                     String loc = ort.getText().toString();
+
                     Map<String,String> event = new HashMap<>();
                     event.put("Eventname", names);
                     event.put("Datum", date);
@@ -99,6 +100,7 @@ public class Eventerstellen extends AppCompatActivity {
                     event.put("Zeit", time);
                     event.put("Id", userID);
                     event.put("Teilnehmer", null);
+
                     fStore.collection("event").add(event).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
@@ -108,18 +110,11 @@ public class Eventerstellen extends AppCompatActivity {
                             intent.putExtra("event_id", eventid[0]);
                             startActivity(intent);
 
-                //            Intent intent = new Intent(Intent.ACTION_SEND);
-                //            intent.setType("Text/plain");
-                //            String shareBody = "file:///C:/Users/AMD/Desktop/App/Anfrage.html";
-                //            String shareSubject = "jtzdfuz";
-                //            intent.putExtra(Intent.EXTRA_TEXT, shareBody);
-                //            intent.putExtra(Intent.EXTRA_SUBJECT, shareBody);
-                //            startActivity(Intent.createChooser(intent, "Share"));
+
                                     }
                                 });
 
 
-                       //         Toast.makeText(Eventerstellen.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 
 
 

@@ -300,7 +300,7 @@
                     android:background="@drawable/bt_uiborder"
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
-                    android:text="Freundschaftanfrage "
+                    android:text=""
                     android:textColor="@color/colorBlue" />
 
 
