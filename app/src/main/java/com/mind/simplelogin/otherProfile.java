@@ -1,42 +1,26 @@
 package com.mind.simplelogin;
 
-import android.content.Context;
 import android.content.Intent;
-import android.provider.CalendarContract;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.SnapshotMetadata;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -58,7 +42,6 @@ public class otherProfile extends AppCompatActivity {
     private DatabaseReference FriendRequest;
     private FirebaseUser currentuser;
     public static final String TAG = "YOUR-TAG-NAME";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +73,7 @@ public class otherProfile extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(otherProfile.this, Startseite.class);
+                Intent intent = new Intent(otherProfile.this, RegisterActivity.Startseite.class);
                 startActivity(intent);
             }
         });
@@ -117,11 +100,15 @@ public class otherProfile extends AppCompatActivity {
 
         final String[] requestid = {null};
         final DocumentReference doc = fStore.collection("request").document(yourid+otherid);
+        final DocumentReference doc1 = fStore.collection("friends").document(yourid);
+
         doc.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 String reqtyp = null;
+                String friends = null;
                 reqtyp = documentSnapshot.getString("Type");
+                friends = documentSnapshot.getString(otherid);
 
                 if (reqtyp == null){
                     currentstate = "not_friends";
@@ -129,7 +116,6 @@ public class otherProfile extends AppCompatActivity {
                     add.setText("Freundschaftanfrage verschicken");
                     return;
                 }
-
                 if (reqtyp.equals("received")){
                     currentstate = "req_received";
                     add.setEnabled(true);
@@ -139,6 +125,26 @@ public class otherProfile extends AppCompatActivity {
                     currentstate = "req_send";
                     add.setEnabled(true);
                     add.setText("Anfrage löschen");
+                }
+
+
+
+            }
+
+
+        });
+        doc1.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                String friends = null;
+                friends = documentSnapshot.getString(otherid);
+
+                if (friends.equals(otherid)) {
+                    currentstate = "friends";
+                    add.setEnabled(true);
+                    add.setText("Freund löschen");
+
                 }
                 else{
                     currentstate = "not_friends";
@@ -156,8 +162,8 @@ public class otherProfile extends AppCompatActivity {
             @Override
                 public void onClick(View view) {
                 add.setEnabled(false);
-                String yourid = fAuth.getCurrentUser().getUid();
-                String otherid = getIntent().getStringExtra("user_id");
+                final String yourid = fAuth.getCurrentUser().getUid();
+                final String otherid = getIntent().getStringExtra("user_id");
 
 
 
@@ -231,6 +237,107 @@ public class otherProfile extends AppCompatActivity {
                         }
                     });
                 }
+
+                if (currentstate.equals("req_received")){
+
+                    final Map<String, String> friends = new HashMap<>();
+                    friends.put(otherid, otherid);
+
+
+                    final Map<String, String> friends1 = new HashMap<>();
+                    friends1.put(yourid, yourid);
+
+
+                    fStore.collection("friends").document(yourid).set(friends).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(otherProfile.this,"Ihr seid jetzt Freunde", Toast.LENGTH_SHORT).show();
+                            fStore.collection("request").document(otherid+yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    currentstate = "friends";
+                                    add.setText("Freund löschen");
+                                    add.setEnabled(true);
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(otherProfile.this, "Nö", Toast.LENGTH_SHORT).show();
+
+
+                                }
+                            });
+                            fStore.collection("request").document(yourid+otherid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(otherProfile.this, "Nö", Toast.LENGTH_SHORT).show();
+
+
+                                }
+                            });
+
+                        }
+                    });
+                    fStore.collection("friends").document(otherid).set(friends1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+
+                        }
+                    });
+
+                    add.setEnabled(false);
+
+                }
+                if (currentstate.equals("friends")){
+
+                    fStore.collection("friends").document(yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(otherProfile.this, "Freund gelöscht", Toast.LENGTH_SHORT).show();
+                            add.setText("Freundschaftsanfrage versenden");
+                            currentstate = "not_friends";
+                            add.setEnabled(true);
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(otherProfile.this, "Nö", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+                    fStore.collection("friends").document(otherid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(otherProfile.this, "Nö", Toast.LENGTH_SHORT).show();
+
+
+                        }
+                    });
+                    add.setEnabled(false);
+
+                }
+
+
+
+
+
+
             }
         });
 

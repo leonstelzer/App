@@ -1,25 +1,15 @@
 package com.mind.simplelogin;
 
 import android.content.Intent;
-import android.provider.CalendarContract;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -28,8 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.squareup.picasso.Picasso;
 
 import javax.annotation.Nullable;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Profile extends AppCompatActivity {
@@ -75,7 +63,7 @@ public class Profile extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Profile.this, Startseite.class);
+                Intent intent = new Intent(Profile.this, RegisterActivity.Startseite.class);
                 startActivity(intent);
             }
         });

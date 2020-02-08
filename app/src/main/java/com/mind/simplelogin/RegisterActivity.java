@@ -2,36 +2,24 @@ package com.mind.simplelogin;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -41,10 +29,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.firebase.auth.FirebaseAuth;
-
-import io.opencensus.tags.Tag;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -156,6 +140,56 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    public static class Startseite extends AppCompatActivity {
+
+        private LinearLayout profil;
+        private LinearLayout newsfeed;
+        private LinearLayout erstellen;
+        private LinearLayout friends;
+
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_startseite);
+
+            profil      = findViewById(R.id.profil);
+            profil.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Startseite.this, Profile.class);
+                    startActivity(intent);
+                }
+            });
+
+            erstellen = findViewById(R.id.erstellen);
+            erstellen.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Startseite.this, Eventerstellen.class);
+                    startActivity(intent);
+
+                }
+            });
+            friends = findViewById(R.id.friends);
+            friends.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Startseite.this, findFriends.class);
+                    startActivity(intent);
+
+                }
+            });
+
+
+
+
+
+
+
+
+    }
+    }
 }
 
 

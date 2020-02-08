@@ -28,7 +28,7 @@
                 />
 
         <activity
-                android:name=".Startseite"
+                android:name=".RegisterActivity$Startseite"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
