@@ -100,7 +100,6 @@ public class otherProfile extends AppCompatActivity {
 
         final String[] requestid = {null};
         final DocumentReference doc = fStore.collection("request").document(yourid+otherid);
-        final DocumentReference doc1 = fStore.collection("friends").document(yourid);
 
         doc.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -126,37 +125,18 @@ public class otherProfile extends AppCompatActivity {
                     add.setEnabled(true);
                     add.setText("Anfrage löschen");
                 }
-
-
-
-            }
-
-
-        });
-        doc1.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-
-                String friends = null;
-                friends = documentSnapshot.getString(otherid);
-
-                if (friends.equals(otherid)) {
-                    currentstate = "friends";
-                    add.setEnabled(true);
-                    add.setText("Freund löschen");
-
-                }
                 else{
                     currentstate = "not_friends";
                     add.setEnabled(true);
                     add.setText("Freundschaftanfrage verschicken");
                 }
 
+
+
             }
 
 
         });
-
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
