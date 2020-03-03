@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -228,7 +229,7 @@ public class otherProfile extends AppCompatActivity {
                     friends1.put(yourid, yourid);
 
 
-                    fStore.collection("friends").document(yourid).set(friends).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("friends").document(yourid).set(friends, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this,"Ihr seid jetzt Freunde", Toast.LENGTH_SHORT).show();
@@ -265,7 +266,7 @@ public class otherProfile extends AppCompatActivity {
 
                         }
                     });
-                    fStore.collection("friends").document(otherid).set(friends1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("friends").document(otherid).set(friends1,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
 
