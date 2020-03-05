@@ -159,34 +159,7 @@ public class RegisterActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_startseite);
 
-            navigationView = findViewById(R.id.space);
 
-
-            SpaceNavigationView spaceNavigationView = (SpaceNavigationView) findViewById(R.id.space);
-            spaceNavigationView.initWithSaveInstanceState(savedInstanceState);
-            spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_home_black_24dp));
-            spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_home_black_24dp));
-            spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_home_black_24dp));
-            spaceNavigationView.addSpaceItem(new SpaceItem("", R.drawable.ic_home_black_24dp));
-
-
-            spaceNavigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
-                @Override
-                public void onCentreButtonClick() {
-                    Toast.makeText(Startseite.this,"onCentreButtonClick", Toast.LENGTH_SHORT).show();
-                    navigationView.setCentreButtonSelectable(true);
-                }
-
-                @Override
-                public void onItemClick(int itemIndex, String itemName) {
-                    Toast.makeText(Startseite.this, itemIndex + " " + itemName, Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onItemReselected(int itemIndex, String itemName) {
-                    Toast.makeText(Startseite.this, itemIndex + " " + itemName, Toast.LENGTH_SHORT).show();
-                }
-            });
 
             profil      = findViewById(R.id.profil);
             profil.setOnClickListener(new View.OnClickListener() {
