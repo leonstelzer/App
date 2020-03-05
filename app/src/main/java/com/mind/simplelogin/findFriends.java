@@ -6,7 +6,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.firebase.firestore.DocumentChange;
@@ -30,8 +34,6 @@ public class findFriends extends AppCompatActivity {
     private List<Users> usersList ;
     private  UsersListAdapter usersListAdapter;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +46,9 @@ public class findFriends extends AppCompatActivity {
         friendlist.setHasFixedSize(true);
         friendlist.setLayoutManager(new LinearLayoutManager((this)));
         friendlist.setAdapter(usersListAdapter);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Freunde finden");
 
 
         mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -61,23 +66,37 @@ public class findFriends extends AppCompatActivity {
                         Users users = doc.getDocument().toObject(Users.class).withId(user_id);
                         usersList.add(users);
                         usersListAdapter.notifyDataSetChanged();
-
-
-
-
-
-
-
-
-
                     }
-
-
-
                 }
-
             }
         });
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+
+        if(id == R.id.item1){
+
+            Intent intent = new Intent(findFriends.this, yourFriends.class);
+            startActivity(intent);
+            return true;
+        }
+        if(id == R.id.item2){
+
+            Intent intent = new Intent(findFriends.this, findFriends.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
 
     }
 

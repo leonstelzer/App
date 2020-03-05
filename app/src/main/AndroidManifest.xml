@@ -70,7 +70,12 @@
                 android:label="Preferences"
                 />
         <activity
-                android:name=".myEvent"
+            android:name=".myEvent"
+            android:theme="@style/AppTheme.FullScreen"
+            android:label="Preferences"
+            />
+        <activity
+                android:name=".yourFriends"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
