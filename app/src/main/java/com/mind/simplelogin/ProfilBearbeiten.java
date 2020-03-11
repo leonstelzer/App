@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -41,6 +42,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -59,7 +61,8 @@ public class ProfilBearbeiten extends AppCompatActivity {
     private SharedPreferences speicher;
     private SharedPreferences.Editor editor;
     TextView fullName, email;
-    EditText ort, beschreibung, telefonummer, interessen;
+    EditText  beschreibung, telefonummer, interessen;
+    EditText ort;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
@@ -132,7 +135,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
                 user.put("Interessen", einteresssen);
                 user.put("Beschreibung", ebeschreibung);
                 user.put("Telefonnummer", etelefonnummer);
-               // user.put("Image", image);
+
                 documentReference.set(user);
 
 
@@ -170,6 +173,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
             user.setImageURI(imageurl);
 
         }
+
     }
 
     private void filechooser() {

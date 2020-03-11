@@ -25,7 +25,7 @@
                 android:layout_height="190dp"
                 android:layout_margin="10dp">
             <LinearLayout
-                    android:id="@+id/newsfeed"
+                    android:id="@+id/findevevents"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"

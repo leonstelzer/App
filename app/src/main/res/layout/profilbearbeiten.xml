@@ -53,7 +53,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_name"
                 android:layout_centerHorizontal="true"
-                android:fontFamily="sans-serif"
                 android:text="@string/Ort"
                 android:textAllCaps="true"
                 android:textColor="@color/address"

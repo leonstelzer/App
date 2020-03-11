@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -25,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +40,7 @@ public class Eventerstellen extends AppCompatActivity {
     EditText name;
     EditText datum;
     EditText zeit;
-    EditText ort;
+    AutoCompleteTextView ort;
     String userID;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
@@ -66,6 +68,9 @@ public class Eventerstellen extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         final String[] eventid = {null};
+
+        ort.setAdapter(new PlaceAutoSuggestAdapter(Eventerstellen.this,android.R.layout.simple_list_item_1));
+
 
 
 

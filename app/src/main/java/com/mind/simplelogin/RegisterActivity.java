@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.luseen.spacenavigation.SpaceOnClickListener;
+import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
     Menu menu;
     Button login;
     FirebaseAuth fAuth;
-    EditText eemail, ename, epassswort, eort;
+    EditText eemail, ename, epassswort;
+    AutoCompleteTextView eort;
     ProgressBar progressBar;
     String userID;
     FirebaseFirestore fStore;
@@ -66,6 +69,8 @@ public class RegisterActivity extends AppCompatActivity {
         ename = findViewById(R.id.etUsername);
         epassswort = findViewById(R.id.etPassword);
         eort = findViewById(R.id.etRePassword);
+        eort.setAdapter(new PlaceAutoSuggestAdapter(RegisterActivity.this,android.R.layout.simple_list_item_1));
+
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -148,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
     public static class Startseite extends AppCompatActivity {
 
         private LinearLayout profil;
-        private LinearLayout newsfeed;
+        private LinearLayout findevents;
         private LinearLayout erstellen;
         private LinearLayout friends;
         SpaceNavigationView navigationView;
@@ -184,6 +189,15 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Startseite.this, findFriends.class);
+                    startActivity(intent);
+
+                }
+            });
+            findevents = findViewById(R.id.findevevents);
+            findevents.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Startseite.this, findevents.class);
                     startActivity(intent);
 
                 }
