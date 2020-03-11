@@ -181,7 +181,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:background="@drawable/bt_uisquare"
-                        android:text="Share"
+                        android:text="Event erstellen"
                         android:textAllCaps="false"
                         android:textColor="@color/colorWhite" />
             </RelativeLayout>
