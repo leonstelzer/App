@@ -94,14 +94,11 @@ public class ProfilBearbeiten extends AppCompatActivity {
         beschreibung = findViewById(R.id.tvBesc);
         user = findViewById(R.id.User);
 
-
         user.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 filechooser();
-                //      fileuploader();
 
-                Picasso.get().load(imageurl).into(user);
 
 
             }
@@ -136,12 +133,11 @@ public class ProfilBearbeiten extends AppCompatActivity {
                 user.put("Beschreibung", ebeschreibung);
                 user.put("Telefonnummer", etelefonnummer);
 
-                documentReference.set(user);
+                documentReference.update(user);
 
 
                 Intent intent = new Intent(ProfilBearbeiten.this, Profile.class);
                 startActivity(intent);
-                fileuploader();
             }
         });
         DocumentReference documentReference = fStore.collection("users").document(userId);
@@ -171,6 +167,8 @@ public class ProfilBearbeiten extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageurl = data.getData();
             user.setImageURI(imageurl);
+            fileuploader();
+            Picasso.get().load(imageurl).into(user);
 
         }
 
