@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -41,6 +42,7 @@ public class yourFriends extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.findfriends);
         fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
 
 
         friendlist = findViewById(R.id.friendlist);
@@ -58,7 +60,7 @@ public class yourFriends extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Meine Freunde");
 
-        mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mFirestore.collection("friends").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
@@ -68,11 +70,28 @@ public class yourFriends extends AppCompatActivity {
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED){
 
-                        final String user_id = doc.getDocument().getId();
+                        String user_id = doc.getDocument().getId();
+                        //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
+                        System.out.println(user_id);
+                        System.out.println(fAuth.getUid());
+                        if (fAuth.getUid().equals(user_id)){
 
-                        Users users = doc.getDocument().toObject(Users.class).withId(user_id);
-                        usersList.add(users);
+                            Map map = doc.getDocument().getData();
+                            System.out.println(map.size());
+                            //Toast.makeText(yourFriends.this, map.size(), Toast.LENGTH_SHORT).show();
+
+
+                            for(Object friendid : map.values()){
+                                Users users = doc.getDocument().toObject(Users.class).withId((String)friendid);
+                                //Toast.makeText(yourFriends.this, (String)friendid, Toast.LENGTH_SHORT).show();
+
+                                usersList.add(users);
+
+                            }
+
+                        }
                         usersListAdapter.notifyDataSetChanged();
+
                     }
                 }
             }
