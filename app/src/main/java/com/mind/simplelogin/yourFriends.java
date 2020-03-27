@@ -70,28 +70,48 @@ public class yourFriends extends AppCompatActivity {
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED){
 
-                        String user_id = doc.getDocument().getId();
+                        final String user_id = doc.getDocument().getId();
                         //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
-                        System.out.println(user_id);
-                        System.out.println(fAuth.getUid());
-                        if (fAuth.getUid().equals(user_id)){
 
-                            Map map = doc.getDocument().getData();
-                            System.out.println(map.size());
+
+                        mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                                if (e != null) {
+
+                                }
+                                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                    if (doc.getType() == DocumentChange.Type.ADDED){
+
+                                        String id = doc.getDocument().getId();
+                                        if(user_id.equals(id)) {
+                                            Users users = doc.getDocument().toObject(Users.class).withId(user_id);
+                                            usersList.add(users);
+                                            usersListAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                        //if (fAuth.getUid().equals(user_id)){
+
+                            //Map map = doc.getDocument().getData();
+                            //System.out.println(map.size());
                             //Toast.makeText(yourFriends.this, map.size(), Toast.LENGTH_SHORT).show();
 
 
-                            for(Object friendid : map.values()){
+                            //for(Object friendid : map.values()){
 
-                                friendid.toString();
+                                //friendid.toString();
 
 
-                                Users users = doc.getDocument().toObject(Users.class).withId((String)friendid);
+                                //Users users = doc.getDocument().toObject(Users.class).withId(user_id);
                                 //Toast.makeText(yourFriends.this, (String)friendid, Toast.LENGTH_SHORT).show();
-                                usersList.add(users);
-                            }
-                        }
-                        usersListAdapter.notifyDataSetChanged();
+                                //usersList.add(users);
+                           // }
+                        //}
+                        //usersListAdapter.notifyDataSetChanged();
 
                     }
                 }
