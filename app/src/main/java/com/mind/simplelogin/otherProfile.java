@@ -100,7 +100,7 @@ public class otherProfile extends AppCompatActivity {
 
 
         final String[] requestid = {null};
-        final DocumentReference doc = fStore.collection("request").document(yourid+otherid);
+        final DocumentReference doc = fStore.collection("users").document(yourid).collection("request").document(yourid+otherid);
 
         doc.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -160,7 +160,7 @@ public class otherProfile extends AppCompatActivity {
                     request1.put("yourid", otherid);
                     request1.put("Type", "received");
 
-                    fStore.collection("request").document(otherid+yourid).set(request1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(yourid).collection("request").document(otherid+yourid).set(request1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Versendet", Toast.LENGTH_SHORT).show();
@@ -168,7 +168,7 @@ public class otherProfile extends AppCompatActivity {
                         }
                     });
 
-                    fStore.collection("request").document(yourid+otherid).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(yourid).collection("request").document(yourid+otherid).set(request).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Versendet", Toast.LENGTH_SHORT).show();
@@ -186,7 +186,7 @@ public class otherProfile extends AppCompatActivity {
 
 
                 if (currentstate.equals("req_send")) {
-                    fStore.collection("request").document(otherid+yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(yourid).collection("request").document(otherid+yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Gelöscht", Toast.LENGTH_SHORT).show();
@@ -203,7 +203,7 @@ public class otherProfile extends AppCompatActivity {
 
                         }
                     });
-                    fStore.collection("request").document(yourid+otherid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(yourid).collection("request").document(yourid+otherid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
 
