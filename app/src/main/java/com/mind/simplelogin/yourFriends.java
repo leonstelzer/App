@@ -60,7 +60,7 @@ public class yourFriends extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Meine Freunde");
 
-        mFirestore.collection("friends").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mFirestore.collection("users").document(usid).collection("friends").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
@@ -82,13 +82,14 @@ public class yourFriends extends AppCompatActivity {
 
 
                             for(Object friendid : map.values()){
+
+                                friendid.toString();
+
+
                                 Users users = doc.getDocument().toObject(Users.class).withId((String)friendid);
                                 //Toast.makeText(yourFriends.this, (String)friendid, Toast.LENGTH_SHORT).show();
-
                                 usersList.add(users);
-
                             }
-
                         }
                         usersListAdapter.notifyDataSetChanged();
 

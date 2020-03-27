@@ -117,7 +117,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "User Created.", Toast.LENGTH_SHORT).show();
                             userID = fAuth.getCurrentUser().getUid();
                             DocumentReference documentReference = fStore.collection("users").document(userID);
-                            DocumentReference documentReference1 = fStore.collection("friends").document(userID);
 
                             Map<String,Object> user = new HashMap<>();
                             user.put("Benutername", fullname);

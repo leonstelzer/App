@@ -229,7 +229,7 @@ public class otherProfile extends AppCompatActivity {
                     friends1.put(yourid, yourid);
 
 
-                    fStore.collection("friends").document(yourid).set(friends, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(yourid).collection("friends").document(otherid).set(friends, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this,"Ihr seid jetzt Freunde", Toast.LENGTH_SHORT).show();
@@ -266,7 +266,7 @@ public class otherProfile extends AppCompatActivity {
 
                         }
                     });
-                    fStore.collection("friends").document(otherid).set(friends1,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(otherid).collection("friends").document(yourid).set(friends1,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
 
@@ -279,7 +279,7 @@ public class otherProfile extends AppCompatActivity {
                 }
                 if (currentstate.equals("friends")){
 
-                    fStore.collection("friends").document(yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(yourid).collection("friends").document(otherid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Freund gelöscht", Toast.LENGTH_SHORT).show();
@@ -296,7 +296,7 @@ public class otherProfile extends AppCompatActivity {
 
                         }
                     });
-                    fStore.collection("friends").document(otherid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(otherid).collection("friends").document(yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
 
@@ -313,11 +313,6 @@ public class otherProfile extends AppCompatActivity {
                     add.setEnabled(false);
 
                 }
-
-
-
-
-
 
             }
         });

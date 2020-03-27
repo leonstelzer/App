@@ -37,7 +37,8 @@ public class findFriends extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.findfriends);
+        setContentView(R.layout.
+        findfriends);
         friendlist = findViewById(R.id.friendlist);
         mFirestore = FirebaseFirestore.getInstance();
         usersList = new ArrayList<>();
@@ -70,7 +71,6 @@ public class findFriends extends AppCompatActivity {
                 }
             }
         });
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
