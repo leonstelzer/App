@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        tools:context=".Eventerstellen">
+        tools:context=".events.Eventerstellen">
 
     <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -101,12 +101,12 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/etEmail"
                             android:layout_margin="15dp"
-                            android:text="Datum"
+                            android:text="Datum auswählen"
                             android:textColor="@color/colorPurple"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                    <EditText
+                    <TextView
                             android:id="@+id/etUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -115,6 +115,7 @@
                             android:layout_marginRight="15dp"
                             android:drawablePadding="30dp"
                             android:inputType="text"
+                            android:text="Datum anzeigen"
                             android:padding="10dp" />
 
                     <TextView
@@ -123,12 +124,12 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/etUsername"
                             android:layout_margin="15dp"
-                            android:text="Zeit"
+                            android:text="Zeit auswählen"
                             android:textColor="@color/colorPurple"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
-                    <EditText
+                    <TextView
                             android:id="@+id/etPassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -136,7 +137,9 @@
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             android:drawablePadding="30dp"
-                            android:padding="10dp" />
+                            android:padding="10dp"
+                            android:text="Zeit anzeigen"
+                            />
 
                     <TextView
                             android:id="@+id/tvRePassword"

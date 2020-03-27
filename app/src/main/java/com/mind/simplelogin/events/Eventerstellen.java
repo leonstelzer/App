@@ -1,12 +1,12 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.events;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.EventLog;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,33 +14,36 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mind.simplelogin.R;
+import com.mind.simplelogin.myEvent;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Eventerstellen extends AppCompatActivity {
+public class Eventerstellen extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private RelativeLayout rlayout;
     private Animation animation;
     private Menu menu;
     private Button share;
     EditText name;
-    EditText datum;
-    EditText zeit;
+
     AutoCompleteTextView ort;
+    TextView date, dateanzeige, zeitanzeigen, zeit;
     String userID;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
@@ -61,15 +64,32 @@ public class Eventerstellen extends AppCompatActivity {
         rlayout.setAnimation(animation);
         share      = findViewById(R.id.btLogin);
         name =findViewById(R.id.etEmail);
-        datum =findViewById(R.id.etUsername);
-        zeit =findViewById(R.id.etPassword);
+        zeitanzeigen =findViewById(R.id.etPassword);
+        zeit = findViewById(R.id.tvPassword);
         ort =findViewById(R.id.etRePassword);
+        date=findViewById(R.id.tvUsername);
+        dateanzeige=findViewById(R.id.etUsername);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         final String[] eventid = {null};
 
         ort.setAdapter(new PlaceAutoSuggestAdapter(Eventerstellen.this,android.R.layout.simple_list_item_1));
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment datePicker = new DatePickerFragment();
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
+        zeit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment timePicker = new TimerPickerFragment();
+                timePicker.show(getSupportFragmentManager(), "time picker");
+            }
+        });
 
 
 
@@ -82,10 +102,17 @@ public class Eventerstellen extends AppCompatActivity {
                 if (name.length()==0){
                     name.setError("Name eingeben");
                 }
-                if (datum.length()==0){
-                    datum.setError("Datum eingeben");
+                if (dateanzeige.length()==0){
+                    zeit.setError("Zeit eingeben");
                 }
-                if (zeit.length()==0){
+                if (dateanzeige.equals("Datum anzeigen")){
+                    zeit.setError("Zeit eingeben");
+                }
+                if (zeitanzeigen.equals("Zeit anzeigen")){
+                    zeit.setError("Zeit eingeben");
+                }
+
+                if (zeitanzeigen.length()==0){
                     zeit.setError("Zeit eingeben");
                 }
                 if (ort.length()==0){
@@ -94,8 +121,8 @@ public class Eventerstellen extends AppCompatActivity {
                 else {
                     userID = fAuth.getCurrentUser().getUid();
                     String names = name.getText().toString();
-                    String date = datum.getText().toString();
-                    String time = zeit.getText().toString();
+                    String date = dateanzeige.getText().toString();
+                    String time = zeitanzeigen.getText().toString();
                     String loc = ort.getText().toString();
 
                     Map<String,String> event = new HashMap<>();
@@ -114,34 +141,22 @@ public class Eventerstellen extends AppCompatActivity {
                             Intent intent = new Intent(Eventerstellen.this, myEvent.class);
                             intent.putExtra("event_id", eventid[0]);
                             startActivity(intent);
-
-
                                     }
                                 });
-
-
-
-
-
-
-
                 }
-
-
-
-
-
-
-
-
 
             }
         });
 
-
-
-
-
+    }
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        dateanzeige.setText(currentDateString);
     }
 
     @Override
@@ -153,4 +168,11 @@ public class Eventerstellen extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        zeitanzeigen.setText(hourOfDay+":"+minute);
+    }
 }
+

@@ -50,7 +50,7 @@
                 />
 
         <activity
-                android:name=".Eventerstellen"
+                android:name=".events.Eventerstellen"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />

@@ -27,9 +27,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.luseen.spacenavigation.SpaceItem;
 import com.luseen.spacenavigation.SpaceNavigationView;
-import com.luseen.spacenavigation.SpaceOnClickListener;
+import com.mind.simplelogin.events.Eventerstellen;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.util.HashMap;
