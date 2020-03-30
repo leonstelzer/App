@@ -1,5 +1,6 @@
 package com.mind.simplelogin.Profil;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +33,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.events.Eventerstellen;
+import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -46,7 +50,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     TextView fullName, email;
     EditText  beschreibung, telefonummer, interessen;
-    EditText ort;
+    AutoCompleteTextView ort;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
@@ -57,6 +61,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
     private StorageTask uploadtask;
     private Bitmap compressor;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +92,8 @@ public class ProfilBearbeiten extends AppCompatActivity {
 
             }
         });
+        ort.setAdapter(new PlaceAutoSuggestAdapter(ProfilBearbeiten.this,android.R.layout.simple_list_item_1));
+
 
 
         bestätigen.setOnClickListener(new View.OnClickListener() {
