@@ -172,7 +172,8 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        zeitanzeigen.setText(hourOfDay+":"+minute);
+        if (minute < 10) zeitanzeigen.setText(hourOfDay+":0"+minute);
+        else zeitanzeigen.setText(hourOfDay+":"+minute);
     }
 }
 
