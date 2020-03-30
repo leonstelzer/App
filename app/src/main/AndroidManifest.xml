@@ -33,12 +33,12 @@
                 android:label="Preferences"
                 />
         <activity
-                android:name=".Profile"
+                android:name=".Profil.Profile"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
         <activity
-                android:name=".ProfilBearbeiten"
+                android:name=".Profil.ProfilBearbeiten"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
@@ -65,12 +65,12 @@
                 android:label="Preferences"
                 />
         <activity
-                android:name=".otherProfile"
+                android:name=".Profil.otherProfile"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
         <activity
-            android:name=".myEvent"
+            android:name=".events.myEvent"
             android:theme="@style/AppTheme.FullScreen"
             android:label="Preferences"
             />
@@ -80,16 +80,10 @@
                 android:label="Preferences"
                 />
         <activity
-                android:name=".findevents"
-                android:theme="@style/AppTheme.FullScreen"
-                android:label="Preferences"
-                />
-        <activity
-                android:name=".overviewact"
-                android:theme="@style/AppTheme.FullScreen"
-                android:label="Preferences"
-                />
-
+            android:name=".findevents"
+            android:theme="@style/AppTheme.FullScreen"
+            android:label="Preferences"
+            />
 
 
     </application>

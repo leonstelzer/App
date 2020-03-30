@@ -1,4 +1,4 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Profil;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +15,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.mind.simplelogin.Einstellungen;
+import com.mind.simplelogin.R;
+import com.mind.simplelogin.RegisterActivity;
 import com.squareup.picasso.Picasso;
 
 import javax.annotation.Nullable;
-
-
 
 public class Profile extends AppCompatActivity {
     private ImageView bearbeiten;

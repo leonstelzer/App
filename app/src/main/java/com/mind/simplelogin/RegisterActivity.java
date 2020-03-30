@@ -1,7 +1,6 @@
 package com.mind.simplelogin;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -30,6 +28,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.luseen.spacenavigation.SpaceNavigationView;
+import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.events.Eventerstellen;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
@@ -49,8 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
     String userID;
     FirebaseFirestore fStore;
     public static final String TAG = "YOUR-TAG-NAME";
-
-
 
 
     @Override
@@ -133,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     Log.d(TAG, "New Profil for"+userID);
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(), overviewact.class));
+                            startActivity(new Intent(getApplicationContext(), RegisterActivity.Startseite.class));
 
                     }
                         else {
@@ -149,8 +146,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-
-
 
     public static class Startseite extends AppCompatActivity {
 

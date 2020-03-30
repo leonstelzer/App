@@ -1,4 +1,4 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Profil;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -22,6 +22,8 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.SetOptions;
+import com.mind.simplelogin.R;
+import com.mind.simplelogin.RegisterActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;

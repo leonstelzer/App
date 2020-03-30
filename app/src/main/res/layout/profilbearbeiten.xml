@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ProfilBearbeiten">
+        tools:context=".Profil.ProfilBearbeiten">
 
     <RelativeLayout
             android:id="@+id/rellay1"
@@ -54,7 +54,7 @@
                 android:layout_below="@+id/tv_name"
                 android:layout_centerHorizontal="true"
                 android:text="@string/Ort"
-                android:textAllCaps="true"
+                android:textAllCaps="false"
                 android:textColor="@color/address"
                 android:textSize="14sp" />
 
