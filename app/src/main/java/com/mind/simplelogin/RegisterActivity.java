@@ -1,6 +1,7 @@
 package com.mind.simplelogin;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -131,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     Log.d(TAG, "New Profil for"+userID);
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(), Startseite.class));
+                            startActivity(new Intent(getApplicationContext(), overviewact.class));
 
                     }
                         else {
@@ -147,6 +149,8 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     public static class Startseite extends AppCompatActivity {
 
@@ -182,6 +186,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
             });
+
             friends = findViewById(R.id.friends);
             friends.setOnClickListener(new View.OnClickListener() {
                 @Override
