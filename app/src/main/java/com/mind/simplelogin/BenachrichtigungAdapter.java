@@ -27,9 +27,9 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
     }
     @NonNull
     @Override
-    public BenachrichtigungAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_benachrichtigung, viewGroup, false);
-        return new BenachrichtigungAdapter(view);
+        return new ViewHolder(view);
 
     }
 
