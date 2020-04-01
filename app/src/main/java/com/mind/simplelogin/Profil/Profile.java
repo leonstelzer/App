@@ -15,6 +15,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.mind.simplelogin.Beanchrichtigung;
 import com.mind.simplelogin.Einstellungen;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.RegisterActivity;
@@ -25,7 +26,7 @@ import javax.annotation.Nullable;
 public class Profile extends AppCompatActivity {
     private ImageView bearbeiten;
     private ImageView back;
-    ImageView user;
+    ImageView user, benachrichtigung;
     TextView fullName,email, ort, beschreibung, telefonummer, interessen;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -46,6 +47,7 @@ public class Profile extends AppCompatActivity {
         telefonummer = findViewById(R.id.telefonummer);
         interessen   = findViewById(R.id.interessen);
         user = findViewById(R.id.User);
+        benachrichtigung = findViewById(R.id.benach);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -66,6 +68,13 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Profile.this, RegisterActivity.Startseite.class);
+                startActivity(intent);
+            }
+        });
+        benachrichtigung.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Profile.this, Beanchrichtigung.class);
                 startActivity(intent);
             }
         });

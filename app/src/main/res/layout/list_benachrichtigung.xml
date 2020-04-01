@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground">
+
+    <ImageView
+            android:id="@+id/image"
+            android:layout_width="103dp"
+            android:layout_height="98dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="321dp"
+            android:layout_marginRight="321dp"
+            app:srcCompat="@drawable/ic_person" />
+
+    <TextView
+            android:id="@+id/name"
+            android:layout_width="80dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="false"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="149dp"
+            android:text="TextView" />
+
+    <Button
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
+            android:layout_centerVertical="false"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="150dp"
+            android:text="Annehmen"
+            android:background="#55E43C"/>
+    <Button
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
+            android:layout_centerVertical="false"
+            android:layout_centerHorizontal="false"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="280dp"
+            android:text="Ablehnen"
+            android:background="#FB3535"/>
+
+
+</RelativeLayout>

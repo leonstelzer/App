@@ -162,7 +162,7 @@ public class otherProfile extends AppCompatActivity {
                     request1.put("yourid", otherid);
                     request1.put("Type", "received");
 
-                    fStore.collection("users").document(yourid).collection("request").document(otherid+yourid).set(request1).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(otherid).collection("request").document(otherid+yourid).set(request1).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Versendet", Toast.LENGTH_SHORT).show();
