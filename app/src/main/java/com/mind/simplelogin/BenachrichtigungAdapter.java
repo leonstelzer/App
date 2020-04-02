@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,11 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         this.context= context;
 
     }
+
+    Button ablehnen, annehmen;
+
+
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -60,6 +66,8 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
             }
         });
 
+
+
     }
 
 
@@ -87,4 +95,5 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
         }
     }
+
 }

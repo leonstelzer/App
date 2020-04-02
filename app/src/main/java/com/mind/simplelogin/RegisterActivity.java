@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -153,6 +154,7 @@ public class RegisterActivity extends AppCompatActivity {
         private LinearLayout findevents;
         private LinearLayout erstellen;
         private LinearLayout friends;
+        private ImageView benachrichtigung;
         SpaceNavigationView navigationView;
 
 
@@ -196,6 +198,15 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Startseite.this, findevents.class);
+                    startActivity(intent);
+
+                }
+            });
+            benachrichtigung = findViewById(R.id.benach);
+            benachrichtigung.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Startseite.this, Beanchrichtigung.class);
                     startActivity(intent);
 
                 }
