@@ -53,7 +53,7 @@ public class Beanchrichtigung extends AppCompatActivity {
 
 
         mFirestore.collection("users").document(usid).collection("request").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                                                                                    @Override
+                                                                                                     @Override
                                                                                                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                                                                                                         System.out.println("Start ON Event");
                                                                                                         if (e != null) {
@@ -63,6 +63,11 @@ public class Beanchrichtigung extends AppCompatActivity {
                                                                                                         for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                                                                                                             if (doc.getType() == DocumentChange.Type.ADDED) {
                                                                                                                 String type = (String) doc.getDocument().get("Type");
+                                                                                                                String otherid = (String) doc.getDocument().get("otherid");
+
+                                                                                                                System.out.println("type:"+type);
+                                                                                                                System.out.println("otherid:"+otherid);
+
                                                                                                                 final String otherID = (String) doc.getDocument().get("otherid");
                                                                                                                 if (type.equals("received")) {
                                                                                                                     mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {

@@ -195,7 +195,7 @@ public class otherProfile extends AppCompatActivity {
 
 
                 if (currentstate.equals("req_send")) {
-                    fStore.collection("users").document(yourid).collection("request").document(otherid+yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(otherid).collection("request").document(otherid+yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Gelöscht", Toast.LENGTH_SHORT).show();
