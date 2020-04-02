@@ -110,23 +110,22 @@ public class otherProfile extends AppCompatActivity {
                 String reqtyp = null;
                 String friends = null;
                 reqtyp = documentSnapshot.getString("Type");
-                friends = documentSnapshot.getString(otherid);
                 String yourid = fAuth.getCurrentUser().getUid();
+                friends = fStore.collection("users").document(yourid).collection("friends").document(otherid).getId();
 
-
-                if (reqtyp == null && fStore.collection("users").document(yourid).collection("friends").document(otherid) != null){
-                    currentstate = "friends";
-                    add.setEnabled(true);
-                    add.setText("Freund löschen");
-                    return;
-                }
+            //    if (friends.equals(otherid) && reqtyp == null){
+             //       currentstate = "friends";
+              //      add.setEnabled(true);
+                //    add.setText("Freund löschen");
+                 //   return;
+               // }
                 if (reqtyp == null){
                     currentstate = "not_friends";
                     add.setEnabled(true);
                     add.setText("Freundschaftanfrage verschicken");
                     return;
                 }
-                if (reqtyp.equals("received")){
+                else if (reqtyp.equals("received")){
                     currentstate = "req_received";
                     add.setEnabled(true);
                     add.setText("Anfrage annehmen");
@@ -142,12 +141,10 @@ public class otherProfile extends AppCompatActivity {
                     add.setText("Freundschaftanfrage verschicken");
                 }
 
-
-
             }
 
-
         });
+
 
 
 

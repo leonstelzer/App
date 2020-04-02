@@ -27,10 +27,6 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
     }
 
-    Button ablehnen, annehmen;
-
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

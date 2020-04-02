@@ -29,6 +29,7 @@
             android:text="TextView" />
 
     <Button
+            android:id="@+id/annehmen"
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="false"
@@ -40,6 +41,8 @@
             android:text="Annehmen"
             android:background="#55E43C"/>
     <Button
+            android:id="@+id/ablehnen"
+
             android:layout_width="110dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="false"

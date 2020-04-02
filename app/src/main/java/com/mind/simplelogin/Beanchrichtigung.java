@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +29,8 @@ public class Beanchrichtigung extends AppCompatActivity {
     private List<Users> usersList ;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
-    private BenachrichtigungAdapter BenachrichtigungAdapter;
+    private BenachrichtigungAdapter benachrichtigungAdapter;
+    Button annehmen, ablehnen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,52 +43,55 @@ public class Beanchrichtigung extends AppCompatActivity {
         friendlist = findViewById(R.id.friendlist);
         mFirestore = FirebaseFirestore.getInstance();
         usersList = new ArrayList<>();
-        BenachrichtigungAdapter = new BenachrichtigungAdapter(getApplicationContext(), usersList);
+        benachrichtigungAdapter = new BenachrichtigungAdapter(getApplicationContext(), usersList);
         String usid = fAuth.getCurrentUser().getUid();
 
 
         friendlist.setHasFixedSize(true);
         friendlist.setLayoutManager(new LinearLayoutManager((this)));
-        friendlist.setAdapter(BenachrichtigungAdapter);
+        friendlist.setAdapter(benachrichtigungAdapter);
 
 
         mFirestore.collection("users").document(usid).collection("request").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                                                                                    @Override
+                                                                                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                                                                                        System.out.println("Start ON Event");
+                                                                                                        if (e != null) {
 
-                if (e != null) {
+                                                                                                        }
+                                                                                                        System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
+                                                                                                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                                                                                            if (doc.getType() == DocumentChange.Type.ADDED) {
+                                                                                                                String type = (String) doc.getDocument().get("Type");
+                                                                                                                final String otherID = (String) doc.getDocument().get("otherid");
+                                                                                                                if (type.equals("received")) {
+                                                                                                                    mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                                                                                                        @Override
+                                                                                                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                                                                                                            if (e != null) {
 
-                }
-                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() == DocumentChange.Type.ADDED){
+                                                                                                                            }
+                                                                                                                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                                                                                                                if (doc.getType() == DocumentChange.Type.ADDED) {
+                                                                                                                                    String id = doc.getDocument().getId();
+                                                                                                                                    if (otherID.equals(id)) {
+                                                                                                                                        Users users = doc.getDocument().toObject(Users.class).withId(otherID);
+                                                                                                                                        usersList.add(users);
+                                                                                                                                        benachrichtigungAdapter.notifyDataSetChanged();
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    });
+                                                                                                                }
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                });
+                        //To
+        annehmen = findViewById(R.id.annehmen);
+        ablehnen = findViewById(R.id.ablehnen);
 
-                        final String user_id = doc.getDocument().getId();
-                        //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
 
-
-                        mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                                if (e != null) {
-
-                                }
-                                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                    if (doc.getType() == DocumentChange.Type.ADDED){
-
-                                        String id = doc.getDocument().getId();
-                                        if(user_id.equals(id)) {
-                                            Users users = doc.getDocument().toObject(Users.class).withId(user_id);
-                                            usersList.add(users);
-                                            (BenachrichtigungAdapter).notifyDataSetChanged();
-                                        }
-                                    }
-                                }
-                            }
-                        });
-                                          }
-                }
-            }
-        });
-        }
+    }
     }
