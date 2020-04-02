@@ -111,7 +111,15 @@ public class otherProfile extends AppCompatActivity {
                 String friends = null;
                 reqtyp = documentSnapshot.getString("Type");
                 friends = documentSnapshot.getString(otherid);
+                String yourid = fAuth.getCurrentUser().getUid();
 
+
+                if (reqtyp == null && fStore.collection("users").document(yourid).collection("friends").document(otherid) != null){
+                    currentstate = "friends";
+                    add.setEnabled(true);
+                    add.setText("Freund löschen");
+                    return;
+                }
                 if (reqtyp == null){
                     currentstate = "not_friends";
                     add.setEnabled(true);
@@ -140,6 +148,8 @@ public class otherProfile extends AppCompatActivity {
 
 
         });
+
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
