@@ -23,7 +23,6 @@ public class PlaceAutoSuggestAdapter extends ArrayAdapter implements Filterable 
         super(context,resId);
         this.context=context;
         this.resource=resId;
-
     }
 
     @Override

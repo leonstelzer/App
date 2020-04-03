@@ -1,19 +1,14 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Profil;
 
-import android.app.Notification;
-import android.app.Person;
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AutoCompleteTextView;
@@ -23,16 +18,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.errorprone.annotations.Var;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -42,17 +32,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.mind.simplelogin.R;
+import com.mind.simplelogin.events.Eventerstellen;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Nullable;
-
-
-import io.grpc.Compressor;
 
 public class ProfilBearbeiten extends AppCompatActivity {
 
@@ -62,7 +50,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     TextView fullName, email;
     EditText  beschreibung, telefonummer, interessen;
-    EditText ort;
+    AutoCompleteTextView ort;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
@@ -73,6 +61,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
     private StorageTask uploadtask;
     private Bitmap compressor;
 
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +92,8 @@ public class ProfilBearbeiten extends AppCompatActivity {
 
             }
         });
+        ort.setAdapter(new PlaceAutoSuggestAdapter(ProfilBearbeiten.this,android.R.layout.simple_list_item_1));
+
 
 
         bestätigen.setOnClickListener(new View.OnClickListener() {

@@ -26,7 +26,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.myEvent;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.text.DateFormat;
@@ -144,10 +143,8 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                                     }
                                 });
                 }
-
             }
         });
-
     }
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
