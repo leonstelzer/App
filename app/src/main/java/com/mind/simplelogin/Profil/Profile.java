@@ -26,7 +26,7 @@ import javax.annotation.Nullable;
 public class Profile extends AppCompatActivity {
     private ImageView bearbeiten;
     private ImageView back;
-    ImageView user, benachrichtigung;
+    ImageView user;
     TextView fullName,email, ort, beschreibung, telefonummer, interessen;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -47,7 +47,6 @@ public class Profile extends AppCompatActivity {
         telefonummer = findViewById(R.id.telefonummer);
         interessen   = findViewById(R.id.interessen);
         user = findViewById(R.id.User);
-        benachrichtigung = findViewById(R.id.benach);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -71,13 +70,7 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        benachrichtigung.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Profile.this, Beanchrichtigung.class);
-                startActivity(intent);
-            }
-        });
+
 
 
 
