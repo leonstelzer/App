@@ -16,11 +16,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.RegisterActivity;
@@ -41,7 +43,7 @@ public class otherProfile extends AppCompatActivity {
     Button add;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference reference = firebaseDatabase.getReference();
-    private String currentstate;
+    private String currentstate, reqstate;
     private DatabaseReference FriendRequest;
     private FirebaseUser currentuser;
     public static final String TAG = "YOUR-TAG-NAME";
@@ -60,6 +62,8 @@ public class otherProfile extends AppCompatActivity {
         user = findViewById(R.id.User);
         add = findViewById(R.id.add);
         currentstate = null;
+        reqstate = null;
+
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -72,6 +76,7 @@ public class otherProfile extends AppCompatActivity {
         final String otherid = getIntent().getStringExtra("user_id");
 
         back = findViewById(R.id.back);
+
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,11 +104,31 @@ public class otherProfile extends AppCompatActivity {
 
 
         });
-
-
         final String[] requestid = {null};
-        final DocumentReference doc = fStore.collection("users").document(yourid).collection("request").document(yourid+otherid);
+        final DocumentReference doc1 = fStore.collection("users").document(yourid).collection("friends").document(otherid);
+        doc1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                String yourid = fAuth.getCurrentUser().getUid();
 
+                String friends = fStore.collection("users").document(yourid).collection("friends").document(otherid).getId();
+                System.out.println(friends+" "+otherid);
+
+                if (friends.equals(otherid)){
+                    currentstate = "friends";
+                    add.setEnabled(true);
+                    add.setText("Freundschaftanfrage verschicken");
+                    return;
+                }
+                else {
+                    currentstate = "not_friends";
+                    return;
+                }
+            }
+        });
+
+
+        final DocumentReference doc = fStore.collection("users").document(yourid).collection("request").document(yourid+otherid);
         doc.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
@@ -111,34 +136,26 @@ public class otherProfile extends AppCompatActivity {
                 String friends = null;
                 reqtyp = documentSnapshot.getString("Type");
                 String yourid = fAuth.getCurrentUser().getUid();
-                friends = fStore.collection("users").document(yourid).collection("friends").document(otherid).getId();
+                DocumentReference mine = fStore.collection("users").document(yourid);
+                // friends = fStore.collection("users").document(yourid).collection("friends").document(otherid).getId();
+                System.out.println(otherid);
 
-            //    if (friends.equals(otherid) && reqtyp == null){
-             //       currentstate = "friends";
-              //      add.setEnabled(true);
-                //    add.setText("Freund löschen");
-                 //   return;
-               // }
+
                 if (reqtyp == null){
-                    currentstate = "not_friends";
+                    reqstate = "";
                     add.setEnabled(true);
-                    add.setText("Freundschaftanfrage verschicken");
+                    add.setText("Freund löschen");
                     return;
                 }
                 else if (reqtyp.equals("received")){
-                    currentstate = "req_received";
+                    reqstate = "received";
                     add.setEnabled(true);
                     add.setText("Anfrage annehmen");
                 }
                 else if (reqtyp.equals("req_send") ){
-                    currentstate = "req_send";
+                    reqstate = "req_send";
                     add.setEnabled(true);
                     add.setText("Anfrage löschen");
-                }
-                else{
-                    currentstate = "not_friends";
-                    add.setEnabled(true);
-                    add.setText("Freundschaftanfrage verschicken");
                 }
 
             }
@@ -157,7 +174,7 @@ public class otherProfile extends AppCompatActivity {
 
 
 
-                if (currentstate.equals("not_friends")) {
+                if (currentstate.equals("not_friends") && reqstate.equals("")) {
                     final Map<String, String> request = new HashMap<>();
                     request.put("yourid", yourid);
                     request.put("otherid", otherid);
@@ -181,7 +198,7 @@ public class otherProfile extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Versendet", Toast.LENGTH_SHORT).show();
-                            currentstate = "req_send";
+                            reqstate = "req_send";
                             add.setEnabled(true);
                             add.setText("Anfrage löschen");
                             requestid[0] = documentReference.getId();
@@ -194,13 +211,13 @@ public class otherProfile extends AppCompatActivity {
                 }
 
 
-                if (currentstate.equals("req_send")) {
+                else if (reqstate.equals("req_send")) {
                     fStore.collection("users").document(otherid).collection("request").document(otherid+yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Gelöscht", Toast.LENGTH_SHORT).show();
                             add.setText("Freundschaftsanfrage versenden");
-                            currentstate = "not_friends";
+                            reqstate = "";
                             add.setEnabled(true);
 
                         }
@@ -228,7 +245,7 @@ public class otherProfile extends AppCompatActivity {
                     });
                 }
 
-                if (currentstate.equals("req_received")){
+                else if (reqstate.equals("req_received")){
 
                     final Map<String, String> friends = new HashMap<>();
                     friends.put(otherid, otherid);
@@ -246,6 +263,7 @@ public class otherProfile extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     currentstate = "friends";
+                                    reqstate = "";
                                     add.setText("Freund löschen");
                                     add.setEnabled(true);
 
@@ -286,7 +304,7 @@ public class otherProfile extends AppCompatActivity {
                     add.setEnabled(false);
 
                 }
-                if (currentstate.equals("friends")){
+                else if (currentstate.equals("friends")){
 
                     fStore.collection("users").document(yourid).collection("friends").document(otherid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
