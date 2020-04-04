@@ -11,10 +11,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.mind.simplelogin.Profil.ProfilBearbeiten;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class overviewact extends AppCompatActivity implements View.OnClickListener {
 
     private ImageButton fussball;
     private Button weiter;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    String userId;
     private ImageButton badminton;
     private ImageButton running;
     private ImageButton pokern;
@@ -28,6 +41,9 @@ public class overviewact extends AppCompatActivity implements View.OnClickListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.testoverview);
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        userId = fAuth.getCurrentUser().getUid();
 
         weiter = (Button) findViewById(R.id.btweiter);
         fussball = (ImageButton) findViewById(R.id.btfussball);
@@ -48,16 +64,26 @@ public class overviewact extends AppCompatActivity implements View.OnClickListen
         kino.setOnClickListener(this);
         bar.setOnClickListener(this);
         food.setOnClickListener(this);
+        String delim = " ,";
 
         weiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(overviewact.this, RegisterActivity.Startseite.class);
+
+                DocumentReference doc = fStore.collection("users").document(userId);
+                doc.update("Interessen", interessen);
+
+                Intent intent = new Intent(overviewact.this, ProfilBearbeiten.class);
                 startActivity(intent);
 
             }
         });
     }
+    List<String>interessen=new ArrayList<>();
+
+
+
+
 
     @Override
     public void onClick(View view) {
@@ -66,68 +92,105 @@ public class overviewact extends AppCompatActivity implements View.OnClickListen
             case R.id.btrunning:
             if(clicked) {
                 running.setBackgroundResource(R.color.colorBlue);
+                interessen.add("joggen");
             }
             else {
                 running.setBackgroundResource(R.color.colorWhite);
+                interessen.remove("joggen");
+
             }
             break;
             case R.id.btbadminton:
                 if(clicked) {
                     badminton.setBackgroundResource(R.color.colorBlue);
+                    interessen.add("Badminton");
                 }
                 else {
                     badminton.setBackgroundResource(R.color.colorWhite);
+                    interessen.remove("Badminton");
+
                 }
                 break;
             case R.id.btfussball:
                 if(clicked) {
                     fussball.setBackgroundResource(R.color.colorBlue);
+                    interessen.add("Fußball");
+
                 }
                 else {
                     fussball.setBackgroundResource(R.color.colorWhite);
+                    interessen.remove("Fußball");
+
                 }
                 break;
             case R.id.btpoker:
                 if(clicked) {
                     pokern.setBackgroundResource(R.color.colorBlue);
+                    interessen.add("Pokern");
+
                 }
                 else {
                     pokern.setBackgroundResource(R.color.colorWhite);
+                    interessen.remove("Pokern");
+
                 }
                 break;
             case R.id.btfifa:
                 if(clicked) {
                     fifa.setBackgroundResource(R.color.colorBlue);
+
+                    interessen.add("Fifa");
+
                 }
                 else {
                     fifa.setBackgroundResource(R.color.colorWhite);
+                    interessen.remove("Fifa");
+
                 }
                 break;
             case R.id.btkino:
                 if(clicked) {
                     kino.setBackgroundResource(R.color.colorBlue);
+                    interessen.add("Kino");
+
                 }
                 else {
                     kino.setBackgroundResource(R.color.colorWhite);
+                    interessen.remove("Kino");
+
                 }
                 break;
             case R.id.btbar:
                 if(clicked) {
                     bar.setBackgroundResource(R.color.colorBlue);
+                    interessen.add("trinken");
+
                 }
                 else {
                     bar.setBackgroundResource(R.color.colorWhite);
+                    interessen.remove("trinken");
+
                 }
                 break;
             case R.id.btfood:
                 if(clicked) {
                     food.setBackgroundResource(R.color.colorBlue);
+                    interessen.add("Essen");
+
                 }
                 else {
                     food.setBackgroundResource(R.color.colorWhite);
+                    interessen.remove("Essen");
+
                 }
                 break;
 
+
+
         }
+        System.out.println(interessen);
+
     }
+
+
 };

@@ -1,7 +1,10 @@
 package com.mind.simplelogin;
 
+import java.util.Collections;
+import java.util.List;
+
 public class Users extends UserId{
-    public Users(String Benutername,String Beschreibung,String EMail,String Image,String Interessen,String Ort,String Telefonnummer){
+    public Users(String Benutername, String Beschreibung, String EMail, String Image, List<String> Interessen, String Ort, String Telefonnummer){
         this.Benutername=Benutername;
         this.Beschreibung=Beschreibung;
         this.EMail=EMail;
@@ -50,11 +53,11 @@ public class Users extends UserId{
         Image = image;
     }
 
-    public String getInteressen() {
+    public List<String> getInteressen() {
         return Interessen;
     }
 
-    public void setInteressen(String interessen) {
+    public void setInteressen(List<String> interessen) {
         Interessen = interessen;
     }
 
@@ -74,5 +77,11 @@ public class Users extends UserId{
         Telefonnummer = telefonnummer;
     }
 
-    String Benutername, Beschreibung, EMail, Image, Interessen, Ort, Telefonnummer;
+    String Benutername;
+    String Beschreibung;
+    String EMail;
+    String Image;
+    List<String> Interessen;
+    String Ort;
+    String Telefonnummer;
 }

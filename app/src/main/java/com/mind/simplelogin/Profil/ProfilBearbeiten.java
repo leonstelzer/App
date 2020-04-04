@@ -32,12 +32,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.mind.simplelogin.Einstellungen;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.events.Eventerstellen;
+import com.mind.simplelogin.overviewact;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -48,8 +51,8 @@ public class ProfilBearbeiten extends AppCompatActivity {
     Button bestätigen;
     private SharedPreferences speicher;
     private SharedPreferences.Editor editor;
-    TextView fullName, email;
-    EditText  beschreibung, telefonummer, interessen;
+    TextView fullName, email, interessen, interessen1;
+    EditText  beschreibung, telefonummer;
     AutoCompleteTextView ort;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -80,8 +83,25 @@ public class ProfilBearbeiten extends AppCompatActivity {
         ort = findViewById(R.id.tv_address);
         telefonummer = findViewById(R.id.tvTel);
         interessen = findViewById(R.id.tvInt);
+        interessen1 = findViewById(R.id.Int);
+
         beschreibung = findViewById(R.id.tvBesc);
         user = findViewById(R.id.User);
+
+        interessen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfilBearbeiten.this, overviewact.class);
+                startActivity(intent);
+            }
+        });
+        interessen1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfilBearbeiten.this, overviewact.class);
+                startActivity(intent);
+            }
+        });
 
         user.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +124,6 @@ public class ProfilBearbeiten extends AppCompatActivity {
                 final String eemail = email.getText().toString().trim();
                 final String efullname = fullName.getText().toString();
                 final String eort = ort.getText().toString();
-                final String einteresssen = interessen.getText().toString();
                 final String ebeschreibung = beschreibung.getText().toString();
                 final String etelefonnummer = telefonummer.getText().toString();
                 final String bild = "";
@@ -120,7 +139,6 @@ public class ProfilBearbeiten extends AppCompatActivity {
                 user.put("Benutername", efullname);
                 user.put("EMail", eemail);
                 user.put("Ort", eort);
-                user.put("Interessen", einteresssen);
                 user.put("Beschreibung", ebeschreibung);
                 user.put("Telefonnummer", etelefonnummer);
 
@@ -140,7 +158,9 @@ public class ProfilBearbeiten extends AppCompatActivity {
                 email.setText(documentSnapshot.getString("EMail"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
-                interessen.setText(documentSnapshot.getString("Interessen"));
+               // String interessen1 = (documentSnapshot.get("Interessen").toString());
+               // interessen.setText(interessen1.substring(1,interessen1.length()-1));
+                interessen.setText(lstToString((List)documentSnapshot.get("Interessen")));
                 beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
@@ -218,5 +238,18 @@ public class ProfilBearbeiten extends AppCompatActivity {
 
 
                 });
+    }
+
+    private String lstToString(List<String> lst) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < lst.size()-1; i++) {
+            sb.append(lst.get(i));
+            sb.append(", ");
+        }
+
+        if (lst.size()>0){
+        sb.append(lst.get(lst.size()-1));}
+
+        return sb.toString();
     }
 }

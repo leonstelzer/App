@@ -27,6 +27,7 @@ import com.mind.simplelogin.RegisterActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -90,7 +91,7 @@ public class otherProfile extends AppCompatActivity {
                 email.setText(documentSnapshot.getString("EMail"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
-                interessen.setText(documentSnapshot.getString("Interessen"));
+                interessen.setText(lstToString((List)documentSnapshot.get("Interessen")));
                 beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
@@ -339,6 +340,18 @@ public class otherProfile extends AppCompatActivity {
         });
 
 
+    }
+    private String lstToString(List<String> lst) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < lst.size()-1; i++) {
+            sb.append(lst.get(i));
+            sb.append(", ");
+        }
+
+        if (lst.size()>0){
+            sb.append(lst.get(lst.size()-1));}
+
+        return sb.toString();
     }
 
 }

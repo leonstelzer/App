@@ -219,13 +219,14 @@
                     android:orientation="vertical">
 
                 <TextView
+                        android:id="@+id/Int"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Interessen"
                         android:textColor="@color/headings"
                         android:textSize="13sp" />
 
-                <EditText
+                <TextView
                         android:id="@+id/tvInt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -33,7 +33,9 @@ import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.events.Eventerstellen;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -82,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String password = epassswort.getText().toString().trim();
                 final String fullname = ename.getText().toString();
                 final String ort = eort.getText().toString();
-                final String interesssen = "Bitte noch ausfüllen";
+                final List<String> interesssen = new ArrayList<>();
                 final String beschreibung = "Bitte noch ausfüllen";
                 final String telefonnummer = "Bitte noch ausfüllen";
                 final String image = null;
@@ -131,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     Log.d(TAG, "New Profil for"+userID);
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(), overviewact.class));
+                            startActivity(new Intent(getApplicationContext(), Startseite.class));
 
                     }
                         else {
