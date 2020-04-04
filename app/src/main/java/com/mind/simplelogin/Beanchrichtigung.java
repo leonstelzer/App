@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -55,6 +56,10 @@ public class Beanchrichtigung extends AppCompatActivity {
         usersList = new ArrayList<>();
         benachrichtigungAdapter = new BenachrichtigungAdapter(getApplicationContext(), usersList);
         final String usid = fAuth.getCurrentUser().getUid();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        setTitle("Benachrichtigungen");
+
 
         friendlist.setHasFixedSize(true);
         friendlist.setLayoutManager(new LinearLayoutManager((this)));
@@ -66,10 +71,8 @@ public class Beanchrichtigung extends AppCompatActivity {
                                                                                                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                                                                                                         System.out.println("Start ON Event");
                                                                                                         if (e != null) {
-
                                                                                                         }
                                                                                                         System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
-
                                                                                                          for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                                                                                                             if (doc.getType() == DocumentChange.Type.ADDED) {
                                                                                                                 String type = (String) doc.getDocument().get("Type");
@@ -93,7 +96,6 @@ public class Beanchrichtigung extends AppCompatActivity {
                                                                                                                                         Users users = doc.getDocument().toObject(Users.class).withId(otherID);
                                                                                                                                         usersList.add(users);
                                                                                                                                         benachrichtigungAdapter.notifyDataSetChanged();
-
                                                                                                                                     }
                                                                                                                                 }
                                                                                                                             }
@@ -107,7 +109,7 @@ public class Beanchrichtigung extends AppCompatActivity {
         annehmen = findViewById(R.id.annehmen);
         ablehnen = findViewById(R.id.ablehnen);
 
-        ablehnen.setOnClickListener(new View.OnClickListener() {
+      /*  ablehnen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fStore.collection("users").document(otherid).collection("request").document(otherid+usid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -190,7 +192,7 @@ public class Beanchrichtigung extends AppCompatActivity {
             }
 
         });
-
+*/
 
     }
     }
