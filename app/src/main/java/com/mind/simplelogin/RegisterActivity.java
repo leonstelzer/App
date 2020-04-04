@@ -131,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     Log.d(TAG, "New Profil for"+userID);
                                 }
                             });
-                            startActivity(new Intent(getApplicationContext(), RegisterActivity.Startseite.class));
+                            startActivity(new Intent(getApplicationContext(), overviewact.class));
 
                     }
                         else {
