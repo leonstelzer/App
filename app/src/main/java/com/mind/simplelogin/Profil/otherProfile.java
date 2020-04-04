@@ -103,43 +103,62 @@ public class otherProfile extends AppCompatActivity {
 
         final String[] requestid = {null};
         final DocumentReference doc = fStore.collection("users").document(yourid).collection("request").document(yourid+otherid);
-
-        doc.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+        final DocumentReference doc1 = fStore.collection("users").document(yourid).collection("friends").document(otherid);
+        doc1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                String reqtyp = null;
-                String friends = null;
-                reqtyp = documentSnapshot.getString("Type");
-                friends = documentSnapshot.getString(otherid);
+                String friends = documentSnapshot.getString(otherid);
+                System.out.println(friends+" "+otherid);
 
-                if (reqtyp == null){
-                    currentstate = "not_friends";
+
+                if(friends == null){
+                    doc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                            String reqtyp = null;
+                            String friends = null;
+                            reqtyp = documentSnapshot.getString("Type");
+                            friends = documentSnapshot.getString(otherid);
+
+                            if (reqtyp == null){
+                                currentstate = "not_friends";
+                                add.setEnabled(true);
+                                add.setText("Freundschaftanfrage verschicken");
+                                return;
+                            }
+                            else if (reqtyp.equals("received")){
+                                currentstate = "req_received";
+                                add.setEnabled(true);
+                                add.setText("Anfrage annehmen");
+                            }
+                            else if (reqtyp.equals("req_send") ){
+                                currentstate = "req_send";
+                                add.setEnabled(true);
+                                add.setText("Anfrage löschen");
+                            }
+                            else{
+                                currentstate = "not_friends";
+                                add.setEnabled(true);
+                                add.setText("Freundschaftanfrage verschicken");
+                            }
+
+
+                        }
+
+                    });
+                }
+                else {
+                    currentstate = "friends";
                     add.setEnabled(true);
-                    add.setText("Freundschaftanfrage verschicken");
+                    add.setText("Freund löschen");
                     return;
                 }
-                if (reqtyp.equals("received")){
-                    currentstate = "req_received";
-                    add.setEnabled(true);
-                    add.setText("Anfrage annehmen");
-                }
-                else if (reqtyp.equals("req_send") ){
-                    currentstate = "req_send";
-                    add.setEnabled(true);
-                    add.setText("Anfrage löschen");
-                }
-                else{
-                    currentstate = "not_friends";
-                    add.setEnabled(true);
-                    add.setText("Freundschaftanfrage verschicken");
-                }
-
-
+                System.out.println(currentstate);
 
             }
-
-
         });
+
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,7 +207,7 @@ public class otherProfile extends AppCompatActivity {
 
 
                 if (currentstate.equals("req_send")) {
-                    fStore.collection("users").document(yourid).collection("request").document(otherid+yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    fStore.collection("users").document(otherid).collection("request").document(otherid+yourid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(otherProfile.this, "Gelöscht", Toast.LENGTH_SHORT).show();
