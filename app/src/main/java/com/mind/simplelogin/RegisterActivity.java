@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
 
@@ -26,9 +27,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.luseen.spacenavigation.SpaceNavigationView;
+import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
 import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.events.Eventerstellen;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
@@ -37,6 +43,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -158,6 +166,11 @@ public class RegisterActivity extends AppCompatActivity {
         private LinearLayout friends;
         private ImageView benachrichtigung;
         SpaceNavigationView navigationView;
+        private TextView number;
+        private FirebaseFirestore mFirestore;
+        FirebaseAuth fAuth;
+
+
 
 
         @Override
@@ -213,6 +226,38 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
             });
+            number = findViewById(R.id.numberbenach);
+
+            fAuth = FirebaseAuth.getInstance();
+            mFirestore = FirebaseFirestore.getInstance();
+
+
+            final String usid = fAuth.getCurrentUser().getUid();
+
+
+
+           mFirestore.collection("users").document(usid).collection("request").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    int receivecount = 0;
+
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                            String type = (String) doc.getDocument().get("Type");
+
+                            final String otherID = (String) doc.getDocument().get("otherid");
+                            if (type.equals("received")) {
+                                receivecount++;
+
+                            }
+                        }
+                    }
+                    number.setText(String.valueOf(receivecount));
+
+
+
+                }
+            });
 
 
 
@@ -221,7 +266,10 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-    }
+
+
+
+        }
     }
 }
 

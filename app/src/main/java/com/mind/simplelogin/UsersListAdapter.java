@@ -45,8 +45,6 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
            } else{ Picasso.get().load(usersList.get(i).getImage()).into(viewHolder.image);
            }
 
-
-
         final String user_id = usersList.get(i).userId;
 
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {

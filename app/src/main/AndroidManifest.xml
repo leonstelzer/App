@@ -85,7 +85,7 @@
             android:label="Preferences"
             />
         <activity
-                android:name=".Beanchrichtigung"
+                android:name=".Benachrichtigung.Beanchrichtigung"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />

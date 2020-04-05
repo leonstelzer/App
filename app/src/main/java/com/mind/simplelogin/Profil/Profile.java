@@ -15,7 +15,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.mind.simplelogin.Beanchrichtigung;
 import com.mind.simplelogin.Einstellungen;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.RegisterActivity;
