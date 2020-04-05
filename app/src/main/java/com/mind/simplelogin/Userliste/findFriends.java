@@ -1,38 +1,33 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Userliste;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.mind.simplelogin.R;
+import com.mind.simplelogin.Freundesliste.yourFriends;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
-import io.opencensus.tags.Tag;
-
 public class findFriends extends AppCompatActivity {
     private RecyclerView friendlist;
     private FirebaseFirestore mFirestore;
     private List<Users> usersList ;
-    private  UsersListAdapter usersListAdapter;
+    private UsersListAdapter usersListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.mind.simplelogin.Einstellungen;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.RegisterActivity;
+import com.mind.simplelogin.Login.RegisterActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

@@ -1,9 +1,10 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Userliste;
 
-import java.util.Collections;
+import com.mind.simplelogin.Profil.UserId;
+
 import java.util.List;
 
-public class Users extends UserId{
+public class Users extends UserId {
     public Users(String Benutername, String Beschreibung, String EMail, String Image, List<String> Interessen, String Ort, String Telefonnummer){
         this.Benutername=Benutername;
         this.Beschreibung=Beschreibung;

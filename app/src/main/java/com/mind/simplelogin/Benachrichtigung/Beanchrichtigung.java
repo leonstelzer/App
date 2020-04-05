@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.Users;
+import com.mind.simplelogin.Userliste.Users;
 
 import java.util.ArrayList;
 import java.util.List;

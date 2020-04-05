@@ -1,4 +1,4 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Profil;
 
 import com.google.firebase.database.annotations.NotNull;
 

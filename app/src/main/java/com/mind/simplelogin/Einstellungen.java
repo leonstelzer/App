@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.mind.simplelogin.Login.MainActivity;
 import com.mind.simplelogin.Profil.ProfilBearbeiten;
 
 public class Einstellungen extends AppCompatActivity {
@@ -33,7 +34,7 @@ public class Einstellungen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();//logout
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
 
             }

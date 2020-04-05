@@ -8,15 +8,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.mind.simplelogin.Profil.otherProfile;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.Users;
+import com.mind.simplelogin.Userliste.Users;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BenachrichtigungAdapter extends RecyclerView.Adapter<BenachrichtigungAdapter.ViewHolder> {
 
@@ -62,6 +71,101 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
             }
         });
+        FirebaseAuth fAuth;
+        final FirebaseFirestore fStore;
+        FirebaseFirestore mFirestore;
+
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
+        final String usid = fAuth.getCurrentUser().getUid();
+
+
+
+        viewHolder.ablehnen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fStore.collection("users").document(user_id).collection("request").document(user_id+usid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Freundschaftsanfrage abgelehnt", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Nö", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+                fStore.collection("users").document(usid).collection("request").document(usid+user_id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, "Nö", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+            }
+
+        });
+
+        viewHolder.annehmen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Map<String, String> friends = new HashMap<>();
+                friends.put(user_id, user_id);
+
+
+                final Map<String, String> friends1 = new HashMap<>();
+                friends1.put(usid, usid);
+
+                fStore.collection("users").document(usid).collection("friends").document(user_id).set(friends, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context,"Ihr seid jetzt Freunde", Toast.LENGTH_SHORT).show();
+                        fStore.collection("users").document(user_id).collection("request").document(user_id +usid).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context, "Nö", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                        fStore.collection("users").document(usid).collection("request").document(usid+ user_id).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context, "Nö", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+                    }
+                });
+                fStore.collection("users").document(user_id).collection("friends").document(usid).set(friends1,SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                    }
+                });
+            }
+
+        });
+
 
 
 
@@ -80,6 +184,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
         public TextView nametext;
         public ImageView image;
+        Button annehmen, ablehnen;
 
 
 
@@ -87,10 +192,13 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
             super(itemView);
             mView= itemView;
 
-            nametext = (TextView) mView.findViewById(R.id.name);
-            image = (ImageView) mView.findViewById(R.id.image);
+            nametext = (TextView)mView.findViewById(R.id.name);
+            image = (ImageView)mView.findViewById(R.id.image);
+            annehmen = (Button)mView.findViewById(R.id.annehmen);
+            ablehnen = (Button)mView.findViewById(R.id.ablehnen);
 
         }
+
     }
 
 }

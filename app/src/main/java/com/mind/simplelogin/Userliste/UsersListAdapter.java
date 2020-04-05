@@ -1,4 +1,4 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Userliste;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mind.simplelogin.Profil.otherProfile;
+import com.mind.simplelogin.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

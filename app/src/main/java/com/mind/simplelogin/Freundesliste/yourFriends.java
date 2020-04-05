@@ -1,4 +1,4 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Freundesliste;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,17 +12,17 @@ import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
+import com.mind.simplelogin.Userliste.Users;
+import com.mind.simplelogin.R;
+import com.mind.simplelogin.Userliste.UsersListAdapter;
+import com.mind.simplelogin.Userliste.findFriends;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -32,7 +32,7 @@ public class yourFriends extends AppCompatActivity {
     private RecyclerView friendlist;
     private FirebaseFirestore mFirestore;
     private List<Users> usersList ;
-    private  UsersListAdapter usersListAdapter;
+    private UsersListAdapter usersListAdapter;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
 

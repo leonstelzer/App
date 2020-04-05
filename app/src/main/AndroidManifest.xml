@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Login.MainActivity"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,13 +22,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".Login.RegisterActivity"
             android:theme="@style/AppTheme.FullScreen"
             android:label="Preferences"
                 />
 
         <activity
-                android:name=".RegisterActivity$Startseite"
+                android:name=".Login.RegisterActivity$Startseite"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
@@ -55,12 +55,12 @@
                 android:label="Preferences"
                 />
         <activity
-                android:name=".findFriends"
+                android:name=".Userliste.findFriends"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
         <activity
-                android:name=".Users"
+                android:name=".Userliste.Users"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
@@ -75,7 +75,7 @@
             android:label="Preferences"
             />
         <activity
-                android:name=".yourFriends"
+                android:name=".Freundesliste.yourFriends"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />

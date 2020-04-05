@@ -1,4 +1,4 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Login;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -36,7 +36,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
 import com.mind.simplelogin.Profil.Profile;
+import com.mind.simplelogin.R;
 import com.mind.simplelogin.events.Eventerstellen;
+import com.mind.simplelogin.Userliste.findFriends;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.util.ArrayList;
@@ -212,7 +214,7 @@ public class RegisterActivity extends AppCompatActivity {
             findevents.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Startseite.this, findevents.class);
+                    Intent intent = new Intent(Startseite.this, com.mind.simplelogin.findevents.class);
                     startActivity(intent);
 
                 }
