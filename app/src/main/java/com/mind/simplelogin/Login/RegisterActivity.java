@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -167,6 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
         private LinearLayout erstellen;
         private LinearLayout friends;
         private ImageView benachrichtigung;
+        private CardView numbercontainer;
         SpaceNavigationView navigationView;
         private TextView number;
         private FirebaseFirestore mFirestore;
@@ -229,6 +231,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             });
             number = findViewById(R.id.numberbenach);
+            numbercontainer =findViewById(R.id.numbercontainer);
 
             fAuth = FirebaseAuth.getInstance();
             mFirestore = FirebaseFirestore.getInstance();
@@ -254,7 +257,16 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    number.setText(String.valueOf(receivecount));
+                    if(receivecount == 0){
+                        number.setVisibility(View.INVISIBLE);
+                        numbercontainer.setVisibility(View.INVISIBLE);
+
+
+                    }
+                    else {
+                        number.setText(String.valueOf(receivecount));
+
+                    }
 
 
 
