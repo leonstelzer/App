@@ -80,6 +80,8 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         mFirestore = FirebaseFirestore.getInstance();
         final String usid = fAuth.getCurrentUser().getUid();
 
+        final int userPos = i;
+
 
 
         viewHolder.ablehnen.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +116,9 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
                     }
                 });
+
+                usersList.remove(userPos);
+                notifyDataSetChanged();
             }
 
         });
@@ -162,6 +167,8 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
                     public void onSuccess(Void aVoid) {
                     }
                 });
+                usersList.remove(userPos);
+                notifyDataSetChanged();
             }
 
         });
