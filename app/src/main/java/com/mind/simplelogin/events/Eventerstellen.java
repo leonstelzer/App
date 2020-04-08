@@ -138,7 +138,7 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                             Toast.makeText(Eventerstellen.this, "Event Created.", Toast.LENGTH_SHORT).show();
                             eventid[0] = documentReference.getId();
                             Intent intent = new Intent(Eventerstellen.this, myEvent.class);
-                            intent.putExtra("event_id", eventid[0]);
+                            intent.putExtra("eventid", eventid[0]);
                             startActivity(intent);
                                     }
                                 });

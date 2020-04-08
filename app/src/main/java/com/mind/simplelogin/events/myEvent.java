@@ -16,7 +16,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.mind.simplelogin.Freundesliste.yourFriends;
+import com.mind.simplelogin.Login.RegisterActivity;
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.Userliste.findFriends;
+import com.mind.simplelogin.events.Freundeeinladen.EventEinladen;
 import com.squareup.picasso.Picasso;
 
 import javax.annotation.Nullable;
@@ -43,7 +47,7 @@ public class myEvent extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
-        eventid = getIntent().getStringExtra("event_id");
+        eventid = getIntent().getStringExtra("eventid");
         share  = findViewById(R.id.btnShare);
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("event").child(userId);
@@ -78,6 +82,15 @@ public class myEvent extends AppCompatActivity {
                 intent.putExtra(Intent.EXTRA_SUBJECT, shareBody);
                 startActivity(Intent.createChooser(intent, "Share"));
 
+            }
+        });
+
+        teilnehmer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                        Intent intent = new Intent(myEvent.this, EventEinladen.class);
+                        intent.putExtra("eventid", eventid);
+                        startActivity(intent);
             }
         });
 

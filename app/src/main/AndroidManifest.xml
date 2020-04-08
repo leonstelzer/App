@@ -94,6 +94,11 @@
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
+        <activity
+                android:name=".events.Freundeeinladen.EventEinladen"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
 
 
     </application>
