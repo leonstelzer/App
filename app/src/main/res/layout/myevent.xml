@@ -91,7 +91,26 @@
                             android:layout_marginLeft="15dp"
                             android:layout_marginRight="15dp"
                             android:drawablePadding="30dp"
-                            android:inputType="textEmailAddress"
+                            android:padding="10dp" />
+                    <TextView
+                            android:id="@+id/Kategorie"
+                            android:layout_width="wrap_content"
+                            android:layout_below="@+id/einort"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="15dp"
+                            android:text="Kategorie"
+                            android:textColor="@color/colorPurple"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    <TextView
+                            android:id="@+id/einKategorie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/Kategorie"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:drawablePadding="30dp"
                             android:padding="10dp" />
 
 
@@ -99,7 +118,7 @@
                             android:id="@+id/Datum"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/einort"
+                            android:layout_below="@+id/einKategorie"
                             android:layout_margin="15dp"
                             android:text="Datum"
                             android:textColor="@color/colorPurple"
@@ -144,7 +163,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/einzeit"
                             android:layout_margin="15dp"
-                            android:text="Teilnehmer"
+                            android:text="Teilnehmer einladen"
                             android:textColor="@color/colorPurple"
                             android:textSize="14sp"
                             android:textStyle="bold" />

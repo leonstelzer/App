@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 
 public class myEvent extends AppCompatActivity {
 
-    TextView name, ort, zeit, datum, teilnehmer;
+    TextView name, ort, zeit, datum, teilnehmer, kategorie, teilnehmer2;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId, eventid;
@@ -44,6 +44,8 @@ public class myEvent extends AppCompatActivity {
         zeit = findViewById(R.id.einzeit);
         datum = findViewById(R.id.eindatum);
         teilnehmer = findViewById(R.id.einteilnehmer);
+        teilnehmer2 = findViewById(R.id.teilnehmer);
+        kategorie = findViewById(R.id.einKategorie);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
@@ -64,6 +66,7 @@ public class myEvent extends AppCompatActivity {
                 ort.setText(documentSnapshot.getString("Ort"));
                 datum.setText(documentSnapshot.getString("Datum"));
                 teilnehmer.setText(documentSnapshot.getString("Teilnehmer"));
+                kategorie.setText(documentSnapshot.getString("Kategorie"));
 
 
 
@@ -91,6 +94,14 @@ public class myEvent extends AppCompatActivity {
                         Intent intent = new Intent(myEvent.this, EventEinladen.class);
                         intent.putExtra("eventid", eventid);
                         startActivity(intent);
+            }
+        });
+        teilnehmer2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(myEvent.this, EventEinladen.class);
+                intent.putExtra("eventid", eventid);
+                startActivity(intent);
             }
         });
 

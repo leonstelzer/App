@@ -216,7 +216,7 @@ public class RegisterActivity extends AppCompatActivity {
             findevents.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Startseite.this, com.mind.simplelogin.findevents.class);
+                    Intent intent = new Intent(Startseite.this, com.mind.simplelogin.events.findevents.findevents.class);
                     startActivity(intent);
 
                 }

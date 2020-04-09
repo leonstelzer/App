@@ -80,7 +80,7 @@
                 android:label="Preferences"
                 />
         <activity
-            android:name=".findevents"
+            android:name=".events.findevents.findevents"
             android:theme="@style/AppTheme.FullScreen"
             android:label="Preferences"
             />

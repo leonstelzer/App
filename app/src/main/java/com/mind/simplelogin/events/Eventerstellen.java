@@ -39,7 +39,7 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
     private Animation animation;
     private Menu menu;
     private Button share;
-    EditText name;
+    EditText name, kategorie;
 
     AutoCompleteTextView ort;
     TextView date, dateanzeige, zeitanzeigen, zeit;
@@ -67,6 +67,7 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
         zeit = findViewById(R.id.tvPassword);
         ort =findViewById(R.id.etRePassword);
         date=findViewById(R.id.tvUsername);
+        kategorie =findViewById(R.id.etKategorie);
         dateanzeige=findViewById(R.id.etUsername);
 
         fAuth = FirebaseAuth.getInstance();
@@ -101,6 +102,10 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                 if (name.length()==0){
                     name.setError("Name eingeben");
                 }
+                if (kategorie.length()==0){
+                    kategorie.setError("Kategorie eingeben");
+                }
+
                 if (dateanzeige.length()==0){
                     zeit.setError("Zeit eingeben");
                 }
@@ -122,10 +127,12 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                     String names = name.getText().toString();
                     String date = dateanzeige.getText().toString();
                     String time = zeitanzeigen.getText().toString();
+                    String kate = kategorie.getText().toString();
                     String loc = ort.getText().toString();
 
                     Map<String,String> event = new HashMap<>();
                     event.put("Eventname", names);
+                    event.put("Kategorie", kate);
                     event.put("Datum", date);
                     event.put("Ort", loc);
                     event.put("Zeit", time);

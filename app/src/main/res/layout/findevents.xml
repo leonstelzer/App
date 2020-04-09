@@ -5,12 +5,39 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".findevents">
+        tools:context=".events.findevents.findevents">
 
-    <AutoCompleteTextView
-            android:hint="Search Location"
-            android:layout_width="match_parent"
+   <android.support.design.widget.TabLayout
+           android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:background="@color/followersBg"
+           app:tabTextColor="@color/black"
+           app:tabSelectedTextColor="#FFFFFF">
+
+
+    <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/autocomplete" />
+            android:id="@+id/tab1"
+            android:text="Events finden"/>
 
+    <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab2"
+            android:text="Eingeladende Events"/>
+
+    <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tab3"
+            android:text="Deine Events"/>
+
+   </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 </RelativeLayout>

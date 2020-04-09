@@ -7,4 +7,7 @@
     <string name="Int">Bearbeite deine Intressen bei Einstellungen</string>
     <string name="Besc">Ich bin 35 Jahre alt und suche derzeit in New York nach neuen Kontakten</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
