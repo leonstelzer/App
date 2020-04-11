@@ -54,6 +54,8 @@ public class Beanchrichtigung extends AppCompatActivity {
         friendlist.setAdapter(benachrichtigungAdapter);
 
 
+
+
         mFirestore.collection("users").document(usid).collection("request").addSnapshotListener(new EventListener<QuerySnapshot>() {
                                                                                                      @Override
                                                                                                     public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
