@@ -1,6 +1,5 @@
 package com.mind.simplelogin.events.Freundeeinladen;
 
-import com.mind.simplelogin.events.Freundeeinladen.Eventid;
 
 
 public class Event extends Eventid {
