@@ -36,21 +36,18 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventListAdapter.ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         viewHolder.nametext.setText(eventList.get(i).getEventname());
         viewHolder.orttext.setText(eventList.get(i).getOrt());
         viewHolder.datum.setText(eventList.get(i).getDatum());
 
         final String eventid = eventList.get(i).eventid;
 
-
-
-
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return eventList.size();
     }
     public class ViewHolder extends RecyclerView.ViewHolder{
 
