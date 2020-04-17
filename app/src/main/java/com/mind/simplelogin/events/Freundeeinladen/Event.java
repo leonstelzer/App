@@ -2,34 +2,29 @@ package com.mind.simplelogin.events.Freundeeinladen;
 
 import com.mind.simplelogin.events.Freundeeinladen.Eventid;
 
+import java.util.List;
+
 
 public class Event extends Eventid {
-    public Event(String Eventname, String Ort, String Teilnehmer, String Zeit, String Datum, String Kategorie,String Id){
+    public Event(String Datum, String Eventname, String Id, String Kategorie, String Ort, List<String> Teilnehmer,String Zeit ){
+            this.Datum=Datum;
             this.Eventname=Eventname;
+            this.Id=Id;
             this.Ort=Ort;
             this.Teilnehmer=Teilnehmer;
             this.Zeit=Zeit;
             this.Datum=Datum;
             this.Kategorie= Kategorie;
-            this.Id=Id;
     }
     public Event(){
     }
 
-    public String getKategorie() {
-        return Kategorie;
+    public String getDatum() {
+        return Datum;
     }
 
-    public void setKategorie(String kategorie) {
-        Kategorie = kategorie;
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        Id = id;
+    public void setDatum(String datum) {
+        Datum = datum;
     }
 
     public String getEventname() {
@@ -40,6 +35,22 @@ public class Event extends Eventid {
         Eventname = eventname;
     }
 
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
+    public String getKategorie() {
+        return Kategorie;
+    }
+
+    public void setKategorie(String kategorie) {
+        Kategorie = kategorie;
+    }
+
     public String getOrt() {
         return Ort;
     }
@@ -48,11 +59,11 @@ public class Event extends Eventid {
         Ort = ort;
     }
 
-    public String getTeilnehmer() {
+    public List<String> getTeilnehmer() {
         return Teilnehmer;
     }
 
-    public void setTeilnehmer(String teilnehmer) {
+    public void setTeilnehmer(List<String> teilnehmer) {
         Teilnehmer = teilnehmer;
     }
 
@@ -64,17 +75,9 @@ public class Event extends Eventid {
         Zeit = zeit;
     }
 
-    public String getDatum() {
-        return Datum;
-    }
-
-    public void setDatum(String datum) {
-        Datum = datum;
-    }
-
     String Eventname;
     String Ort;
-    String Teilnehmer;
+    List<String> Teilnehmer;
     String Zeit;
     String Datum;
     String Kategorie;

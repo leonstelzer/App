@@ -16,10 +16,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mind.simplelogin.Profil.otherProfile;
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.Userliste.Users;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +63,7 @@ public class otherEvent extends AppCompatActivity {
                 zeit.setText(documentSnapshot.getString("Zeit"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 datum.setText(documentSnapshot.getString("Datum"));
-                teilnehmer.setText(documentSnapshot.getString("Teilnehmer"));
+               teilnehmer.setText(lstToString((List)documentSnapshot.get("Teilnehmer")));
                 kategorie.setText(documentSnapshot.getString("Kategorie"));
 
 
@@ -68,6 +71,38 @@ public class otherEvent extends AppCompatActivity {
 
 
 
+
+            }
+        });
+
+       fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+
+
+                    String id = doc.getDocument().getId();
+
+                    if(id.equals(userId)) {
+                        final String username = doc.getDocument().toObject(Users.class).getBenutername();
+                        System.out.println(username);
+
+                        teilnehmen.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                List<String>teilnehmern=new ArrayList<>();
+                                teilnehmern.add(username);
+
+                                DocumentReference doc = fStore.collection("event").document(eventid);
+                                doc.update("Teilnehmer", username);
+
+                            }
+                        });
+
+
+
+                    }
+                }
             }
         });
 
@@ -78,6 +113,17 @@ public class otherEvent extends AppCompatActivity {
 
 
 
+
+    }
+    private String lstToString(List<String> lst) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < lst.size()-1; i++) {
+            sb.append(lst.get(i));
+            sb.append(", ");
+        }
+        if (lst.size()>0){
+            sb.append(lst.get(lst.size()-1));}
+        return sb.toString();
     }
 
 }

@@ -29,8 +29,10 @@ import com.mind.simplelogin.R;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Eventerstellen extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
@@ -129,15 +131,19 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                     String time = zeitanzeigen.getText().toString();
                     String kate = kategorie.getText().toString();
                     String loc = ort.getText().toString();
+                    final List<String> teilnehmer = new ArrayList<>();
 
-                    Map<String,String> event = new HashMap<>();
+
+
+
+                    Map<String,Object> event = new HashMap<>();
                     event.put("Eventname", names);
                     event.put("Kategorie", kate);
                     event.put("Datum", date);
                     event.put("Ort", loc);
                     event.put("Zeit", time);
                     event.put("Id", userID);
-                    event.put("Teilnehmer", null);
+                    event.put("Teilnehmer", teilnehmer);
 
                     fStore.collection("event").add(event).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override

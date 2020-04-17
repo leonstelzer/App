@@ -158,8 +158,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
                 email.setText(documentSnapshot.getString("EMail"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
-               // String interessen1 = (documentSnapshot.get("Interessen").toString());
-               // interessen.setText(interessen1.substring(1,interessen1.length()-1));
+
                 interessen.setText(lstToString((List)documentSnapshot.get("Interessen")));
                 beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
