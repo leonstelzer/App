@@ -22,7 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.SetOptions;
 import com.mind.simplelogin.Profil.otherProfile;
 import com.mind.simplelogin.R;
@@ -34,12 +36,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 public class BenachrichtigungAdapter extends RecyclerView.Adapter<BenachrichtigungAdapter.ViewHolder> {
 
     public List<Users> usersList;
     //public List<Users> acceptedList;
     public Context context;
     //private String myUsId;
+
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+
     private final int PEND_REQ_FLAG = 0;
     private final int ACC_REQ_FLAG = 1;
 
@@ -49,6 +57,8 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         //this.acceptedList = new ArrayList<>();
         this.context= context;
         //this.myUsId = fAuth.getUid();
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -56,29 +66,11 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
 
         String myId = FirebaseAuth.getInstance().getUid();
-        String otherId = usersList.get(position).userId;
-
+        String otherId = usersList.get(position).getUsId();
         DocumentReference docIdRef = rootRef.collection("users").document(myId).collection("friends").document(otherId);
 
-
-        final boolean[] isFriends = new boolean[1];
-        docIdRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        isFriends[0] = true;
-                    } else {
-                        isFriends[0] = false;
-                    }
-                } else {
-                    isFriends[0] = false;
-                }
-            }
-        });
-        System.out.println("WIR SIND BEFREUNDET : " + Boolean.toString(isFriends[0]));
-        if (isFriends[0]) {
+        boolean isFriends = areWeFriends(myId, otherId);
+        if (isFriends) {
             return ACC_REQ_FLAG;
         } else {
             return PEND_REQ_FLAG;
@@ -173,9 +165,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
                         }
                     });
-                    Users added = usersList.get(userPos);
-                    usersList.remove(added);
-                    usersList.add(added);
+                    usersList.remove(userPos);
                     notifyDataSetChanged();
                 }
 
@@ -225,7 +215,9 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
                         public void onSuccess(Void aVoid) {
                         }
                     });
-                    usersList.remove(userPos);
+                    Users added = usersList.get(userPos);
+                    usersList.remove(added);
+                    usersList.add(userPos, added);
                     notifyDataSetChanged();
 
 
@@ -264,11 +256,30 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
     }
 
-
-
     @Override
     public int getItemCount() {
         return usersList.size();
+    }
+
+    private boolean areWeFriends(String myId, final String otherId) {
+        final DocumentReference doc1 = fStore.collection("users").document(myId).collection("friends").document(otherId);
+        final boolean[] friendsReturn = new boolean[1];
+        doc1.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                System.out.println("CHECKED IF WE ARE FRIENDS");
+                String friends = documentSnapshot.getString(otherId);
+                System.out.println("Mein Freund: " + friends);
+                if(friends == null){
+                    friendsReturn[0] = false;
+                } else {
+                    friendsReturn[0] = true;
+                }
+                System.out.println("FREUNDESSTATUS INNERE KLASSE: " + Boolean.toString(friendsReturn[0]));
+            }
+        });
+        System.out.println("FREUNDESSTATUS AUSSEN: " + Boolean.toString(friendsReturn[0]));
+        return friendsReturn[0];
     }
 
     public abstract class ViewHolder extends RecyclerView.ViewHolder{
