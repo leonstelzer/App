@@ -23,6 +23,8 @@ import com.mind.simplelogin.Userliste.findFriends;
 import com.mind.simplelogin.events.Freundeeinladen.EventEinladen;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 
@@ -65,7 +67,7 @@ public class myEvent extends AppCompatActivity {
                 zeit.setText(documentSnapshot.getString("Zeit"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 datum.setText(documentSnapshot.getString("Datum"));
-                teilnehmer.setText(documentSnapshot.getString("Teilnehmer"));
+                teilnehmer.setText(lstToString((List)documentSnapshot.get("Teilnehmer")));
                 kategorie.setText(documentSnapshot.getString("Kategorie"));
 
 
@@ -106,6 +108,16 @@ public class myEvent extends AppCompatActivity {
         });
 
 
+    }
+    private String lstToString(List<String> lst) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < lst.size()-1; i++) {
+            sb.append(lst.get(i));
+            sb.append(", ");
+        }
+        if (lst.size()>0){
+            sb.append(lst.get(lst.size()-1));}
+        return sb.toString();
     }
 
 }
