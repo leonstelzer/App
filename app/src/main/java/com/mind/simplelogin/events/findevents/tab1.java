@@ -62,22 +62,27 @@ public class tab1 extends Fragment {
                 if (e != null) {
 
                 }
+                eventList.clear();
+                eventListAdapter.notifyDataSetChanged();
+
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED){
-                        System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
 
                         final String eventid = doc.getDocument().getId();
 
                         Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                      //  eventList.clear();
                         eventList.add(event);
-                        eventListAdapter.notifyDataSetChanged();
-                        System.out.println(eventid);
                     }
                 }
+                eventListAdapter.notifyDataSetChanged();
+                events.invalidate();
+
+
             }
         });
 
-        return inflater.inflate(R.layout.fragment_tab1, container, false);
+        return RootView;
     }
 
 

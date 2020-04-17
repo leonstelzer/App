@@ -56,7 +56,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
 
         String myId = FirebaseAuth.getInstance().getUid();
-        String otherId = usersList.get(position).getUsId();
+        String otherId = usersList.get(position).userId;
 
         DocumentReference docIdRef = rootRef.collection("users").document(myId).collection("friends").document(otherId);
 
@@ -227,6 +227,8 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
                     });
                     usersList.remove(userPos);
                     notifyDataSetChanged();
+
+
                 }
 
             });

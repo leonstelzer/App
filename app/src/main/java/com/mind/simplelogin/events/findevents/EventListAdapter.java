@@ -43,6 +43,20 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         final String eventid = eventList.get(i).eventid;
 
+        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //  Toast.makeText(context, "User ID:"+user_id, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, otherEvent.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+                intent.putExtra("eventid", eventid);
+                context.startActivity(intent);
+
+            }
+        });
+
     }
 
     @Override
@@ -62,9 +76,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mView= itemView;
-            datum = (TextView) mView.findViewById(R.id.Datum);
-            nametext = (TextView) mView.findViewById(R.id.name_text);
-            orttext = (TextView) mView.findViewById(R.id.ort_text);
+            datum = mView.findViewById(R.id.Datum);
+            nametext = mView.findViewById(R.id.name_text);
+            orttext = mView.findViewById(R.id.ort_text);
 
         }
     }
