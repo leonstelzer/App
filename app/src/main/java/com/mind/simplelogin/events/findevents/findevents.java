@@ -29,7 +29,9 @@ public class findevents extends AppCompatActivity {
         viewPager = findViewById(R.id.viewpager);
 
         pagerAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        System.out.println("ANZAHL AN TABS : "+ pagerAdapter.getCount());
         viewPager.setAdapter(pagerAdapter);
+        System.out.println("SET ADAPTER");
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
