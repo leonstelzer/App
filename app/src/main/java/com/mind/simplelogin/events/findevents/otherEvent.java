@@ -94,7 +94,7 @@ public class otherEvent extends AppCompatActivity {
                                 teilnehmern.add(username);
 
                                 DocumentReference doc = fStore.collection("event").document(eventid);
-                                doc.update("Teilnehmer", username);
+                                doc.update("Teilnehmer", teilnehmern);
 
                             }
                         });
