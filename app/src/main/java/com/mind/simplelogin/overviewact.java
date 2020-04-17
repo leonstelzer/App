@@ -3,9 +3,12 @@ package com.mind.simplelogin;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -90,97 +93,102 @@ public class overviewact extends AppCompatActivity implements View.OnClickListen
         clicked = !clicked;
         switch (view.getId()) {
             case R.id.btrunning:
-            if(clicked) {
-                running.setBackgroundResource(R.color.colorBlue);
+                //ColorDrawable buttonColor = (ColorDrawable) button.getColorFilter();
+                //int colorId = buttonColor.getColor();
+                //if(colorId == Color.BLACK){
+                //// hier immer einzeln prüfen, ob Farbe auf Schwarz steht.
+            if(clicked){
+             //   running.getColorFilter().equals(new ColorFilter(buttonColor.BLACK, PorterDuff.Mode.SRC_ATOP))) {
                 interessen.add("joggen");
+                running.setColorFilter(ContextCompat.getColor(this,R.color.address));
+                ;;
             }
             else {
-                running.setBackgroundResource(R.color.colorWhite);
                 interessen.remove("joggen");
+                running.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
 
             }
             break;
             case R.id.btbadminton:
                 if(clicked) {
-                    badminton.setBackgroundResource(R.color.colorBlue);
                     interessen.add("Badminton");
+                    badminton.setColorFilter(ContextCompat.getColor(this,R.color.address));
                 }
                 else {
-                    badminton.setBackgroundResource(R.color.colorWhite);
                     interessen.remove("Badminton");
+                    badminton.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
 
                 }
                 break;
             case R.id.btfussball:
                 if(clicked) {
-                    fussball.setBackgroundResource(R.color.colorBlue);
                     interessen.add("Fußball");
+                    fussball.setColorFilter(ContextCompat.getColor(this,R.color.address));
 
                 }
                 else {
-                    fussball.setBackgroundResource(R.color.colorWhite);
                     interessen.remove("Fußball");
+                    fussball.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
 
                 }
                 break;
             case R.id.btpoker:
                 if(clicked) {
-                    pokern.setBackgroundResource(R.color.colorBlue);
                     interessen.add("Pokern");
+                    pokern.setColorFilter(ContextCompat.getColor(this,R.color.address));
 
                 }
                 else {
-                    pokern.setBackgroundResource(R.color.colorWhite);
                     interessen.remove("Pokern");
+                    pokern.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
 
                 }
                 break;
             case R.id.btfifa:
                 if(clicked) {
-                    fifa.setBackgroundResource(R.color.colorBlue);
-
                     interessen.add("Fifa");
+                    fifa.setColorFilter(ContextCompat.getColor(this,R.color.address));
 
                 }
                 else {
-                    fifa.setBackgroundResource(R.color.colorWhite);
                     interessen.remove("Fifa");
+                    fifa.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
 
                 }
                 break;
             case R.id.btkino:
                 if(clicked) {
-                    kino.setBackgroundResource(R.color.colorBlue);
                     interessen.add("Kino");
+                    kino.setColorFilter(ContextCompat.getColor(this,R.color.address));
 
                 }
                 else {
-                    kino.setBackgroundResource(R.color.colorWhite);
                     interessen.remove("Kino");
+                    kino.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
 
                 }
                 break;
             case R.id.btbar:
                 if(clicked) {
-                    bar.setBackgroundResource(R.color.colorBlue);
                     interessen.add("trinken");
+                    bar.setColorFilter(ContextCompat.getColor(this,R.color.address));
 
                 }
                 else {
-                    bar.setBackgroundResource(R.color.colorWhite);
                     interessen.remove("trinken");
+                    bar.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
 
                 }
                 break;
             case R.id.btfood:
                 if(clicked) {
-                    food.setBackgroundResource(R.color.colorBlue);
                     interessen.add("Essen");
+                    food.setColorFilter(ContextCompat.getColor(this,R.color.address));
 
                 }
                 else {
-                    food.setBackgroundResource(R.color.colorWhite);
                     interessen.remove("Essen");
+                    food.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP);
 
                 }
                 break;

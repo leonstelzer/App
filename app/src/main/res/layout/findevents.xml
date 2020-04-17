@@ -7,34 +7,34 @@
         android:layout_height="match_parent"
         tools:context=".events.findevents.findevents">
 
-   <android.support.design.widget.TabLayout
-           android:id="@+id/tablayout"
-        android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:background="@color/followersBg"
-           app:tabTextColor="@color/black"
-           app:tabSelectedTextColor="#FFFFFF">
-
-
-    <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
+    <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tab1"
-            android:text="Events finden"/>
+            android:background="@drawable/grad2"
+            app:tabSelectedTextColor="#FFFFFF"
+            app:tabTextColor="@color/black">
 
-    <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tab2"
-            android:text="Eingeladende Events"/>
 
-    <android.support.design.widget.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/tab3"
-            android:text="Deine Events"/>
+        <android.support.design.widget.TabItem
+                android:id="@+id/tab1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Events finden" />
 
-   </android.support.design.widget.TabLayout>
+        <android.support.design.widget.TabItem
+                android:id="@+id/tab2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eingeladende Events" />
+
+        <android.support.design.widget.TabItem
+                android:id="@+id/tab3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Deine Events" />
+
+    </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"

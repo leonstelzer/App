@@ -71,7 +71,6 @@ public class tab1 extends Fragment {
                         final String eventid = doc.getDocument().getId();
 
                         Event event = doc.getDocument().toObject(Event.class).withId(eventid);
-                      //  eventList.clear();
                         eventList.add(event);
                     }
                 }

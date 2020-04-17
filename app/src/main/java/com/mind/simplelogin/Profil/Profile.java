@@ -82,12 +82,12 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 fullName.setText(documentSnapshot.getString("Benutername"));
-                email.setText(documentSnapshot.getString("EMail"));
+                //email.setText(documentSnapshot.getString("EMail"));
                 ort.setText(documentSnapshot.getString("Ort"));
-                telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
+                //telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
                 interessen.setText(lstToString((List)documentSnapshot.get("Interessen")));
 
-                beschreibung.setText(documentSnapshot.getString("Beschreibung"));
+                //beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
 

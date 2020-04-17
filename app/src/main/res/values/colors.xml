@@ -3,7 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorBlue">#28A2CF</color>
+    <color name="colorBlue">#2F7092</color>
     <color name="colorBlueT">#6428a2cf</color>
     <color name="colorPurple">#A130FF</color>
     <color name="colorPurpleT">#64a130ff</color>
@@ -26,8 +26,6 @@
     <color name="light_grey">#e4e4e4</color>
     >
     <color name="dark_grey">#696969</color>
-
-
     <color name="address">#2F7092</color>
 
     <color name="followers">#0D5D98</color>

@@ -47,6 +47,8 @@ public class findFriends extends AppCompatActivity {
         setTitle("Freunde finden");
 
 
+
+
         mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -58,7 +60,6 @@ public class findFriends extends AppCompatActivity {
                     if (doc.getType() == DocumentChange.Type.ADDED){
 
                         final String user_id = doc.getDocument().getId();
-
                         Users users = doc.getDocument().toObject(Users.class).withId(user_id);
                         usersList.add(users);
                         usersListAdapter.notifyDataSetChanged();

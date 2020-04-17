@@ -10,7 +10,7 @@
             android:id="@+id/rellay1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/grad"
+            android:background="@drawable/grad2"
             android:paddingBottom="20dp">
 
         <RelativeLayout
@@ -18,8 +18,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                >
+                android:layout_marginTop="20dp">
 
             <ImageView
                     android:id="@+id/User"
@@ -73,10 +72,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/followersBg"
+                android:background="@color/headings"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
             <LinearLayout
                     android:layout_width="wrap_content"
@@ -110,10 +109,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/followingBg"
+                android:background="@color/address"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
             <LinearLayout
                     android:layout_width="wrap_content"
@@ -150,143 +149,48 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/linlay1">
 
-        <LinearLayout
+        <Button
+                android:id="@+id/btbestätigen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_alignLeft="@+id/cv"
+                android:layout_alignRight="@+id/cv"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="26dp"
+                android:background="@drawable/bt_uiborder"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Bestätigen"
+                android:textColor="@color/address" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_above="@+id/btbestätigen"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="124dp"
                 android:orientation="vertical">
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textColor="@color/headings"
-                        android:textSize="13sp" />
-
-                <TextView
-                        android:id="@+id/tvEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text="@string/Email"
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Telefonnummer"
-                        android:textColor="@color/headings"
-                        android:textSize="13sp" />
-
-                <EditText
-                        android:id="@+id/tvTel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text="@string/Tel"
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
-
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@color/grey" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:id="@+id/Int"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Interessen"
-                        android:textColor="@color/headings"
-                        android:textSize="13sp" />
-
-                <TextView
-                        android:id="@+id/tvInt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text="@string/Int"
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
-
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@color/grey" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp"
-                    android:layout_marginTop="15dp"
-                    android:orientation="vertical">
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Beschreibung"
-                        android:textColor="@color/headings"
-                        android:textSize="13sp" />
-
-                <EditText
-                        android:id="@+id/tvBesc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-light"
-                        android:text="@string/Besc"
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
-
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@color/grey" />
-
-
-            </LinearLayout>
-            <Button
-                    android:id="@+id/btbestätigen"
-                    android:layout_width="match_parent"
+            <TextView
+                    android:id="@+id/Int"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvForgot"
-                    android:layout_alignLeft="@+id/cv"
-                    android:layout_alignRight="@+id/cv"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/bt_uiborder"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="Bestätigen"
-                    android:textColor="@color/colorBlue" />
+                    android:text="Interessen"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
 
+            <TextView
+                    android:id="@+id/tvInt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/Int"
+                    android:textColor="#000000"
+                    android:textSize="15sp" />
 
         </LinearLayout>
 
