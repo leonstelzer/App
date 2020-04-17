@@ -3,6 +3,7 @@ package com.mind.simplelogin;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -91,11 +92,11 @@ public class overviewact extends AppCompatActivity implements View.OnClickListen
         switch (view.getId()) {
             case R.id.btrunning:
             if(clicked) {
-                running.setBackgroundResource(R.color.colorBlue);
+                running.setColorFilter(R.color.testcolorblue, PorterDuff.Mode.SRC_ATOP);
                 interessen.add("joggen");
             }
             else {
-                running.setBackgroundResource(R.color.colorWhite);
+                running.setColorFilter(R.color.yello, PorterDuff.Mode.SRC_ATOP);
                 interessen.remove("joggen");
 
             }

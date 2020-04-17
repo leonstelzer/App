@@ -78,6 +78,10 @@ public class Users extends UserId {
         Telefonnummer = telefonnummer;
     }
 
+    public String getUsId() {
+        return this.userId;
+    }
+
     String Benutername;
     String Beschreibung;
     String EMail;
