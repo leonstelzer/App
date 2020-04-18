@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.mind.simplelogin.Profil.otherProfile;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
+import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -74,14 +75,69 @@ public class otherEvent extends AppCompatActivity {
 
             }
         });
+        final String currenstate;
 
-       fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+
+          fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+
+
+                        String id = doc.getDocument().getId();
+
+
+                        if(id.equals(userId)) {
+                            final String username = doc.getDocument().toObject(Users.class).getBenutername();
+                            System.out.println(username);
+
+                            fStore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                            List<String>teilnehmern=new ArrayList<>();
+
+                                            for(DocumentChange doc1 : queryDocumentSnapshots.getDocumentChanges()) {
+                                                if (doc1.getType() == DocumentChange.Type.ADDED) {
+
+
+                                                    teilnehmern = ((Event) doc1.getDocument().toObject(Event.class)).getTeilnehmer();
+
+                                                    if(teilnehmern.contains(username))
+                                                    {
+                                                        teilnehmen.setEnabled(true);
+                                                        teilnehmen.setText("Teilnahme zurückziehen");
+
+
+                                                    }
+                                                }
+
+                                                break;
+
+
+                                            }
+
+                                        }
+                                    });
+
+
+
+
+
+                        }
+                    }
+                }
+            });
+
+
+
+        fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
 
                     String id = doc.getDocument().getId();
+
 
                     if(id.equals(userId)) {
                         final String username = doc.getDocument().toObject(Users.class).getBenutername();
@@ -90,11 +146,54 @@ public class otherEvent extends AppCompatActivity {
                         teilnehmen.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                List<String>teilnehmern=new ArrayList<>();
-                                teilnehmern.add(username);
 
-                                DocumentReference doc = fStore.collection("event").document(eventid);
-                                doc.update("Teilnehmer", teilnehmern);
+                                fStore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                        List<String>teilnehmern=new ArrayList<>();
+
+                                        for(DocumentChange doc1 : queryDocumentSnapshots.getDocumentChanges()) {
+                                            if (doc1.getType() == DocumentChange.Type.ADDED) {
+                                                teilnehmern = ((Event) doc1.getDocument().toObject(Event.class)).getTeilnehmer();
+
+                                                if(teilnehmern.contains(username))
+                                                {
+
+                                                    teilnehmern.remove(username);
+
+                                                    DocumentReference doc = fStore.collection("event").document(eventid);
+
+
+                                                    doc.update("Teilnehmer", teilnehmern);
+                                                    teilnehmen.setEnabled(true);
+                                                    teilnehmen.setText("Teilnehmen");
+
+
+                                                }
+                                                else {
+
+
+                                                    teilnehmern = ((Event) doc1.getDocument().toObject(Event.class)).getTeilnehmer();
+                                                    teilnehmern.add(username);
+
+                                                    DocumentReference doc = fStore.collection("event").document(eventid);
+
+
+                                                    doc.update("Teilnehmer", teilnehmern);
+                                                    teilnehmen.setEnabled(true);
+                                                    teilnehmen.setText("Teilnahme zurückziehen");
+                                                }
+
+
+                                                }
+
+                                                break;
+
+
+                                        }
+
+                                    }
+                                });
 
                             }
                         });
@@ -104,15 +203,7 @@ public class otherEvent extends AppCompatActivity {
                     }
                 }
             }
-        });
-
-
-
-
-
-
-
-
+       });
 
     }
     private String lstToString(List<String> lst) {
