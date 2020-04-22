@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
+import com.mind.simplelogin.events.Freundeeinladen.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +26,10 @@ public class Beanchrichtigung extends AppCompatActivity {
 
     private RecyclerView friendlist;
     private FirebaseFirestore mFirestore;
-    private List<Users> usersList ;
+    private List<Object> usersList ;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     private BenachrichtigungAdapter benachrichtigungAdapter;
-    Button annehmen, ablehnen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +96,46 @@ public class Beanchrichtigung extends AppCompatActivity {
                                                                                                         }
                                                                                                     }
                                                                                                 });
+
+        mFirestore.collection("users").document(usid).collection("eventeinladung").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                System.out.println("Start ON Event");
+                if (e != null) {
+                }
+                System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                        //String type = (String) doc.getDocument().get("Type");
+                        final String eventid = (String) doc.getDocument().get("eventid");
+
+                        //System.out.println("type:"+type);
+                        System.out.println("eventid:"+ eventid);
+
+                        //final String otherID = (String) doc.getDocument().get("otherid");
+                            mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                    if (e != null) {
+
+                                    }
+                                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                                            String id = doc.getDocument().getId();
+                                            if (eventid.equals(id)) {
+                                                Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                                                usersList.add(event);
+                                                benachrichtigungAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                    }
+                }
+            }
+        });
+
 
 
     }
