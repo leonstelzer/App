@@ -64,13 +64,8 @@ public class otherEvent extends AppCompatActivity {
                 zeit.setText(documentSnapshot.getString("Zeit"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 datum.setText(documentSnapshot.getString("Datum"));
-               teilnehmer.setText(lstToString((List)documentSnapshot.get("Teilnehmer")));
+                teilnehmer.setText(lstToString((List)documentSnapshot.get("Teilnehmer")));
                 kategorie.setText(documentSnapshot.getString("Kategorie"));
-
-
-
-
-
 
 
             }
@@ -83,9 +78,7 @@ public class otherEvent extends AppCompatActivity {
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
-
                         String id = doc.getDocument().getId();
-
 
                         if(id.equals(userId)) {
                             final String username = doc.getDocument().toObject(Users.class).getBenutername();
@@ -101,6 +94,7 @@ public class otherEvent extends AppCompatActivity {
 
 
                                                     teilnehmern = ((Event) doc1.getDocument().toObject(Event.class)).getTeilnehmer();
+                                                    System.out.println(teilnehmern);
 
                                                     if(teilnehmern.contains(username))
                                                     {
@@ -141,8 +135,6 @@ public class otherEvent extends AppCompatActivity {
 
                     if(id.equals(userId)) {
                         final String username = doc.getDocument().toObject(Users.class).getBenutername();
-                        System.out.println(username);
-
                         teilnehmen.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

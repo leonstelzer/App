@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tab2"
-            android:text="Eingeladende Events"/>
+            android:text="Teilnehmende Events"/>
 
     <android.support.design.widget.TabItem
             android:layout_width="wrap_content"

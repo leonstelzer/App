@@ -250,13 +250,17 @@ public class RegisterActivity extends AppCompatActivity {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
                             String type = (String) doc.getDocument().get("Type");
 
+
                             final String otherID = (String) doc.getDocument().get("otherid");
                             if (type.equals("received")) {
                                 receivecount++;
 
                             }
+
                         }
                     }
+
+
                     if(receivecount == 0){
                         number.setVisibility(View.INVISIBLE);
                         numbercontainer.setVisibility(View.INVISIBLE);
@@ -272,6 +276,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
             });
+
+
+
+
+
 
 
 

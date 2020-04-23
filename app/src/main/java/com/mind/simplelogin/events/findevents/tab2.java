@@ -53,7 +53,7 @@ public class tab2 extends Fragment {
 
         eventList = new ArrayList<>();
         eventListAdapter = new EventListAdapter(getContext(), eventList);
-        String usid = fAuth.getCurrentUser().getUid();
+        final String usid = fAuth.getCurrentUser().getUid();
 
         events.setHasFixedSize(true);
         events.setLayoutManager(new LinearLayoutManager((this.getContext())));
@@ -98,6 +98,47 @@ public class tab2 extends Fragment {
                     }
                 }
             }
+        });
+
+        mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                        String id = doc.getDocument().getId();
+
+                        if (id.equals(usid)){
+                            final String username = doc.getDocument().toObject(Users.class).getBenutername();
+
+                            mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                                if (e != null) {
+
+                                }
+                                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                    if (doc.getType() == DocumentChange.Type.ADDED){
+                                        List<String>teilnehmern=new ArrayList<>();
+                                        final String eventid = doc.getDocument().getId();
+
+                                        teilnehmern = ((Event) doc.getDocument().toObject(Event.class)).getTeilnehmer();
+                                        String id = doc.getDocument().getId();
+                                        if(teilnehmern.contains(username)) {
+                                            Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                                            eventList.add(event);
+                                            eventListAdapter.notifyDataSetChanged();
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+
+                    }
+                    }
+            }}
         });
 
         return RootView;

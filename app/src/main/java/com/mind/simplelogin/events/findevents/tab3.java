@@ -70,33 +70,22 @@ public class tab3 extends Fragment {
 
                         final String eventid = doc.getDocument().getId();
                         final String usid = fAuth.getCurrentUser().getUid();
+                        String event1 = doc.getDocument().toObject(Event.class).getId();
+                        System.out.println(usid+" "+event1);
+                        if(usid.equals(event1)) {
+                            Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                            eventList.add(event);
+                            eventListAdapter.notifyDataSetChanged();
 
                         //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
 
 
-                        mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
 
-                                if (e != null) {
 
-                                }
-                                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                    if (doc.getType() == DocumentChange.Type.ADDED){
 
-                                        String event1 = doc.getDocument().toObject(Event.class).getId();
-                                        System.out.println(usid+" "+event1);
-                                        if(usid.equals(event1)) {
-                                            Event event = doc.getDocument().toObject(Event.class).withId(eventid);
-                                            eventList.add(event);
-                                            eventListAdapter.notifyDataSetChanged();
-                                        }
-                                    }
-                                }
-                            }
-                        });
-
+                        }
                     }
+
                 }
             }
         });

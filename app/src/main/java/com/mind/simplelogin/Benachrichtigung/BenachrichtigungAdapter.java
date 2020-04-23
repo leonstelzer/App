@@ -80,7 +80,6 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         String myId = FirebaseAuth.getInstance().getUid();
         String otherId = usersList.get(position).getUsId();
         DocumentReference docIdRef = rootRef.collection("users").document(myId).collection("friends").document(otherId);
-
         boolean isFriends = areWeFriends(myId, otherId);
         if (isFriends) {
             return ACC_REQ_FLAG;
@@ -134,14 +133,11 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
         /*
         HIER WIRD DAS INTERESSEN IMAGE GELADEN
-
         if (event.getImage() == null) {
             reqViewHolder.image.setImageResource(R.drawable.ic_person);
         } else {
             Picasso.get().load(user.getImage()).into(reqViewHolder.image);
         }
-
-
          */
 
         final String event_id = event.eventid;
@@ -359,16 +355,12 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         /*
         AcceptedReqViewHolder acceptedReqViewHolder = (AcceptedReqViewHolder) viewHolder;
         acceptedReqViewHolder.nametext.setText(usersList.get(i).getBenutername());
-
         if (usersList.get(i).getImage() == null) {
             acceptedReqViewHolder.image.setImageResource(R.drawable.ic_person);
         } else {
             Picasso.get().load(usersList.get(i).getImage()).into(acceptedReqViewHolder.image);
         }
-
-
         final String user_id = usersList.get(i).userId;
-
         viewHolder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -379,7 +371,6 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
                 }
                 intent.putExtra("user_id", user_id);
                 context.startActivity(intent);
-
             }
         });
         */
