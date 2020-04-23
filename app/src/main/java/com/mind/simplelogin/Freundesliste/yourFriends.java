@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -22,6 +24,7 @@ import com.mind.simplelogin.Userliste.UsersListAdapter;
 import com.mind.simplelogin.Userliste.findFriends;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -88,6 +91,7 @@ public class yourFriends extends AppCompatActivity {
                                         if(user_id.equals(id)) {
                                             Users users = doc.getDocument().toObject(Users.class).withId(user_id);
                                             usersList.add(users);
+                                            Collections.sort(usersList, Users.myname);
                                             usersListAdapter.notifyDataSetChanged();
                                         }
                                     }
@@ -123,6 +127,22 @@ public class yourFriends extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                usersListAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return true;
     }
 

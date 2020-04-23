@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -19,6 +21,8 @@ import com.mind.simplelogin.R;
 import com.mind.simplelogin.Freundesliste.yourFriends;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -61,16 +65,35 @@ public class findFriends extends AppCompatActivity {
 
                         Users users = doc.getDocument().toObject(Users.class).withId(user_id);
                         usersList.add(users);
+                        Collections.sort(usersList, Users.myname);
+
                         usersListAdapter.notifyDataSetChanged();
                     }
                 }
             }
         });
+
+
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem searchitem = menu.findItem(R.id.search);
+        SearchView searchView = (SearchView) searchitem.getActionView();
+
+      //  searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                usersListAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         return true;
     }
 
