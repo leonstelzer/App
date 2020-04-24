@@ -36,10 +36,13 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
+import com.mind.simplelogin.Benachrichtigung.BenachrichtigungAdapter;
 import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.events.Eventerstellen;
 import com.mind.simplelogin.Userliste.findFriends;
+import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.util.ArrayList;
@@ -82,6 +85,8 @@ public class RegisterActivity extends AppCompatActivity {
         epassswort = findViewById(R.id.etPassword);
         eort = findViewById(R.id.etRePassword);
         eort.setAdapter(new PlaceAutoSuggestAdapter(RegisterActivity.this,android.R.layout.simple_list_item_1));
+
+
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -173,6 +178,8 @@ public class RegisterActivity extends AppCompatActivity {
         private TextView number;
         private FirebaseFirestore mFirestore;
         FirebaseAuth fAuth;
+        private List<Object> usersList ;
+        private BenachrichtigungAdapter benachrichtigungAdapter;
 
 
 
@@ -182,6 +189,8 @@ public class RegisterActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_startseite);
 
+            usersList = new ArrayList<>();
+            benachrichtigungAdapter = new BenachrichtigungAdapter(getApplicationContext(), usersList);
 
 
             profil      = findViewById(R.id.profil);
@@ -240,42 +249,107 @@ public class RegisterActivity extends AppCompatActivity {
             final String usid = fAuth.getCurrentUser().getUid();
 
 
-
-           mFirestore.collection("users").document(usid).collection("request").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            mFirestore.collection("users").document(usid).collection("request").addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    int receivecount = 0;
-
+                    System.out.println("Start ON Event");
+                    if (e != null) {
+                    }
+                    System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
                             String type = (String) doc.getDocument().get("Type");
+                            String otherid = (String) doc.getDocument().get("otherid");
 
+                            System.out.println("type:"+type);
+                            System.out.println("otherid:"+ otherid);
 
                             final String otherID = (String) doc.getDocument().get("otherid");
                             if (type.equals("received")) {
-                                receivecount++;
+                                mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                        if (e != null) {
 
+                                        }
+                                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                            if (doc.getType() == DocumentChange.Type.ADDED) {
+                                                String id = doc.getDocument().getId();
+                                                if (otherID.equals(id)) {
+                                                    Users users = doc.getDocument().toObject(Users.class).withId(otherID);
+                                                    usersList.add(users);
+                                                    benachrichtigungAdapter.notifyDataSetChanged();
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
                             }
-
                         }
                     }
-
-
-                    if(receivecount == 0){
-                        number.setVisibility(View.INVISIBLE);
-                        numbercontainer.setVisibility(View.INVISIBLE);
-
-
-                    }
-                    else {
-                        number.setText(String.valueOf(receivecount));
-
-                    }
-
-
-
                 }
             });
+
+            mFirestore.collection("users").document(usid).collection("eventeinladung").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    System.out.println("Start ON Event");
+                    if (e != null) {
+                    }
+                    System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                            //String type = (String) doc.getDocument().get("Type");
+                            final String eventid = (String) doc.getDocument().get("eventid");
+
+                            //System.out.println("type:"+type);
+                            System.out.println("eventid:"+ eventid);
+
+                            //final String otherID = (String) doc.getDocument().get("otherid");
+                            mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                    if (e != null) {
+
+                                    }
+                                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                                            String id = doc.getDocument().getId();
+                                            if (eventid.equals(id)) {
+                                                Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                                                usersList.add(event);
+                                                benachrichtigungAdapter.notifyDataSetChanged();
+                                                System.out.println(usersList.size());
+                                                int receivecount = 0;
+
+                                                receivecount = usersList.size();
+
+                                                if(receivecount == 0){
+                                                    number.setVisibility(View.INVISIBLE);
+                                                    numbercontainer.setVisibility(View.INVISIBLE);
+                                                }
+                                                else {
+                                                    number.setText(String.valueOf(receivecount));
+
+                                                }
+
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+
+
+
+
+
+
+
+
 
 
 
