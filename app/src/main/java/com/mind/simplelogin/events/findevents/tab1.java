@@ -69,6 +69,7 @@ public class tab1 extends Fragment {
                     if (doc.getType() == DocumentChange.Type.ADDED){
 
                         final String eventid = doc.getDocument().getId();
+                        System.out.println(eventid);
 
                         Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                         eventList.add(event);

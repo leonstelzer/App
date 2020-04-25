@@ -2,6 +2,7 @@ package com.mind.simplelogin.Userliste;
 
 import com.mind.simplelogin.Profil.UserId;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class Users extends UserId {
@@ -81,6 +82,16 @@ public class Users extends UserId {
     public String getUsId() {
         return this.userId;
     }
+
+    public static Comparator<Users> myname= new Comparator<Users>(){
+        @Override
+                public int compare(Users u1, Users u2){
+
+            return u1.getBenutername().compareTo(u2.getBenutername());
+
+        }
+    };
+
 
     String Benutername;
     String Beschreibung;

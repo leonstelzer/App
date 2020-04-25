@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,15 +17,19 @@ import com.mind.simplelogin.Profil.otherProfile;
 import com.mind.simplelogin.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.ViewHolder> {
+public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.ViewHolder> implements Filterable {
 
-    public List<Users> usersList;
+     List<Users> usersList;
     public Context context;
+
     public UsersListAdapter(Context context, List<Users> usersList){
         this.usersList = usersList;
         this.context= context;
+
 
     }
     @NonNull
@@ -69,6 +75,39 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         return usersList.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return searchFilter;
+    }
+    private Filter searchFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Users>filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(usersList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Users user : usersList) {
+                    if (user.getBenutername().toLowerCase().contains(filterPattern)|| user.getEMail().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(user);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            usersList.clear();
+            usersList.addAll((Collection<? extends Users>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
