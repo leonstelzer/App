@@ -255,7 +255,6 @@ public class RegisterActivity extends AppCompatActivity {
                     System.out.println("Start ON Event");
                     if (e != null) {
                     }
-                    System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
                             String type = (String) doc.getDocument().get("Type");
@@ -299,13 +298,8 @@ public class RegisterActivity extends AppCompatActivity {
                     System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
                     for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                         if (doc.getType() == DocumentChange.Type.ADDED) {
-                            //String type = (String) doc.getDocument().get("Type");
                             final String eventid = (String) doc.getDocument().get("eventid");
-
-                            //System.out.println("type:"+type);
                             System.out.println("eventid:"+ eventid);
-
-                            //final String otherID = (String) doc.getDocument().get("otherid");
                             mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
                                 @Override
                                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {

@@ -2,6 +2,7 @@ package com.mind.simplelogin.Userliste;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -79,9 +80,26 @@ public class findFriends extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem searchitem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) searchitem.getActionView();
-        List<Users> allUsers = new ArrayList<>();
+        final SearchView searchView = (SearchView) searchitem.getActionView();
+        final List<Users> allUsers = new ArrayList<>();
         allUsers.addAll(usersList);
+
+        searchitem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                usersList.clear();
+                usersList.addAll(allUsers);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                usersList.clear();
+                usersList.addAll(allUsers);
+                return true;
+            }
+        });
 
       //  searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -95,7 +113,9 @@ public class findFriends extends AppCompatActivity {
                 usersListAdapter.getFilter().filter(newText);
                 return false;
             }
+
         });
+
         return true;
     }
 
