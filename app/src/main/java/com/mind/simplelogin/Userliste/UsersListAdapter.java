@@ -23,7 +23,7 @@ import java.util.List;
 
 public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.ViewHolder> implements Filterable {
 
-     List<Users> usersList;
+    List<Users> usersList;
     public Context context;
 
     public UsersListAdapter(Context context, List<Users> usersList){
@@ -79,18 +79,30 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
     public Filter getFilter() {
         return searchFilter;
     }
+
     private Filter searchFilter = new Filter() {
+
+        private List<Users> filteredList = new ArrayList<>();
+        private List<Users> unfilteredList = new ArrayList<>();
+
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            List<Users>filteredList = new ArrayList<>();
             if (constraint == null || constraint.length() == 0) {
                 filteredList.addAll(usersList);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (Users user : usersList) {
+                List<Users> allUsers = new ArrayList<>();
+                allUsers.addAll(filteredList);
+                allUsers.addAll(unfilteredList);
+                filteredList.clear();
+                unfilteredList.clear();
+
+                for (Users user : allUsers) {
                     if (user.getBenutername().toLowerCase().contains(filterPattern)|| user.getEMail().toLowerCase().contains(filterPattern)) {
                         filteredList.add(user);
+                    } else {
+                        unfilteredList.add(user);
                     }
                 }
             }

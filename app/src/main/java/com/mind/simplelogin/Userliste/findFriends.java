@@ -80,6 +80,8 @@ public class findFriends extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         MenuItem searchitem = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) searchitem.getActionView();
+        List<Users> allUsers = new ArrayList<>();
+        allUsers.addAll(usersList);
 
       //  searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
