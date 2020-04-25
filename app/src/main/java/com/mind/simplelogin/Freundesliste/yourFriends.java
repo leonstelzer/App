@@ -125,12 +125,28 @@ public class yourFriends extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.search);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        getMenuInflater().inflate(R.menu.menu, menu);
+        MenuItem searchitem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) searchitem.getActionView();
+        final List<Users> allUsers = new ArrayList<>();
+        allUsers.addAll(usersList);
 
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        searchitem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                usersList.clear();
+                usersList.addAll(allUsers);
+                return true;
+            }
+        });
+
+        //  searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -142,9 +158,12 @@ public class yourFriends extends AppCompatActivity {
                 usersListAdapter.getFilter().filter(newText);
                 return false;
             }
+
         });
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
