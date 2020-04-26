@@ -95,10 +95,10 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
 
 
 
-
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println(dateanzeige);
 
 
                 if (name.length()==0){
@@ -109,10 +109,10 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                 }
 
                 if (dateanzeige.length()==0){
-                    zeit.setError("Zeit eingeben");
+                    zeit.setError("Zeit anzeigen");
                 }
                 if (dateanzeige.equals("Datum anzeigen")){
-                    zeit.setError("Zeit eingeben");
+                    zeit.setError("Datum anzeigen");
                 }
                 if (zeitanzeigen.equals("Zeit anzeigen")){
                     zeit.setError("Zeit eingeben");
@@ -132,6 +132,7 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                     String kate = kategorie.getText().toString();
                     String loc = ort.getText().toString();
                     final List<String> teilnehmer = new ArrayList<>();
+
 
 
 

@@ -109,7 +109,6 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
 
             FilterResults results = new FilterResults();
             results.values = filteredList;
-
             return results;
         }
 

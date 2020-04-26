@@ -60,45 +60,6 @@ public class tab2 extends Fragment {
         events.setAdapter(eventListAdapter);
 
 
-        mFirestore.collection("users").document(usid).collection("eventeinladung").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                if (e != null) {
-
-                }
-                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() == DocumentChange.Type.ADDED){
-
-                        final String eventid = doc.getDocument().getId();
-                        //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
-
-
-                        mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                            @Override
-                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                                if (e != null) {
-
-                                }
-                                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                    if (doc.getType() == DocumentChange.Type.ADDED){
-
-                                        String id = doc.getDocument().getId();
-                                        if(eventid.equals(id)) {
-                                            Event event = doc.getDocument().toObject(Event.class).withId(eventid);
-                                            eventList.add(event);
-                                            eventListAdapter.notifyDataSetChanged();
-                                        }
-                                    }
-                                }
-                            }
-                        });
-
-                    }
-                }
-            }
-        });
 
         mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

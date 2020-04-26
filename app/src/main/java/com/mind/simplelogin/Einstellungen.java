@@ -9,12 +9,12 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.mind.simplelogin.Login.MainActivity;
+import com.mind.simplelogin.Login.RegisterActivity;
 import com.mind.simplelogin.Profil.ProfilBearbeiten;
 
 public class Einstellungen extends AppCompatActivity {
 
     private TextView profilbearbeiten;
-    Button logout;
 
 
     @Override
@@ -29,16 +29,7 @@ public class Einstellungen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        logout = findViewById(R.id.btlogout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();//logout
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
 
-            }
-        });
 
     }
 }
