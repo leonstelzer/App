@@ -1,19 +1,15 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Kategorie;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import com.mind.simplelogin.Userliste.Users;
+import com.mind.simplelogin.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class Interessen extends AppCompatActivity{
     RecyclerView interessenview;

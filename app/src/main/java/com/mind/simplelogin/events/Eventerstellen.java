@@ -25,9 +25,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
-import com.mind.simplelogin.Interessen;
-import com.mind.simplelogin.Login.RegisterActivity;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
@@ -172,7 +169,7 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
         });
         final String loc = ort.getText().toString();
 
-        
+
     }
 
     @Override

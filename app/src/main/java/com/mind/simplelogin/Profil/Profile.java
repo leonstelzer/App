@@ -68,8 +68,6 @@ public class Profile extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
 
-
-
         fAuth=FirebaseAuth.getInstance();
         FirebaseAuth.AuthStateListener fAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -78,7 +76,6 @@ public class Profile extends AppCompatActivity {
 
             }
         };
-
 
         back            = findViewById(R.id.back);
         bearbeiten.setOnClickListener(new View.OnClickListener() {
@@ -95,12 +92,6 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-
-
-
         final DocumentReference documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
@@ -121,7 +112,6 @@ public class Profile extends AppCompatActivity {
         eventList = new ArrayList<>();
         eventListAdapter = new EventListAdapter(getApplicationContext(), eventList);
         eventList2 = new ArrayList<>();
-
 
         fStore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

@@ -28,31 +28,21 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
 import com.mind.simplelogin.Benachrichtigung.BenachrichtigungAdapter;
-import com.mind.simplelogin.Einstellungen;
-import com.mind.simplelogin.Interessen;
+import com.mind.simplelogin.Kategorie.Interessen;
 import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.Userliste.Users;
-import com.mind.simplelogin.events.Eventerstellen;
 import com.mind.simplelogin.Userliste.findFriends;
-import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Nullable;
 
 public class RegisterActivity extends AppCompatActivity {
 

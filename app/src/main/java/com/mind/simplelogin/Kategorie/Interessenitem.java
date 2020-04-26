@@ -1,6 +1,4 @@
-package com.mind.simplelogin;
-
-import com.mind.simplelogin.Userliste.Users;
+package com.mind.simplelogin.Kategorie;
 
 import java.util.Comparator;
 

@@ -1,4 +1,4 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Kategorie;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,14 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mind.simplelogin.Profil.otherProfile;
+import com.mind.simplelogin.R;
 import com.mind.simplelogin.events.Eventerstellen;
-import com.mind.simplelogin.events.Freundeeinladen.EinladenListAdapter;
 
 import java.util.ArrayList;
 

@@ -42,7 +42,7 @@
     </RelativeLayout>
 
     <LinearLayout
-            android:id="@+id/linlay1"
+            android:id="@+id/allfriends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/rellay1"
@@ -66,6 +66,7 @@
                     android:orientation="vertical">
 
                 <TextView
+                        android:id="@+id/freundezahl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
