@@ -100,10 +100,15 @@
                 android:label="Preferences"
                 />
         <activity
-                android:name=".events.findevents.otherEvent"
-                android:theme="@style/AppTheme.FullScreen"
-                android:label="Preferences"
-                />
+            android:name=".events.findevents.otherEvent"
+            android:theme="@style/AppTheme.FullScreen"
+            android:label="Preferences"
+            />
+        <activity
+            android:name=".Interessen"
+            android:theme="@style/AppTheme.FullScreen"
+            android:label="Preferences"
+            />
 
 
     </application>

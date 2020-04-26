@@ -38,6 +38,7 @@ import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
 import com.mind.simplelogin.Benachrichtigung.BenachrichtigungAdapter;
 import com.mind.simplelogin.Einstellungen;
+import com.mind.simplelogin.Interessen;
 import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
@@ -207,7 +208,7 @@ public class RegisterActivity extends AppCompatActivity {
             erstellen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Startseite.this, Eventerstellen.class);
+                    Intent intent = new Intent(Startseite.this, Interessen.class);
                     startActivity(intent);
 
                 }

@@ -25,6 +25,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
+import com.mind.simplelogin.Interessen;
+import com.mind.simplelogin.Login.RegisterActivity;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
@@ -41,10 +44,10 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
     private Animation animation;
     private Menu menu;
     private Button share;
-    EditText name, kategorie;
+    EditText name;
 
     AutoCompleteTextView ort;
-    TextView date, dateanzeige, zeitanzeigen, zeit;
+    TextView date, dateanzeige, zeitanzeigen, zeit,kate,kategorie;
     String userID;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
@@ -71,6 +74,14 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
         date=findViewById(R.id.tvUsername);
         kategorie =findViewById(R.id.etKategorie);
         dateanzeige=findViewById(R.id.etUsername);
+        kate = findViewById(R.id.Kategorie);
+
+        String namekate  = getIntent().getStringExtra("name");
+
+            kategorie.setText(namekate);
+
+
+
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -159,7 +170,11 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                 }
             }
         });
+        final String loc = ort.getText().toString();
+
+        
     }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
