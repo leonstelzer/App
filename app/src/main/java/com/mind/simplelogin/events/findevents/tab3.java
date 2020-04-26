@@ -18,6 +18,7 @@ import com.mind.simplelogin.R;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -75,6 +76,8 @@ public class tab3 extends Fragment {
                         if(usid.equals(event1)) {
                             Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                             eventList.add(event);
+                            Collections.sort(eventList, Event.myname);
+
                             eventListAdapter.notifyDataSetChanged();
 
                         //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();

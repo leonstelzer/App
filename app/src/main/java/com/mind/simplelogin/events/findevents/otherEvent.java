@@ -1,12 +1,15 @@
 package com.mind.simplelogin.events.findevents;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -66,17 +69,15 @@ public class otherEvent extends AppCompatActivity {
                 datum.setText(documentSnapshot.getString("Datum"));
                 teilnehmer.setText(lstToString((List)documentSnapshot.get("Teilnehmer")));
                 kategorie.setText(documentSnapshot.getString("Kategorie"));
-
-
-            }
+               }
         });
         final String currenstate;
 
 
           fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                public void onEvent(@Nullable final QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    for(final DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
                         String id = doc.getDocument().getId();
 
@@ -84,38 +85,32 @@ public class otherEvent extends AppCompatActivity {
                             final String username = doc.getDocument().toObject(Users.class).getBenutername();
                             System.out.println(username);
 
-                            fStore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                            List<String>teilnehmern=new ArrayList<>();
+                            DocumentReference documentReference = fStore.collection("event").document(eventid);
 
-                                            for(DocumentChange doc1 : queryDocumentSnapshots.getDocumentChanges()) {
-                                                if (doc1.getType() == DocumentChange.Type.ADDED) {
+                            documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                @Override
+                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                    List<String>teilnehmern=new ArrayList<>();
 
+                                    Event event = (Event) documentSnapshot.toObject(Event.class);
+                                    teilnehmern = event.getTeilnehmer();
 
-                                                    teilnehmern = ((Event) doc1.getDocument().toObject(Event.class)).getTeilnehmer();
-                                                    System.out.println(teilnehmern);
-
-                                                    if(teilnehmern.contains(username))
-                                                    {
-                                                        teilnehmen.setEnabled(true);
-                                                        teilnehmen.setText("Teilnahme zurückziehen");
+                                    if (teilnehmern.contains(username)) {
 
 
-                                                    }
-                                                }
-
-                                                break;
+                                        teilnehmen.setEnabled(true);
+                                        teilnehmen.setText("Teilnahme zurückziehen");
 
 
-                                            }
-
-                                        }
-                                    });
-
+                                    } else {
+                                        teilnehmen.setEnabled(true);
+                                        teilnehmen.setText("Teilnehmen");
 
 
+                                    }
 
+                                }
+                            });
 
                         }
                     }
@@ -139,47 +134,32 @@ public class otherEvent extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
 
-                                fStore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                final DocumentReference documentReference = fStore.collection("event").document(eventid);
+
+                                documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
-                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         List<String>teilnehmern=new ArrayList<>();
 
-                                        for(DocumentChange doc1 : queryDocumentSnapshots.getDocumentChanges()) {
-                                            if (doc1.getType() == DocumentChange.Type.ADDED) {
-                                                teilnehmern = ((Event) doc1.getDocument().toObject(Event.class)).getTeilnehmer();
+                                        Event event = (Event) documentSnapshot.toObject(Event.class);
+                                        teilnehmern = event.getTeilnehmer();
 
-                                                if(teilnehmern.contains(username))
-                                                {
-
-                                                    teilnehmern.remove(username);
-
-                                                    DocumentReference doc = fStore.collection("event").document(eventid);
+                                        if (teilnehmern.contains(username)) {
+                                              teilnehmern.remove(username);
+                                              documentReference.update("Teilnehmer", teilnehmern);
 
 
-                                                    doc.update("Teilnehmer", teilnehmern);
-                                                    teilnehmen.setEnabled(true);
-                                                    teilnehmen.setText("Teilnehmen");
+                                            teilnehmen.setEnabled(true);
+                                            teilnehmen.setText("Teilnehmen");
 
 
-                                                }
-                                                else {
+                                        } else {
 
+                                            teilnehmern.add(username);
+                                              documentReference.update("Teilnehmer", teilnehmern);
 
-                                                    teilnehmern = ((Event) doc1.getDocument().toObject(Event.class)).getTeilnehmer();
-                                                    teilnehmern.add(username);
-
-                                                    DocumentReference doc = fStore.collection("event").document(eventid);
-
-
-                                                    doc.update("Teilnehmer", teilnehmern);
-                                                    teilnehmen.setEnabled(true);
-                                                    teilnehmen.setText("Teilnahme zurückziehen");
-                                                }
-
-
-                                                }
-
-                                                break;
+                                            teilnehmen.setEnabled(true);
+                                            teilnehmen.setText("Teilnahme zurückziehen");
 
 
                                         }

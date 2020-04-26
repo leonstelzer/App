@@ -20,6 +20,7 @@ import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.Userliste.UsersListAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 
@@ -72,9 +73,13 @@ public class tab1 extends Fragment {
                         System.out.println(eventid);
 
                         Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                      //  eventList.clear();
+
                         eventList.add(event);
                     }
                 }
+                Collections.sort(eventList, Event.myname);
+
                 eventListAdapter.notifyDataSetChanged();
                 events.invalidate();
 

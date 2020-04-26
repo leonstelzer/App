@@ -1,7 +1,9 @@
 package com.mind.simplelogin.events.Freundeeinladen;
 
+import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.events.Freundeeinladen.Eventid;
 
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -75,6 +77,15 @@ public class Event extends Eventid {
         Zeit = zeit;
     }
 
+
+    public static Comparator<Event> myname= new Comparator<Event>(){
+        @Override
+        public int compare(Event u1, Event u2){
+
+            return u1.getEventname().compareTo(u2.getEventname());
+
+        }
+    };
     String Eventname;
     String Ort;
     List<String> Teilnehmer;
