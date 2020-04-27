@@ -109,12 +109,17 @@ public class InteressenAdapter extends RecyclerView.Adapter<InteressenAdapter.In
                 for (Interessenitem interesse : minteressenlistall){
                     if (interesse.getName().toLowerCase().contains(filterPattern)){
                         filterlist.add(interesse);
+
+
                     }
 
                 }
             }
             FilterResults filterResults = new FilterResults();
+
             filterResults.values = filterlist;
+            Collections.sort(filterlist, Interessenitem.myname);
+
             return filterResults;
 
         }
@@ -123,6 +128,8 @@ public class InteressenAdapter extends RecyclerView.Adapter<InteressenAdapter.In
         protected void publishResults(CharSequence constraint, FilterResults results) {
             minteressenlist.clear();
             minteressenlist.addAll((Collection<? extends Interessenitem>) results.values);
+
+
             notifyDataSetChanged();
 
         }

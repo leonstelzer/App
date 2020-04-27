@@ -73,6 +73,7 @@ public class Interessen extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.menuinteressen, menu);
         MenuItem item = menu.findItem(R.id.search);
         SearchView searchView = (SearchView) item.getActionView();
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
