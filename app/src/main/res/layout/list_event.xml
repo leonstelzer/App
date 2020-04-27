@@ -3,44 +3,65 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:background="?android:attr/selectableItemBackground">
 
-    <TextView
-            android:id="@+id/ort_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentRight="false"
-            android:layout_centerVertical="true"
+    <ImageView
+            android:id="@+id/image"
+            android:layout_width="106dp"
+            android:layout_height="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginEnd="158dp"
-            android:layout_marginRight="149dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="299dp"
+            android:layout_marginRight="299dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/ic_person" />
+
+    <TextView
+            android:id="@+id/name"
+            android:layout_width="126dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+
+            android:layout_marginEnd="111dp"
+            android:layout_marginRight="111dp"
             android:text="TextView" />
+
     <TextView
-            android:id="@+id/name_text"
+            android:id="@+id/datum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/name"
             android:layout_alignParentEnd="false"
             android:layout_alignParentRight="false"
-            android:layout_below="@+id/ort_text"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="158dp"
             android:layout_marginRight="149dp"
             android:text="TextView" />
 
     <TextView
-            android:id="@+id/Datum"
+            android:id="@+id/zeit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/name_text"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentRight="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-59dp"
-            android:layout_marginEnd="158dp"
-            android:layout_marginRight="149dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="false"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginEnd="45dp"
+
+
+            android:layout_marginRight="45dp"
+            android:layout_marginBottom="20dp"
             android:text="TextView" />
-
-
 </RelativeLayout>

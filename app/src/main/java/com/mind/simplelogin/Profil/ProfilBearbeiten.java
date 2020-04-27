@@ -23,22 +23,29 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.mind.simplelogin.Einstellungen;
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.events.Eventerstellen;
+import com.mind.simplelogin.events.Freundeeinladen.Event;
+import com.mind.simplelogin.events.findevents.EventListAdapter;
 import com.mind.simplelogin.overviewact;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +58,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
     Button bestätigen;
     private SharedPreferences speicher;
     private SharedPreferences.Editor editor;
-    TextView fullName, email, interessen, interessen1;
+    TextView fullName, email, interessen, interessen1, eevent, tevent;
     EditText  beschreibung, telefonummer;
     AutoCompleteTextView ort;
     FirebaseAuth fAuth;
@@ -60,6 +67,11 @@ public class ProfilBearbeiten extends AppCompatActivity {
     ImageView user;
     Uri imageurl;
     StorageReference mStorageRef;
+    private List<Event> eventList ;
+    private List<Event> eventList2 ;
+    private EventListAdapter eventListAdapter;
+
+
 
     private StorageTask uploadtask;
     private Bitmap compressor;
@@ -75,6 +87,8 @@ public class ProfilBearbeiten extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         mStorageRef = FirebaseStorage.getInstance().getReference().child("Images");
         DatabaseReference reference = database.getReference();
+        eevent= findViewById(R.id.eevent);
+        tevent = findViewById(R.id.tevent);
 
         userId = fAuth.getCurrentUser().getUid();
         fullName = findViewById(R.id.tv_name);
@@ -166,6 +180,91 @@ public class ProfilBearbeiten extends AppCompatActivity {
 
             }
         });
+        eventList = new ArrayList<>();
+        eventListAdapter = new EventListAdapter(getApplicationContext(), eventList);
+        eventList2 = new ArrayList<>();
+
+
+        fStore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                if (e != null) {
+
+                }
+                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() == DocumentChange.Type.ADDED){
+
+                        final String eventid = doc.getDocument().getId();
+                        final String usid = fAuth.getCurrentUser().getUid();
+                        String event1 = doc.getDocument().toObject(Event.class).getId();
+                        if(usid.equals(event1)) {
+                            Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                            eventList.add(event);
+                            Collections.sort(eventList, Event.myname);
+                            eevent.setText(String.valueOf(eventList.size()));
+
+                            eventListAdapter.notifyDataSetChanged();
+
+                            //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
+
+
+
+
+
+                        }
+                    }
+
+                }
+            }
+        });
+
+
+
+        fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                        String id = doc.getDocument().getId();
+
+                        if (id.equals(userId)){
+                            final String username = doc.getDocument().toObject(Users.class).getBenutername();
+
+                            fStore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                                    if (e != null) {
+
+                                    }
+                                    for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                        if (doc.getType() == DocumentChange.Type.ADDED){
+                                            List<String>teilnehmern=new ArrayList<>();
+                                            final String eventid = doc.getDocument().getId();
+
+                                            teilnehmern = ((Event) doc.getDocument().toObject(Event.class)).getTeilnehmer();
+                                            String id = doc.getDocument().getId();
+                                            if(teilnehmern.contains(username)) {
+                                                Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                                                eventList2.add(event);
+                                                eventListAdapter.notifyDataSetChanged();
+                                                tevent.setText(String.valueOf(eventList2.size()));
+
+
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+
+
+                        }
+                    }
+                }}
+        });
+
 
 
     }

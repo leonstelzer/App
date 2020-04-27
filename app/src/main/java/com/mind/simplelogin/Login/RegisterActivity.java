@@ -28,29 +28,21 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
 import com.mind.simplelogin.Benachrichtigung.BenachrichtigungAdapter;
+import com.mind.simplelogin.Kategorie.Interessen;
 import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.Userliste.Users;
-import com.mind.simplelogin.events.Eventerstellen;
 import com.mind.simplelogin.Userliste.findFriends;
-import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.Nullable;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -172,7 +164,7 @@ public class RegisterActivity extends AppCompatActivity {
         private LinearLayout findevents;
         private LinearLayout erstellen;
         private LinearLayout friends;
-        private ImageView benachrichtigung;
+        private ImageView benachrichtigung,exit;
         private CardView numbercontainer;
         SpaceNavigationView navigationView;
         private TextView number;
@@ -206,7 +198,7 @@ public class RegisterActivity extends AppCompatActivity {
             erstellen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(Startseite.this, Eventerstellen.class);
+                    Intent intent = new Intent(Startseite.this, Interessen.class);
                     startActivity(intent);
 
                 }
@@ -239,6 +231,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
             });
+            exit = findViewById(R.id.exit);
             number = findViewById(R.id.numberbenach);
             numbercontainer =findViewById(R.id.numbercontainer);
 
@@ -246,121 +239,38 @@ public class RegisterActivity extends AppCompatActivity {
             mFirestore = FirebaseFirestore.getInstance();
 
 
+
+
             final String usid = fAuth.getCurrentUser().getUid();
 
+            int receivecount = 0;
 
-            mFirestore.collection("users").document(usid).collection("request").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            receivecount = usersList.size();
+
+            if(receivecount == 0){
+                number.setVisibility(View.INVISIBLE);
+                numbercontainer.setVisibility(View.INVISIBLE);
+            }
+            else {
+                number.setText(String.valueOf(receivecount));
+
+            }
+            System.out.println(receivecount);
+
+
+
+                exit.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    System.out.println("Start ON Event");
-                    if (e != null) {
-                    }
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
-                            String type = (String) doc.getDocument().get("Type");
-                            String otherid = (String) doc.getDocument().get("otherid");
-
-                            System.out.println("type:"+type);
-                            System.out.println("otherid:"+ otherid);
-
-                            final String otherID = (String) doc.getDocument().get("otherid");
-                            if (type.equals("received")) {
-                                mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                    @Override
-                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                        if (e != null) {
-
-                                        }
-                                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                            if (doc.getType() == DocumentChange.Type.ADDED) {
-                                                String id = doc.getDocument().getId();
-                                                if (otherID.equals(id)) {
-                                                    Users users = doc.getDocument().toObject(Users.class).withId(otherID);
-                                                    usersList.add(users);
-                                                    benachrichtigungAdapter.notifyDataSetChanged();
-                                                }
-                                            }
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }
+                public void onClick(View v) {
+                    FirebaseAuth.getInstance().signOut();//logout
+                    startActivity(new Intent(Startseite.this, MainActivity.class));
+                    finish();
                 }
             });
-
-            mFirestore.collection("users").document(usid).collection("eventeinladung").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                    System.out.println("Start ON Event");
-                    if (e != null) {
-                    }
-                    System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
-                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (doc.getType() == DocumentChange.Type.ADDED) {
-                            final String eventid = (String) doc.getDocument().get("eventid");
-                            System.out.println("eventid:"+ eventid);
-                            mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                    if (e != null) {
-
-                                    }
-                                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                        if (doc.getType() == DocumentChange.Type.ADDED) {
-                                            String id = doc.getDocument().getId();
-                                            if (eventid.equals(id)) {
-                                                Event event = doc.getDocument().toObject(Event.class).withId(eventid);
-                                                usersList.add(event);
-                                                benachrichtigungAdapter.notifyDataSetChanged();
-                                                System.out.println(usersList.size());
-                                                int receivecount = 0;
-
-                                                receivecount = usersList.size();
-
-                                                if(receivecount == 0){
-                                                    number.setVisibility(View.INVISIBLE);
-                                                    numbercontainer.setVisibility(View.INVISIBLE);
-                                                }
-                                                else {
-                                                    number.setText(String.valueOf(receivecount));
-
-                                                }
-
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                    }
-                }
-            });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         }
+
     }
 }
 

@@ -28,7 +28,6 @@
 
         <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-
                 android:layout_height="match_parent">
 
             <TextView
@@ -36,7 +35,7 @@
                     android:layout_width="20dp"
                     android:layout_height="19dp"
                     android:scrollbarSize="20dp"
-                    android:text="2"
+                    android:text="0"
                     android:gravity="center"
                     android:textColor="@color/black"
                     android:textStyle="bold"

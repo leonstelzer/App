@@ -41,10 +41,10 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
     private Animation animation;
     private Menu menu;
     private Button share;
-    EditText name, kategorie;
+    EditText name;
 
     AutoCompleteTextView ort;
-    TextView date, dateanzeige, zeitanzeigen, zeit;
+    TextView date, dateanzeige, zeitanzeigen, zeit,kate,kategorie;
     String userID;
     FirebaseFirestore fStore;
     FirebaseAuth fAuth;
@@ -71,6 +71,14 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
         date=findViewById(R.id.tvUsername);
         kategorie =findViewById(R.id.etKategorie);
         dateanzeige=findViewById(R.id.etUsername);
+        kate = findViewById(R.id.Kategorie);
+
+        String namekate  = getIntent().getStringExtra("name");
+
+            kategorie.setText(namekate);
+
+
+
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -95,10 +103,10 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
 
 
 
-
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println(dateanzeige);
 
 
                 if (name.length()==0){
@@ -109,10 +117,10 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                 }
 
                 if (dateanzeige.length()==0){
-                    zeit.setError("Zeit eingeben");
+                    zeit.setError("Zeit anzeigen");
                 }
                 if (dateanzeige.equals("Datum anzeigen")){
-                    zeit.setError("Zeit eingeben");
+                    zeit.setError("Datum anzeigen");
                 }
                 if (zeitanzeigen.equals("Zeit anzeigen")){
                     zeit.setError("Zeit eingeben");
@@ -132,6 +140,7 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                     String kate = kategorie.getText().toString();
                     String loc = ort.getText().toString();
                     final List<String> teilnehmer = new ArrayList<>();
+
 
 
 
@@ -158,7 +167,11 @@ public class Eventerstellen extends AppCompatActivity implements DatePickerDialo
                 }
             }
         });
+        final String loc = ort.getText().toString();
+
+
     }
+
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();

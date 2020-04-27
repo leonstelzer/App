@@ -18,11 +18,14 @@
             android:layout_height="90dp"
             android:orientation="horizontal">
 
-        <include
-            layout="@layout/bell"
+        <ImageView
+                android:layout_width="56dp"
+                android:id="@+id/exit"
+                android:layout_height="44dp"
+                app:srcCompat="@drawable/ic_exit_to_app_black_24dp"
             />
 
-
+        <include layout="@layout/bell" />
 
 
     </LinearLayout>

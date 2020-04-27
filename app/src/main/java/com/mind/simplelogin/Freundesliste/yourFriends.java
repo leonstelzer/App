@@ -98,26 +98,7 @@ public class yourFriends extends AppCompatActivity {
                                 }
                             }
                         });
-                        //if (fAuth.getUid().equals(user_id)){
-
-                            //Map map = doc.getDocument().getData();
-                            //System.out.println(map.size());
-                            //Toast.makeText(yourFriends.this, map.size(), Toast.LENGTH_SHORT).show();
-
-
-                            //for(Object friendid : map.values()){
-
-                                //friendid.toString();
-
-
-                                //Users users = doc.getDocument().toObject(Users.class).withId(user_id);
-                                //Toast.makeText(yourFriends.this, (String)friendid, Toast.LENGTH_SHORT).show();
-                                //usersList.add(users);
-                           // }
-                        //}
-                        //usersListAdapter.notifyDataSetChanged();
-
-                    }
+                                       }
                 }
             }
         });

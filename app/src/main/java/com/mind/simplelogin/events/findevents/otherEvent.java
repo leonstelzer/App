@@ -117,8 +117,6 @@ public class otherEvent extends AppCompatActivity {
                 }
             });
 
-
-
         fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
