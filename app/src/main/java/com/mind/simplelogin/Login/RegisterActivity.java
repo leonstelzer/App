@@ -2,6 +2,7 @@ package com.mind.simplelogin.Login;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -28,20 +29,25 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
 import com.mind.simplelogin.Benachrichtigung.BenachrichtigungAdapter;
-import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessen;
 import com.mind.simplelogin.Profil.Profile;
-import com.mind.simplelogin.Startseite;
-
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.Startseite;
+import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.Userliste.findFriends;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessen;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,6 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
                             user.put("Beschreibung", beschreibung);
                             user.put("Telefonnummer", telefonnummer);
                             user.put("Image",image);
+                            user.put("BenachrichtigungsCount", 0);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
