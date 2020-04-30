@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.Startseite;
 
 public class MainActivity extends AppCompatActivity  {
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity  {
 
       // Methode dass man direkt eingeloggt wird
         if(fAuth.getCurrentUser() != null){
-            startActivity(new Intent(getApplicationContext(), RegisterActivity.Startseite.class));
+            startActivity(new Intent(getApplicationContext(), Startseite.class));
                finish();
         }
 
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity  {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), RegisterActivity.Startseite.class));
+                            startActivity(new Intent(getApplicationContext(), Startseite.class));
                         } else {
                             Toast.makeText(MainActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 

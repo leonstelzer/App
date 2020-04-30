@@ -16,6 +16,7 @@ import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.Userliste.UsersListAdapter;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.allevent;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.nametext.setText(eventList.get(i).getEventname());
+        viewHolder.nametext.setText(eventList.get(i).getOrt());
         viewHolder.zeit.setText(eventList.get(i).getZeit());
         viewHolder.datum.setText(eventList.get(i).getDatum());
 
@@ -132,7 +133,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             @Override
             public void onClick(View view) {
                 //  Toast.makeText(context, "User ID:"+user_id, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, otherEvent.class);
+                Intent intent = new Intent(context, allevent.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }

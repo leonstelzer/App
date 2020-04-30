@@ -1,4 +1,4 @@
-package com.mind.simplelogin.Kategorie;
+package com.mind.simplelogin.events.neuerstellen.Kategorie;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.events.Eventerstellen;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -71,13 +70,18 @@ public class InteressenAdapter extends RecyclerView.Adapter<InteressenAdapter.In
         interessenViewHolder.mView.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent intent = new Intent(context, Eventerstellen.class);
+                 Intent intent = new Intent(context, date_time.class);
+
                  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                  }
-                 intent.putExtra("name", name);
+                 intent.putExtra("kategorie", name);
 
                  context.startActivity(intent);
+
+
+
+
              }
          });
 

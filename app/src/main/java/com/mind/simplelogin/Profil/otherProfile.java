@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.SetOptions;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Login.RegisterActivity;
+import com.mind.simplelogin.Startseite;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -77,7 +78,7 @@ public class otherProfile extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(otherProfile.this, RegisterActivity.Startseite.class);
+                Intent intent = new Intent(otherProfile.this, Startseite.class);
                 startActivity(intent);
             }
         });

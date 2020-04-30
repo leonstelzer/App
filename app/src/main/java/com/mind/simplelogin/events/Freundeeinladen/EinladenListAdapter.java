@@ -75,32 +75,65 @@ public class EinladenListAdapter extends RecyclerView.Adapter<EinladenListAdapte
         final int userPos = i;
 
 
-        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                final Map<String, String> event = new HashMap<>();
-                event.put(usid, usid);
-                event.put("eventid",eventid);
 
-                fStore.collection("users").document(user_id).collection("eventeinladung").document(eventid).set(event, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Einladung gesendet an"+nametext, Toast.LENGTH_SHORT).show();
-                        usersList.remove(userPos);
-                        notifyDataSetChanged();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(context, "Nö", Toast.LENGTH_SHORT).show();
+                public void onClick(View view) {
+
+                    final Map<String, String> event = new HashMap<>();
+                    event.put(usid, usid);
+                    event.put("eventid", eventid);
+
+                    fStore.collection("users").document(user_id).collection("eventeinladung").document(eventid).set(event, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(context, "Einladung gesendet an" + nametext, Toast.LENGTH_SHORT).show();
+
+                            usersList.remove(userPos);
+                            notifyDataSetChanged();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Nö", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
-                });
+            });
 
-            }
-        });
 
-    }
+
+
+            viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    final Map<String, String> event = new HashMap<>();
+                    event.put(usid, usid);
+                    event.put("eventid", eventid);
+
+                    fStore.collection("users").document(user_id).collection("eventeinladung").document(eventid).set(event, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(context, "Einladung gesendet an" + nametext, Toast.LENGTH_SHORT).show();
+
+                            usersList.remove(userPos);
+                            notifyDataSetChanged();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(context, "Nö", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            });
+        }
+
+
 
     @Override
     public int getItemCount() {

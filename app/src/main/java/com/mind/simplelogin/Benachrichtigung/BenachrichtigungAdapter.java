@@ -129,7 +129,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
     }
 
     private void EventViewHolderAction(final EventViewHolder eventViewHolder, final Event event) {
-        eventViewHolder.nametext.setText(event.getEventname());
+        eventViewHolder.nametext.setText(event.getOrt());
 
         /*
         HIER WIRD DAS INTERESSEN IMAGE GELADEN

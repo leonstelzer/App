@@ -8,17 +8,31 @@ import java.util.List;
 
 
 public class Event extends Eventid {
-    public Event(String Datum, String Eventname, String Id, String Kategorie, String Ort, List<String> Teilnehmer,String Zeit ){
-            this.Datum=Datum;
-            this.Eventname=Eventname;
-            this.Id=Id;
-            this.Ort=Ort;
-            this.Teilnehmer=Teilnehmer;
-            this.Zeit=Zeit;
-            this.Datum=Datum;
-            this.Kategorie= Kategorie;
+    public Event(String ort, List<String> teilnehmer, String zeit, String datum, String kategorie, String id, String kosten, String Private, int Max) {
+        Ort = ort;
+        Teilnehmer = teilnehmer;
+        Zeit = zeit;
+        Datum = datum;
+        Kategorie = kategorie;
+        Id = id;
+        Kosten = kosten;
+        Private = Private;
+        Max = Max;
     }
+
     public Event(){
+    }
+
+    public void setPrivate(String aPrivate) {
+        Private = aPrivate;
+    }
+
+    public int getMax() {
+        return Max;
+    }
+
+    public void setMax(int max) {
+        Max = max;
     }
 
     public String getDatum() {
@@ -27,14 +41,6 @@ public class Event extends Eventid {
 
     public void setDatum(String datum) {
         Datum = datum;
-    }
-
-    public String getEventname() {
-        return Eventname;
-    }
-
-    public void setEventname(String eventname) {
-        Eventname = eventname;
     }
 
     public String getId() {
@@ -77,20 +83,29 @@ public class Event extends Eventid {
         Zeit = zeit;
     }
 
+    public String getKosten() {
+        return Kosten;
+    }
 
-    public static Comparator<Event> myname= new Comparator<Event>(){
-        @Override
-        public int compare(Event u1, Event u2){
+    public void setKosten(String kosten) {
+        Kosten = kosten;
+    }
 
-            return u1.getEventname().compareTo(u2.getEventname());
+    public String getPrivate() {
+        return Private;
+    }
 
-        }
-    };
-    String Eventname;
+    public void setPrivat(String privat) {
+        this.Private = Private;
+    }
+
     String Ort;
     List<String> Teilnehmer;
     String Zeit;
     String Datum;
     String Kategorie;
     String Id;
+    String Kosten;
+    String Private;
+    int Max;
 }

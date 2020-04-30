@@ -1,4 +1,4 @@
-package com.mind.simplelogin.Kategorie;
+package com.mind.simplelogin.events.neuerstellen.Kategorie;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.mind.simplelogin.R;
 
@@ -18,10 +19,14 @@ public class Interessen extends AppCompatActivity{
     RecyclerView interessenview;
     RecyclerView.LayoutManager layoutManager;
     InteressenAdapter mAdapter;
-
+    private ProgressBar progressBar;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interessen);
+
+        progressBar = findViewById(R.id.seekbar);
+
+        progressBar.setProgress(25);
 
 
         ArrayList<Interessenitem> interessen = new ArrayList<>();

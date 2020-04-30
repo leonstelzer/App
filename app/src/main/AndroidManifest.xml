@@ -28,7 +28,7 @@
                 />
 
         <activity
-                android:name=".Login.RegisterActivity$Startseite"
+                android:name=".Startseite"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
@@ -50,11 +50,6 @@
                 />
 
         <activity
-                android:name=".events.Eventerstellen"
-                android:theme="@style/AppTheme.FullScreen"
-                android:label="Preferences"
-                />
-        <activity
                 android:name=".Userliste.findFriends"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
@@ -69,11 +64,6 @@
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
-        <activity
-            android:name=".events.myEvent"
-            android:theme="@style/AppTheme.FullScreen"
-            android:label="Preferences"
-            />
         <activity
                 android:name=".Freundesliste.yourFriends"
                 android:theme="@style/AppTheme.FullScreen"
@@ -105,11 +95,30 @@
             android:label="Preferences"
             />
         <activity
-            android:name=".Kategorie.Interessen"
+            android:name=".events.neuerstellen.Kategorie.Interessen"
             android:theme="@style/AppTheme.FullScreen"
             android:label="Preferences"
             />
-
+        <activity
+                android:name=".events.neuerstellen.Kategorie.date_time"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
+        <activity
+                android:name=".events.neuerstellen.Kategorie.ort"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
+        <activity
+                android:name=".events.neuerstellen.Kategorie.meinevent"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
+        <activity
+                android:name=".events.neuerstellen.Kategorie.allevent"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
 
     </application>
 
