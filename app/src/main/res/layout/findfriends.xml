@@ -15,9 +15,12 @@
 
     <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar"
+            android:background="@drawable/grad2" />
 
-
-
-
+    <ImageView
+            android:id="@+id/Leiste"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/grad2" />
 </RelativeLayout>

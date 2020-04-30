@@ -38,6 +38,11 @@
                 android:label="Preferences"
                 />
         <activity
+                android:name=".Profil.ProfileX"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
+        <activity
                 android:name=".Profil.ProfilBearbeiten"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"

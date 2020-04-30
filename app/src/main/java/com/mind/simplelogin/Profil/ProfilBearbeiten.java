@@ -92,11 +92,11 @@ public class ProfilBearbeiten extends AppCompatActivity {
         email = findViewById(R.id.tvEmail);
         bestätigen = findViewById(R.id.btbestätigen);
         ort = findViewById(R.id.tv_address);
-        telefonummer = findViewById(R.id.tvTel);
+        //telefonummer = findViewById(R.id.tvtelefon);
         interessen = findViewById(R.id.tvInt);
         interessen1 = findViewById(R.id.Int);
 
-        beschreibung = findViewById(R.id.tvBesc);
+        //beschreibung = findViewById(R.id.tvBesc);
         user = findViewById(R.id.User);
 
         interessen.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +166,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
                 fullName.setText(documentSnapshot.getString("Benutername"));
-                email.setText(documentSnapshot.getString("EMail"));
+                //email.setText(documentSnapshot.getString("EMail"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
 
