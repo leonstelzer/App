@@ -34,10 +34,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-import com.mind.simplelogin.Einstellungen;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
-import com.mind.simplelogin.events.Eventerstellen;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.findevents.EventListAdapter;
 import com.mind.simplelogin.overviewact;
@@ -45,7 +43,6 @@ import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -201,7 +198,6 @@ public class ProfilBearbeiten extends AppCompatActivity {
                         if(usid.equals(event1)) {
                             Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                             eventList.add(event);
-                            Collections.sort(eventList, Event.myname);
                             eevent.setText(String.valueOf(eventList.size()));
 
                             eventListAdapter.notifyDataSetChanged();

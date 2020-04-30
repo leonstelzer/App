@@ -76,7 +76,6 @@ public class tab3 extends Fragment {
                         if(usid.equals(event1)) {
                             Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                             eventList.add(event);
-                            Collections.sort(eventList, Event.myname);
 
                             eventListAdapter.notifyDataSetChanged();
 

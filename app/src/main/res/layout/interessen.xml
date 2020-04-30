@@ -6,18 +6,26 @@
         android:layout_height="match_parent"
         tools:context=".Userliste.findFriends">
 
+
+    <ProgressBar
+            android:id="@+id/seekbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+
     <android.support.v7.widget.RecyclerView
 
+            android:id="@+id/interessenlist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/interessenlist"
-            android:layout_below="@+id/toolbar" />
+            android:layout_below="@+id/seekbar"
+            android:layout_marginTop="10dp" />
 
     <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
-
-
 
 
 </RelativeLayout>

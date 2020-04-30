@@ -25,10 +25,6 @@ import java.util.List;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 
 import javax.annotation.Nullable;
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class tab1 extends Fragment {
 
     public tab1() {
@@ -39,8 +35,6 @@ public class tab1 extends Fragment {
     private FirebaseFirestore mFirestore;
     private List<Event> eventList ;
     private EventListAdapter eventListAdapter;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,22 +62,15 @@ public class tab1 extends Fragment {
 
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED){
-
                         final String eventid = doc.getDocument().getId();
                         System.out.println(eventid);
-
                         Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                       //  eventList.clear();
-
                         eventList.add(event);
                     }
                 }
-                Collections.sort(eventList, Event.myname);
-
                 eventListAdapter.notifyDataSetChanged();
                 events.invalidate();
-
-
             }
         });
 

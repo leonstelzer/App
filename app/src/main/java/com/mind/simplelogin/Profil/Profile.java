@@ -22,6 +22,7 @@ import com.mind.simplelogin.Einstellungen;
 import com.mind.simplelogin.Login.MainActivity;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Login.RegisterActivity;
+import com.mind.simplelogin.Startseite;
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.findevents.EventListAdapter;
@@ -88,7 +89,7 @@ public class Profile extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Profile.this, RegisterActivity.Startseite.class);
+                Intent intent = new Intent(Profile.this, Startseite.class);
                 startActivity(intent);
             }
         });
@@ -129,7 +130,6 @@ public class Profile extends AppCompatActivity {
                         if(usid.equals(event1)) {
                             Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                             eventList.add(event);
-                            Collections.sort(eventList, Event.myname);
                             eevent.setText(String.valueOf(eventList.size()));
 
                             eventListAdapter.notifyDataSetChanged();

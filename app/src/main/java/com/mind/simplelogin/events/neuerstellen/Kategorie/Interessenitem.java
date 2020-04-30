@@ -1,4 +1,4 @@
-package com.mind.simplelogin.Kategorie;
+package com.mind.simplelogin.events.neuerstellen.Kategorie;
 
 import java.util.Comparator;
 
