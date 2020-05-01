@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -110,6 +111,7 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+
         eventList = new ArrayList<>();
         eventListAdapter = new EventListAdapter(getApplicationContext(), eventList);
         eventList2 = new ArrayList<>();
@@ -123,7 +125,6 @@ public class Profile extends AppCompatActivity {
                 }
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     if (doc.getType() == DocumentChange.Type.ADDED){
-
                         final String eventid = doc.getDocument().getId();
                         final String usid = fAuth.getCurrentUser().getUid();
                         String event1 = doc.getDocument().toObject(Event.class).getId();

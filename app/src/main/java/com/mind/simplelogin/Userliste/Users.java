@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Users extends UserId {
-    public Users(String Benutername, String Beschreibung, String EMail, String Image, List<String> Interessen, String Ort, String Telefonnummer){
+    public Users(String Benutername, String Beschreibung, String EMail, String Image, List<String> Interessen, String Ort, String Telefonnummer, int benachrichtigungCount){
         this.Benutername=Benutername;
         this.Beschreibung=Beschreibung;
         this.EMail=EMail;
@@ -14,6 +14,7 @@ public class Users extends UserId {
         this.Interessen=Interessen;
         this.Ort=Ort;
         this.Telefonnummer=Telefonnummer;
+        this.benachrichtigungCount = benachrichtigungCount;
 
 
 
@@ -100,4 +101,13 @@ public class Users extends UserId {
     List<String> Interessen;
     String Ort;
     String Telefonnummer;
+    int benachrichtigungCount;
+
+    public int getBenachrichtigungCount() {
+        return benachrichtigungCount;
+    }
+
+    public void setBenachrichtigungCount(int receiveCount) {
+        this.benachrichtigungCount = receiveCount;
+    }
 }

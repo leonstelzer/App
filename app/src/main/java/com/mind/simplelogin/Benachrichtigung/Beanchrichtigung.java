@@ -57,45 +57,45 @@ public class Beanchrichtigung extends AppCompatActivity {
 
 
         mFirestore.collection("users").document(usid).collection("request").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                                                                                     @Override
-                                                                                                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                                                                                        System.out.println("Start ON Event");
-                                                                                                        if (e != null) {
-                                                                                                        }
-                                                                                                        System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
-                                                                                                         for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                                                                                            if (doc.getType() == DocumentChange.Type.ADDED) {
-                                                                                                                String type = (String) doc.getDocument().get("Type");
-                                                                                                                String otherid = (String) doc.getDocument().get("otherid");
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                System.out.println("Start ON Event");
+                if (e != null) {
+                }
+                System.out.println("MAP GROEESSE : " + queryDocumentSnapshots.getDocumentChanges().size());
+                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                        String type = (String) doc.getDocument().get("Type");
+                        String otherid = (String) doc.getDocument().get("otherid");
 
-                                                                                                                System.out.println("type:"+type);
-                                                                                                                System.out.println("otherid:"+ otherid);
+                        System.out.println("type:"+type);
+                        System.out.println("otherid:"+ otherid);
 
-                                                                                                                final String otherID = (String) doc.getDocument().get("otherid");
-                                                                                                                if (type.equals("received")) {
-                                                                                                                    mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                                                                                                        @Override
-                                                                                                                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                                                                                                            if (e != null) {
+                        final String otherID = (String) doc.getDocument().get("otherid");
+                        if (type.equals("received")) {
+                            mFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                @Override
+                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                    if (e != null) {
 
-                                                                                                                            }
-                                                                                                                            for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                                                                                                                if (doc.getType() == DocumentChange.Type.ADDED) {
-                                                                                                                                    String id = doc.getDocument().getId();
-                                                                                                                                    if (otherID.equals(id)) {
-                                                                                                                                        Users users = doc.getDocument().toObject(Users.class).withId(otherID);
-                                                                                                                                        usersList.add(users);
-                                                                                                                                        benachrichtigungAdapter.notifyDataSetChanged();
-                                                                                                                                    }
-                                                                                                                                }
-                                                                                                                            }
-                                                                                                                        }
-                                                                                                                    });
-                                                                                                                }
-                                                                                                            }
-                                                                                                        }
-                                                                                                    }
-                                                                                                });
+                                    }
+                                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                                            String id = doc.getDocument().getId();
+                                            if (otherID.equals(id)) {
+                                                Users users = doc.getDocument().toObject(Users.class).withId(otherID);
+                                                usersList.add(users);
+                                                benachrichtigungAdapter.notifyDataSetChanged();
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
 
         mFirestore.collection("users").document(usid).collection("eventeinladung").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -113,24 +113,24 @@ public class Beanchrichtigung extends AppCompatActivity {
                         System.out.println("eventid:"+ eventid);
 
                         //final String otherID = (String) doc.getDocument().get("otherid");
-                            mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                @Override
-                                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                                    if (e != null) {
+                        mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                if (e != null) {
 
-                                    }
-                                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                                        if (doc.getType() == DocumentChange.Type.ADDED) {
-                                            String id = doc.getDocument().getId();
-                                            if (eventid.equals(id)) {
-                                                Event event = doc.getDocument().toObject(Event.class).withId(eventid);
-                                                usersList.add(event);
-                                                benachrichtigungAdapter.notifyDataSetChanged();
-                                            }
+                                }
+                                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                                        String id = doc.getDocument().getId();
+                                        if (eventid.equals(id)) {
+                                            Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                                            usersList.add(event);
+                                            benachrichtigungAdapter.notifyDataSetChanged();
                                         }
                                     }
                                 }
-                            });
+                            }
+                        });
                     }
                 }
             }
@@ -139,4 +139,4 @@ public class Beanchrichtigung extends AppCompatActivity {
 
 
     }
-    }
+}
