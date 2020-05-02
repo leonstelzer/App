@@ -97,7 +97,6 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
                     if (edate.equals("Datum anzeigen")){
                         etdate.setError("Datum angeben");
                     }
-
                     return;
                 }
 
