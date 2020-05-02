@@ -22,6 +22,7 @@ import com.mind.simplelogin.events.TimerPickerFragment;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -131,7 +132,7 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
 
         }
         else if(kategorie.equals("Essen")){
-            image.setImageResource(R.drawable.laufenneu);
+            image.setImageResource(R.drawable.essenneu);
 
         }
         else if(kategorie.equals("Kino")){
@@ -184,6 +185,10 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
         }
         else if(kategorie.equals("Zoo/Tierpark")){
             image.setImageResource(R.drawable.zoo);
+
+        }
+        else if(kategorie.equals("Joggen")){
+            image.setImageResource(R.drawable.laufenneu);
 
         }
         else if(kategorie.equals("Casino")){

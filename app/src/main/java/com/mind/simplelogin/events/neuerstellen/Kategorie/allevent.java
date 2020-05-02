@@ -2,7 +2,10 @@ package com.mind.simplelogin.events.neuerstellen.Kategorie;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,13 +39,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nullable;
 
 public class allevent extends AppCompatActivity {
 
     TextView name, ort, zeit, datum,  kategorietxt, kosten, anzahlteilnehmer, ersteller, privat;
-    ImageView image, teilnehmen, share,delete,einladen;
+    ImageView image, teilnehmen, share,delete,einladen,map;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     RecyclerView teilnehmer;
@@ -59,6 +63,7 @@ public class allevent extends AppCompatActivity {
 
         bar = findViewById(R.id.linear);
         name = findViewById(R.id.kate);
+        map = findViewById(R.id.maps);
         image = findViewById(R.id.bildkate);
         kosten = findViewById(R.id.kosten);
         anzahlteilnehmer = findViewById(R.id.anzahl);
@@ -89,7 +94,7 @@ public class allevent extends AppCompatActivity {
 
         final DocumentReference documentReference = fStore.collection("event").document(eventid);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            String privaten, kost, kategorie;
+            String privaten, kost, kategorie, place;
             List<String> teil;
 
             @Override
@@ -97,7 +102,20 @@ public class allevent extends AppCompatActivity {
                 zeit.setText(documentSnapshot.getString("Zeit"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 datum.setText(documentSnapshot.getString("Datum"));
+
+
+
+
                 teil = documentSnapshot.toObject(Event.class).getTeilnehmer();
+                map.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String uri = String.format(Locale.ENGLISH, "geo:19.076,72.8777");
+         //               String uri = String.format(Locale.ENGLISH, "geo:%f,%f", latitude, longitude);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        startActivity(intent);
+                    }
+                });
 
                 final int anzahl = teil.size();
                 for (int i = 0; i < teil.size(); i++) {
@@ -120,13 +138,8 @@ public class allevent extends AppCompatActivity {
                                             }
                                         });
 
-
-
                                     }
                                 }
-
-
-
                             }
                         }
                     });
@@ -211,7 +224,6 @@ public class allevent extends AppCompatActivity {
                         }
                     });
                 }
-
                 else{
                     DocumentReference documentReference1 = fStore.collection("users").document(id);
                     documentReference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -219,7 +231,6 @@ public class allevent extends AppCompatActivity {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             final String name = documentSnapshot.toObject(Users.class).getBenutername();
                             ersteller.setText(name);
-
                         }
                     });
                 }
@@ -248,7 +259,7 @@ public class allevent extends AppCompatActivity {
 
                 }
                 else if(kategorie.equals("Essen")){
-                    image.setImageResource(R.drawable.laufenneu);
+                    image.setImageResource(R.drawable.essenneu);
 
                 }
                 else if(kategorie.equals("Kino")){
@@ -303,6 +314,10 @@ public class allevent extends AppCompatActivity {
                     image.setImageResource(R.drawable.zoo);
 
                 }
+                else if(kategorie.equals("Joggen")){
+                    image.setImageResource(R.drawable.laufenneu);
+
+                }
                 else if(kategorie.equals("Casino")){
                     image.setImageResource(R.drawable.casino);
 
@@ -310,6 +325,7 @@ public class allevent extends AppCompatActivity {
                     image.setImageResource(R.drawable.fragezeichen);
 
                 }
+
             }
         });
 
