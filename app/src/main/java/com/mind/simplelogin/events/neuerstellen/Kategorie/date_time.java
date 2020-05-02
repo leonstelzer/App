@@ -76,11 +76,6 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
             }
         });
 
-
-
-
-
-
         weiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
