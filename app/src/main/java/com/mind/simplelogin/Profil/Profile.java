@@ -132,15 +132,7 @@ public class Profile extends AppCompatActivity {
                             Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                             eventList.add(event);
                             eevent.setText(String.valueOf(eventList.size()));
-
                             eventListAdapter.notifyDataSetChanged();
-
-                            //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
-
-
-
-
-
                         }
                     }
 
@@ -197,9 +189,6 @@ public class Profile extends AppCompatActivity {
                     }
                 }}
         });
-
-
-
     }
     private String lstToString(List<String> lst) {
         StringBuilder sb = new StringBuilder();

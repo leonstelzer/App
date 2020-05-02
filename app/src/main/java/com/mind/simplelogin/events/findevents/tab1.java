@@ -45,7 +45,6 @@ public class tab1 extends Fragment {
         mFirestore = FirebaseFirestore.getInstance();
         eventList = new ArrayList<>();
         eventListAdapter = new EventListAdapter(getContext(), eventList);
-
         events.setHasFixedSize(true);
         events.setLayoutManager(new LinearLayoutManager((this.getContext())));
         events.setAdapter(eventListAdapter);

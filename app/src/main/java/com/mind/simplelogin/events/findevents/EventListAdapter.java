@@ -64,7 +64,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         }
         else if(kategorie.equals("Essen")){
-            viewHolder.image.setImageResource(R.drawable.laufenneu);
+            viewHolder.image.setImageResource(R.drawable.essenneu);
 
         }
         else if(kategorie.equals("Kino")){
@@ -119,6 +119,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             viewHolder.image.setImageResource(R.drawable.zoo);
 
         }
+        else if(kategorie.equals("Joggen")){
+            viewHolder.image.setImageResource(R.drawable.laufenneu);
+
+        }
         else if(kategorie.equals("Casino")){
             viewHolder.image.setImageResource(R.drawable.casino);
 
@@ -126,6 +130,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             viewHolder.image.setImageResource(R.drawable.fragezeichen);
 
         }
+
 
 
 

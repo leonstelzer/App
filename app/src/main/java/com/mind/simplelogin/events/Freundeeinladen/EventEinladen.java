@@ -48,6 +48,8 @@ public class EventEinladen extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         final String eventid = getIntent().getStringExtra("eventid");
         final String herkunft = getIntent().getStringExtra("herkunft");
+        final String kategorie = getIntent().getStringExtra("kategorie");
+
 
         friendlist = findViewById(R.id.friendlist);
         mFirestore = FirebaseFirestore.getInstance();
@@ -69,6 +71,8 @@ public class EventEinladen extends AppCompatActivity {
                     Intent intent = new Intent(EventEinladen.this, meinevent.class);
                     Toast.makeText(EventEinladen.this, "Einladungen verschickt", Toast.LENGTH_SHORT).show();
                     intent.putExtra("eventid", eventid);
+                    intent.putExtra("kategorie", kategorie);
+
                     startActivity(intent);
                 }
             });

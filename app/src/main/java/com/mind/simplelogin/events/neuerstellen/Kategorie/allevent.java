@@ -1,16 +1,23 @@
 package com.mind.simplelogin.events.neuerstellen.Kategorie;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -20,25 +27,35 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.mind.simplelogin.Profil.otherProfile;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Startseite;
 import com.mind.simplelogin.Userliste.Users;
+import com.mind.simplelogin.Userliste.UsersListAdapter;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.Freundeeinladen.EventEinladen;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Nullable;
 
 public class allevent extends AppCompatActivity {
 
-    TextView name, ort, zeit, datum, teilnehmer, kategorietxt, kosten, anzahlteilnehmer, ersteller, privat;
-    ImageView image, teilnehmen, share,delete,einladen;
+    TextView name, ort, zeit, datum,  kategorietxt, kosten, anzahlteilnehmer, ersteller, privat;
+    ImageView image, teilnehmen, share,delete,einladen,map;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
+    RecyclerView teilnehmer;
     String userId, eventid;
+    private List<Users> usersList ;
+
     LinearLayout bar;
+    private TeilnehmerAdapter teilnehmerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +63,7 @@ public class allevent extends AppCompatActivity {
 
         bar = findViewById(R.id.linear);
         name = findViewById(R.id.kate);
+        map = findViewById(R.id.maps);
         image = findViewById(R.id.bildkate);
         kosten = findViewById(R.id.kosten);
         anzahlteilnehmer = findViewById(R.id.anzahl);
@@ -67,11 +85,16 @@ public class allevent extends AppCompatActivity {
         eventid = getIntent().getStringExtra("eventid");
         //share  = findViewById(R.id.button);
         bar.setVisibility(View.INVISIBLE);
+        usersList = new ArrayList<>();
+        teilnehmerAdapter = new TeilnehmerAdapter(getApplicationContext(), usersList);
+        teilnehmer.setHasFixedSize(true);
+        teilnehmer.setLayoutManager(new LinearLayoutManager((this)));
+        teilnehmer.setAdapter(teilnehmerAdapter);
 
 
         final DocumentReference documentReference = fStore.collection("event").document(eventid);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            String privaten, kost, max, kategorie;
+            String privaten, kost, kategorie, place;
             List<String> teil;
 
             @Override
@@ -79,9 +102,74 @@ public class allevent extends AppCompatActivity {
                 zeit.setText(documentSnapshot.getString("Zeit"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 datum.setText(documentSnapshot.getString("Datum"));
-                teilnehmer.setText(lstToString((List)documentSnapshot.get("Teilnehmer")));
-                teil =documentSnapshot.toObject(Event.class).getTeilnehmer();
+
+
+
+
+                teil = documentSnapshot.toObject(Event.class).getTeilnehmer();
+                map.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String uri = String.format(Locale.ENGLISH, "geo:19.076,72.8777");
+         //               String uri = String.format(Locale.ENGLISH, "geo:%f,%f", latitude, longitude);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        startActivity(intent);
+                    }
+                });
+
                 final int anzahl = teil.size();
+                for (int i = 0; i < teil.size(); i++) {
+                    final int finalI = i;
+                    fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                            for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                final String username = doc.getDocument().toObject(Users.class).getBenutername();
+                                if(username.equals(teil.get(finalI))) {
+                                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                                        final String otheruserid = doc.getDocument().getId();
+                                        String benutzername = teil.get(finalI);
+                                        teilnehmer.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(allevent.this, otherProfile.class);
+                                                intent.putExtra("user_id", otheruserid);
+                                                startActivity(intent);
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+                usersList.clear();
+                fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                        for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                            final String username = doc.getDocument().toObject(Users.class).getBenutername();
+
+
+                            if(teil.contains(username)) {
+                                if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                    final String otheruserid = doc.getDocument().getId();
+                                    Users users = doc.getDocument().toObject(Users.class).withId(otheruserid);
+                                    usersList.add(users);
+                                    teilnehmerAdapter.notifyDataSetChanged();
+
+
+                                }
+                            }
+
+                        }
+                    }
+                });
+
+
+
                 kategorietxt.setText(documentSnapshot.getString("Kategorie"));
                 kosten.setText(documentSnapshot.getString("Kosten"));
                 privat.setText(documentSnapshot.getString("Private"));
@@ -117,13 +205,12 @@ public class allevent extends AppCompatActivity {
                             final String name = documentSnapshot.toObject(Users.class).getBenutername();
                             ersteller.setText(name);
                             bar.setVisibility(View.VISIBLE);
+
                             if(max == anzahl){
                                 einladen.setVisibility(View.INVISIBLE);
                                 share.setVisibility(View.INVISIBLE);
 
                             }
-
-
                             einladen.setImageResource(R.drawable.people);
                             einladen.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -137,7 +224,6 @@ public class allevent extends AppCompatActivity {
                         }
                     });
                 }
-
                 else{
                     DocumentReference documentReference1 = fStore.collection("users").document(id);
                     documentReference1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -145,12 +231,17 @@ public class allevent extends AppCompatActivity {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             final String name = documentSnapshot.toObject(Users.class).getBenutername();
                             ersteller.setText(name);
-
                         }
                     });
                 }
-
-
+                ersteller.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(allevent.this, otherProfile.class);
+                        intent.putExtra("user_id", id);
+                        startActivity(intent);
+                    }
+                });
                 if(kategorie.equals("Fussball")){
                     image.setImageResource(R.drawable.fussballneu);
 
@@ -168,7 +259,7 @@ public class allevent extends AppCompatActivity {
 
                 }
                 else if(kategorie.equals("Essen")){
-                    image.setImageResource(R.drawable.laufenneu);
+                    image.setImageResource(R.drawable.essenneu);
 
                 }
                 else if(kategorie.equals("Kino")){
@@ -223,6 +314,10 @@ public class allevent extends AppCompatActivity {
                     image.setImageResource(R.drawable.zoo);
 
                 }
+                else if(kategorie.equals("Joggen")){
+                    image.setImageResource(R.drawable.laufenneu);
+
+                }
                 else if(kategorie.equals("Casino")){
                     image.setImageResource(R.drawable.casino);
 
@@ -230,6 +325,7 @@ public class allevent extends AppCompatActivity {
                     image.setImageResource(R.drawable.fragezeichen);
 
                 }
+
             }
         });
 
@@ -237,15 +333,13 @@ public class allevent extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable final QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for(final DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-
                     String id = doc.getDocument().getId();
 
                     if(id.equals(userId)) {
+
                         final String username = doc.getDocument().toObject(Users.class).getBenutername();
-                        System.out.println(username);
 
                         DocumentReference documentReference = fStore.collection("event").document(eventid);
-
                         documentReference.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -256,7 +350,8 @@ public class allevent extends AppCompatActivity {
 
                                 if (teilnehmern.contains(username)) {
                                     teilnehmen.setImageResource(R.drawable.minus);
-
+                                    usersList.remove(username);
+                                    teilnehmerAdapter.notifyDataSetChanged();
 
                                 } else {
                                     teilnehmen.setImageResource(R.drawable.add);
@@ -275,12 +370,12 @@ public class allevent extends AppCompatActivity {
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
 
-
                     String id = doc.getDocument().getId();
 
-
                     if(id.equals(userId)) {
+                        final Users myuser = doc.getDocument().toObject(Users.class);
                         final String username = doc.getDocument().toObject(Users.class).getBenutername();
+
                         teilnehmen.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -295,21 +390,23 @@ public class allevent extends AppCompatActivity {
                                         Event event = (Event) documentSnapshot.toObject(Event.class);
                                         teilnehmern = event.getTeilnehmer();
 
+
                                         if (teilnehmern.contains(username)) {
                                             teilnehmern.remove(username);
+                                            usersList.remove(myuser);
                                             documentReference.update("Teilnehmer", teilnehmern);
-
-
+                                            teilnehmerAdapter.notifyDataSetChanged();
                                             teilnehmen.setImageResource(R.drawable.add);
 
-
-
                                         } else {
-
                                             teilnehmern.add(username);
+                                            usersList.add(myuser);
                                             documentReference.update("Teilnehmer", teilnehmern);
-
                                             teilnehmen.setImageResource(R.drawable.minus);
+                                            teilnehmerAdapter.notifyDataSetChanged();
+
+
+
                                         }
 
                                     }
@@ -360,5 +457,6 @@ public class allevent extends AppCompatActivity {
             sb.append(lst.get(lst.size()-1));}
         return sb.toString();
     }
+
 
 }

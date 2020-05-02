@@ -171,13 +171,8 @@ public class ort extends AppCompatActivity {
 
                                 }
                             });
-
-
                         }
                     });
-
-
-
 
                 }
             }

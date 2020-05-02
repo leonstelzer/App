@@ -60,7 +60,7 @@ public class meinevent  extends AppCompatActivity{
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
-        String kategorie = getIntent().getStringExtra("kategorie");
+        final String kategorie = getIntent().getStringExtra("kategorie");
         eventid = getIntent().getStringExtra("eventid");
         //share  = findViewById(R.id.button);
 
@@ -98,16 +98,12 @@ public class meinevent  extends AppCompatActivity{
                 if (privaten.equals("true")){
                     privat.setText("Privat");
                 }
-                fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                DocumentReference documentReference2 = fStore.collection("users").document(userId);
+                documentReference2.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                            if(id.equals(userId)) {
-                                final String username = doc.getDocument().toObject(Users.class).getBenutername();
-                                ersteller.setText(username);
-
-                            }
-                        }
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        final String name = documentSnapshot.toObject(Users.class).getBenutername();
+                        ersteller.setText(name);
                     }
                 });
             }
@@ -133,7 +129,7 @@ public class meinevent  extends AppCompatActivity{
 
         }
         else if(kategorie.equals("Essen")){
-            image.setImageResource(R.drawable.laufenneu);
+            image.setImageResource(R.drawable.essenneu);
 
         }
         else if(kategorie.equals("Kino")){
@@ -188,6 +184,10 @@ public class meinevent  extends AppCompatActivity{
             image.setImageResource(R.drawable.zoo);
 
         }
+        else if(kategorie.equals("Joggen")){
+            image.setImageResource(R.drawable.laufenneu);
+
+        }
         else if(kategorie.equals("Casino")){
             image.setImageResource(R.drawable.casino);
 
@@ -195,6 +195,7 @@ public class meinevent  extends AppCompatActivity{
             image.setImageResource(R.drawable.fragezeichen);
 
         }
+
 
         share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,7 +217,9 @@ public class meinevent  extends AppCompatActivity{
             public void onClick(View v) {
                 Intent intent = new Intent(meinevent.this, EventEinladen.class);
                 intent.putExtra("eventid", eventid);
-                intent.putExtra("herkunft", 1);
+                intent.putExtra("kategorie", kategorie);
+
+                intent.putExtra("herkunft", "1");
                 startActivity(intent);
             }
         });
@@ -226,6 +229,8 @@ public class meinevent  extends AppCompatActivity{
                 Intent intent = new Intent(meinevent.this, EventEinladen.class);
                 intent.putExtra("eventid", eventid);
                 intent.putExtra("herkunft", "1");
+                intent.putExtra("kategorie", kategorie);
+
                 startActivity(intent);
             }
         });
