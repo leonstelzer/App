@@ -84,24 +84,41 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
         weiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final String edate = etdate.getText().toString();
                 final String etime = ettime.getText().toString();
 
-                Intent intent = new Intent(date_time.this, ort.class);
-                intent.putExtra("kategorie", kategorie);
-                intent.putExtra("zeit", etime);
-                intent.putExtra("date", edate);
+                if (etime.equals("Zeit anzeigen" )|| edate.equals("Datum anzeigen")){
 
-                System.out.println(etime+" "+edate);
+                    if (etime.equals("Zeit anzeigen")){
+                        ettime.setError("Zeit angeben");
+                    }
 
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    if (edate.equals("Datum anzeigen")){
+                        etdate.setError("Datum angeben");
+                    }
+
+                    return;
+                }
+
+                else {
+                    ettime.setError(null);
+                    etdate.setError(null);
 
 
+                    Intent intent = new Intent(date_time.this, ort.class);
+                    intent.putExtra("kategorie", kategorie);
+                    intent.putExtra("zeit", etime);
+                    intent.putExtra("date", edate);
+
+                    System.out.println(etime + " " + edate);
+
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                }
             }
         });
-
-
 
         if(kategorie.equals("Fussball")){
             image.setImageResource(R.drawable.fussballneu);
