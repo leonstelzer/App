@@ -20,15 +20,16 @@
 
             <ImageView
                     android:id="@+id/bildchat"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="43dp"
+                    android:layout_height="45dp"
                     android:layout_marginLeft="350dp"
                     android:layout_marginTop="10dp"
-                    android:src="@drawable/chat" />
+                    android:src="@drawable/ic_chat" />
+
             <ImageView
                     android:id="@+id/bildkate"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="10dp"
@@ -39,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:text="Katgorie"
                     android:textColor="#fff"
                     android:textSize="21sp"
@@ -50,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="0dp"
                     android:text="Privat"
                     android:textColor="#fff"
                     android:textSize="19sp"

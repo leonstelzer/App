@@ -84,6 +84,20 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
                 final String edate = etdate.getText().toString();
                 final String etime = ettime.getText().toString();
 
+                Date current = new Date(edate);
+                long nextDay = System.currentTimeMillis();
+                Date next = new Date(nextDay);
+                System.out.println("current "+edate);
+                System.out.println("next "+next);
+
+
+                if(next.after(current)){
+                    etdate.setError("Datum angeben");
+                }
+
+
+
+
                 if (etime.equals("Zeit anzeigen" )|| edate.equals("Datum anzeigen")){
 
                     if (etime.equals("Zeit anzeigen")){
@@ -93,6 +107,7 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
                     if (edate.equals("Datum anzeigen")){
                         etdate.setError("Datum angeben");
                     }
+                    
                     return;
                 }
 
@@ -105,9 +120,6 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
                     intent.putExtra("kategorie", kategorie);
                     intent.putExtra("zeit", etime);
                     intent.putExtra("date", edate);
-
-                    System.out.println(etime + " " + edate);
-
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 

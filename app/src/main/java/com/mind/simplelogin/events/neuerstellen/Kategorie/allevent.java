@@ -44,6 +44,7 @@ import java.util.Locale;
 import javax.annotation.Nullable;
 
 import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
 
 public class allevent extends AppCompatActivity {
 
@@ -158,7 +159,7 @@ public class allevent extends AppCompatActivity {
                             if(teil.contains(username)) {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
 
-                                    chat.setVisibility(ImageView.VISIBLE);
+                                   // chat.setVisibility(ImageView.VISIBLE);
                                     final String otheruserid = doc.getDocument().getId();
                                     Users users = doc.getDocument().toObject(Users.class).withId(otheruserid);
                                     usersList.add(users);
@@ -208,7 +209,7 @@ public class allevent extends AppCompatActivity {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             final String name = documentSnapshot.toObject(Users.class).getBenutername();
                             ersteller.setText(name);
-                            bar.setVisibility(View.VISIBLE);
+                            bar.setVisibility(VISIBLE);
 
                             if(max == anzahl){
                                 einladen.setVisibility(INVISIBLE);
@@ -356,6 +357,8 @@ public class allevent extends AppCompatActivity {
                                     teilnehmen.setImageResource(R.drawable.minus);
                                     usersList.remove(username);
                                     teilnehmerAdapter.notifyDataSetChanged();
+                                    chat.setVisibility(VISIBLE);
+
 
                                 } else {
                                     teilnehmen.setImageResource(R.drawable.add);
