@@ -43,10 +43,12 @@ import java.util.Locale;
 
 import javax.annotation.Nullable;
 
+import static android.view.View.INVISIBLE;
+
 public class allevent extends AppCompatActivity {
 
     TextView name, ort, zeit, datum,  kategorietxt, kosten, anzahlteilnehmer, ersteller, privat;
-    ImageView image, teilnehmen, share,delete,einladen,map;
+    ImageView image, teilnehmen, share, delete, einladen, map, chat;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     RecyclerView teilnehmer;
@@ -78,13 +80,15 @@ public class allevent extends AppCompatActivity {
         share = findViewById(R.id.share);
         einladen = findViewById(R.id.einladen);
         delete = findViewById(R.id.delete);
+        chat = findViewById(R.id.bildchat);
+        chat.setVisibility(INVISIBLE);
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         userId = fAuth.getCurrentUser().getUid();
         String kategorie = getIntent().getStringExtra("kategorie");
         eventid = getIntent().getStringExtra("eventid");
         //share  = findViewById(R.id.button);
-        bar.setVisibility(View.INVISIBLE);
+        bar.setVisibility(INVISIBLE);
         usersList = new ArrayList<>();
         teilnehmerAdapter = new TeilnehmerAdapter(getApplicationContext(), usersList);
         teilnehmer.setHasFixedSize(true);
@@ -102,7 +106,6 @@ public class allevent extends AppCompatActivity {
                 zeit.setText(documentSnapshot.getString("Zeit"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 datum.setText(documentSnapshot.getString("Datum"));
-
 
 
 
@@ -155,6 +158,7 @@ public class allevent extends AppCompatActivity {
                             if(teil.contains(username)) {
                                 if (doc.getType() == DocumentChange.Type.ADDED) {
 
+                                    chat.setVisibility(ImageView.VISIBLE);
                                     final String otheruserid = doc.getDocument().getId();
                                     Users users = doc.getDocument().toObject(Users.class).withId(otheruserid);
                                     usersList.add(users);
@@ -207,8 +211,8 @@ public class allevent extends AppCompatActivity {
                             bar.setVisibility(View.VISIBLE);
 
                             if(max == anzahl){
-                                einladen.setVisibility(View.INVISIBLE);
-                                share.setVisibility(View.INVISIBLE);
+                                einladen.setVisibility(INVISIBLE);
+                                share.setVisibility(INVISIBLE);
 
                             }
                             einladen.setImageResource(R.drawable.people);

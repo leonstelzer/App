@@ -19,6 +19,13 @@
 
 
             <ImageView
+                    android:id="@+id/bildchat"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="350dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/chat" />
+            <ImageView
                     android:id="@+id/bildkate"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
