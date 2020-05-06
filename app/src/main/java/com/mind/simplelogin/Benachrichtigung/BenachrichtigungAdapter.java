@@ -151,7 +151,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
             @Override
             public void onClick(View view) {
                 //  Toast.makeText(context, "User ID:"+user_id, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, otherEvent.class);
+                Intent intent = new Intent(context, allevent.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
@@ -372,7 +372,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
             @Override
             public void onClick(View view) {
                 //  Toast.makeText(context, "User ID:"+user_id, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, otherEvent.class);
+                Intent intent = new Intent(context, allevent.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
