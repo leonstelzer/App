@@ -221,7 +221,7 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        String currentDateString = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
         etdate.setText(currentDateString);
     }
 

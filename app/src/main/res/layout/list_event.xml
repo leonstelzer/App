@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="120dp"
         android:background="?android:attr/selectableItemBackground">
 
     <ImageView
@@ -35,6 +35,20 @@
             android:layout_marginRight="111dp"
             android:text="TextView" />
 
+
+    <ImageView
+            android:id="@+id/current"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_live"
+            android:layout_marginEnd="7dp"
+            android:layout_marginRight="7dp"
+            android:text="TextView" />
+
     <TextView
             android:id="@+id/datum"
             android:layout_width="wrap_content"
@@ -43,7 +57,7 @@
             android:layout_alignParentEnd="false"
             android:layout_alignParentRight="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_marginEnd="158dp"
             android:layout_marginRight="149dp"
             android:text="TextView" />
@@ -57,7 +71,7 @@
             android:layout_centerHorizontal="false"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="70dp"
             android:layout_marginEnd="45dp"
 
 
