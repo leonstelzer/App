@@ -19,6 +19,7 @@ import com.mind.simplelogin.Userliste.UsersListAdapter;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.neuerstellen.Kategorie.allevent;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -51,28 +52,26 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         final String eventid = eventList.get(i).eventid;
         final String kategorie = eventList.get(i).getKategorie();
-        final String date = eventList.get(i).getDatum();
-
-
+        String date = eventList.get(i).getDatum();
+        String time = eventList.get(i).getZeit();
+        date +=" ";
+        date += time;
 
         // Get Current Date Time
-     /*   Calendar c = Calendar.getInstance();
         Date current = new Date(date);
-        long nextDay = System.currentTimeMillis();
-        Date next = new Date(nextDay);
-        System.out.println("current "+date);
-        System.out.println("next "+next);
+        Long nextDay =  System.currentTimeMillis();
 
+        Date next = new Date(nextDay);
 
         if(next.after(current)){
 
-            viewHolder.current.setImageResource(R.drawable.ic_done);
+                viewHolder.current.setImageResource(R.drawable.ic_done);
         }
         else
         {
             viewHolder.current.setImageResource(R.drawable.ic_live);
         }
-*/
+
         if(kategorie.equals("Fussball")){
             viewHolder.image.setImageResource(R.drawable.fussballneu);
 
