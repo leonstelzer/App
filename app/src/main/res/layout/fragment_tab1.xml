@@ -7,10 +7,25 @@ android:layout_height="match_parent"
 
 tools:context=".events.findevents.tab1">
 
+
+    <ImageView
+            android:id="@+id/filter"
+            android:layout_width="40dp"
+            android:layout_height="52dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="378dp"
+            android:layout_marginRight="378dp"
+            android:src="@drawable/ic_searchmore" />
+
     <android.support.v7.widget.RecyclerView
 
             android:id="@+id/eventlist"
             android:layout_width="match_parent"
+            android:layout_below="@+id/filter"
             android:layout_height="640dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="0dp" />

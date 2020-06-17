@@ -88,7 +88,6 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
 

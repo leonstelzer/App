@@ -112,7 +112,7 @@ public class ort extends AppCompatActivity {
         final String date = getIntent().getStringExtra("date");
         final String[] eventid = {null};
 
-        ort.setAdapter(new PlaceAutoSuggestAdapter(ort.this,android.R.layout.simple_list_item_1));
+      //  ort.setAdapter(new PlaceAutoSuggestAdapter(this,android.R.layout.simple_list_item_1));
 
         final String finalPrivat = privat;
         weiter.setOnClickListener(new View.OnClickListener() {
