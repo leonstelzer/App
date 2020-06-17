@@ -32,6 +32,8 @@ import com.mind.simplelogin.Profil.otherProfile;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
+import com.mind.simplelogin.events.findevents.otherEvent;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.allevent;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -53,8 +55,8 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
     FirebaseFirestore fStore;
 
     private final int PEND_REQ_FLAG = 0;
-    private final int ACC_REQ_FLAG = 1;
-    private final int PEND_EVENT_FLAG = 2;
+    private final int PEND_EVENT_FLAG = 1;
+    private final int ACC_REQ_FLAG = 2;
     private final int ACC_EVENT_FLAG = 3;
 
 
@@ -72,13 +74,13 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
     public int getItemViewType(int position) {
         checkListSizes();
         if (usersList.get(position) instanceof Users) {
-            if (acceptedList.get(position)==true) {
+            if (acceptedList.get(position)) {
                 return ACC_REQ_FLAG;
             } else {
                 return PEND_REQ_FLAG;
             }
         } else if (usersList.get(position) instanceof Event) {
-            if (acceptedList.get(position)==true) {
+            if (acceptedList.get(position)) {
                 return ACC_EVENT_FLAG;
             } else {
                 return PEND_EVENT_FLAG;
@@ -86,18 +88,6 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         } else {
             return -1;
         }
-        /*
-        FirebaseFirestore rootRef = FirebaseFirestore.getInstance();
-        String myId = FirebaseAuth.getInstance().getUid();
-        String otherId = usersList.get(position).getUsId();
-        DocumentReference docIdRef = rootRef.collection("users").document(myId).collection("friends").document(otherId);
-        boolean isFriends = areWeFriends(myId, otherId);
-        if (isFriends) {
-            return ACC_REQ_FLAG;
-        } else {
-            return PEND_REQ_FLAG;
-        }
-        */
     }
 
     @NonNull
@@ -107,7 +97,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
         switch (viewType) {
             case ACC_REQ_FLAG:
-                v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_req_accepted, viewGroup, false);
+                v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_accepted, viewGroup, false);
                 return new AcceptedReqViewHolder(v);
             case PEND_REQ_FLAG:
                 v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_benachrichtigung, viewGroup, false);
@@ -116,26 +106,24 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
                 v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.event_benachrichtigung, viewGroup, false);
                 return new EventViewHolder(v);
             case ACC_EVENT_FLAG:
-                v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_req_accepted, viewGroup, false);
+                v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_accepted, viewGroup, false);
                 return new AcceptedEventViewHolder(v);
         }
         return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final BenachrichtigungAdapter.ViewHolder viewHolder, int i) {
-        if (viewHolder instanceof BenachrichtigungAdapter.RequestViewHolder) {
+    public void onBindViewHolder(@NonNull final ViewHolder viewHolder, int i) {
+        if (viewHolder instanceof RequestViewHolder) {
             RequestViewHolder reqViewHolder = (RequestViewHolder) viewHolder;
-            ReqViewHolderAction(reqViewHolder, (Users) usersList.get(i));
-            acceptedList.set(i, true);
-        } else if (viewHolder instanceof BenachrichtigungAdapter.AcceptedReqViewHolder) {
+            ReqViewHolderAction(reqViewHolder, i);
+        } else if (viewHolder instanceof AcceptedReqViewHolder) {
             AcceptedReqViewHolder acceptedReqViewHolder = (AcceptedReqViewHolder) viewHolder;
             AcceptedReqViewHolderAction(acceptedReqViewHolder, i);
-        } else if (viewHolder instanceof BenachrichtigungAdapter.EventViewHolder) {
+        } else if (viewHolder instanceof EventViewHolder) {
             EventViewHolder eventViewHolder = (EventViewHolder) viewHolder;
-            EventViewHolderAction(eventViewHolder, (Event) usersList.get(i));
-            acceptedList.set(i, true);
-        } else if (viewHolder instanceof BenachrichtigungAdapter.AcceptedEventViewHolder) {
+            EventViewHolderAction(eventViewHolder, i);
+        } else if (viewHolder instanceof AcceptedEventViewHolder) {
             AcceptedEventViewHolder acceptedEventViewHolder = (AcceptedEventViewHolder) viewHolder;
             AcceptedEventViewHolderAction(acceptedEventViewHolder, i);
         }
@@ -144,7 +132,8 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
     }
 
-    private void EventViewHolderAction(final EventViewHolder eventViewHolder, final Event event) {
+    private void EventViewHolderAction(final EventViewHolder eventViewHolder, final int i) {
+        final Event event = (Event) usersList.get(i);
         eventViewHolder.nametext.setText(event.getOrt());
 
         /*
@@ -162,7 +151,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
             @Override
             public void onClick(View view) {
                 //  Toast.makeText(context, "User ID:"+user_id, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, com.mind.simplelogin.events.findevents.otherEvent.class);
+                Intent intent = new Intent(context, allevent.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 }
@@ -173,11 +162,9 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         });
         FirebaseAuth fAuth;
         final FirebaseFirestore fStore;
-        FirebaseFirestore mFirestore;
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
-        mFirestore = FirebaseFirestore.getInstance();
         final String usid = fAuth.getCurrentUser().getUid();
 
 
@@ -218,7 +205,8 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
 
                                     }
                                 });
-
+                                acceptedList.set(i, true);
+                                notifyDataSetChanged();
                             }
                         });
 
@@ -234,12 +222,14 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
             public void onClick(View v) {
                 fStore.collection("users").document(usid).collection("eventeinladung").document(event_id).delete();
                 usersList.remove(event);
+                acceptedList.remove(i);
                 notifyDataSetChanged();
             }
         });
     }
 
-    private void ReqViewHolderAction(RequestViewHolder reqViewHolder, final Users user) {
+    private void ReqViewHolderAction(RequestViewHolder reqViewHolder, final int i) {
+        final Users user = (Users) usersList.get(i);
         reqViewHolder.nametext.setText(user.getBenutername());
 
         if (user.getImage() == null) {
@@ -266,11 +256,9 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
         });
         FirebaseAuth fAuth;
         final FirebaseFirestore fStore;
-        FirebaseFirestore mFirestore;
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
-        mFirestore = FirebaseFirestore.getInstance();
         final String usid = fAuth.getCurrentUser().getUid();
 
 
@@ -310,6 +298,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
                     }
                 });
                 usersList.remove(user);
+                acceptedList.remove(i);
                 notifyDataSetChanged();
             }
 
@@ -359,6 +348,7 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
                     public void onSuccess(Void aVoid) {
                     }
                 });
+                acceptedList.set(i, true);
                 notifyDataSetChanged();
 
 
@@ -368,9 +358,30 @@ public class BenachrichtigungAdapter extends RecyclerView.Adapter<Benachrichtigu
     }
 
     private void AcceptedEventViewHolderAction(AcceptedEventViewHolder viewHolder, int i) {
+        Event event = (Event) usersList.get(i);
+        viewHolder.nametext.setText("Sie nehmen an "+event.getKategorie()+" teil!");
+        /*
+        if (event.getImage() == null) {
+            viewHolder.image.setImageResource(R.drawable.ic_person);
+        } else {
+            Picasso.get().load(event.getImage()).into(viewHolder.image);
+        }
+        */
+        final String eventId = event.getId();
+        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //  Toast.makeText(context, "User ID:"+user_id, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, allevent.class);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+                intent.putExtra("eventid", eventId);
+                context.startActivity(intent);
 
+            }
+        });
     }
-
 
     private void AcceptedReqViewHolderAction(AcceptedReqViewHolder viewHolder, int i) {
         AcceptedReqViewHolder acceptedReqViewHolder = (AcceptedReqViewHolder) viewHolder;

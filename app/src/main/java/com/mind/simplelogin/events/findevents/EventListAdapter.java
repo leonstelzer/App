@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,11 @@ import com.mind.simplelogin.Userliste.UsersListAdapter;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.neuerstellen.Kategorie.allevent;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder>{
@@ -46,6 +52,25 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
         final String eventid = eventList.get(i).eventid;
         final String kategorie = eventList.get(i).getKategorie();
+        String date = eventList.get(i).getDatum();
+        String time = eventList.get(i).getZeit();
+        date +=" ";
+        date += time;
+
+        // Get Current Date Time
+        Date current = new Date(date);
+        Long nextDay =  System.currentTimeMillis();
+
+        Date next = new Date(nextDay);
+
+        if(next.after(current)){
+
+                viewHolder.current.setImageResource(R.drawable.ic_done);
+        }
+        else
+        {
+            viewHolder.current.setImageResource(R.drawable.ic_live);
+        }
 
         if(kategorie.equals("Fussball")){
             viewHolder.image.setImageResource(R.drawable.fussballneu);
@@ -164,6 +189,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         public TextView zeit;
         public TextView datum;
         public ImageView image;
+        public ImageView current;
 
 
 
@@ -174,6 +200,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
             nametext = mView.findViewById(R.id.name);
             zeit = mView.findViewById(R.id.zeit);
             image = mView.findViewById(R.id.image);
+            current = mView.findViewById(R.id.current);
 
         }
     }

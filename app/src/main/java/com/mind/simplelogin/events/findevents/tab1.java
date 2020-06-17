@@ -19,8 +19,12 @@ import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.Userliste.UsersListAdapter;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 
@@ -64,8 +68,26 @@ public class tab1 extends Fragment {
                         final String eventid = doc.getDocument().getId();
                         System.out.println(eventid);
                         Event event = doc.getDocument().toObject(Event.class).withId(eventid);
-                      //  eventList.clear();
+                        String date = doc.getDocument().toObject(Event.class).getDatum();
+                        String time = doc.getDocument().toObject(Event.class).getZeit();
+                        date +=" ";
+                        date += time;
+
+                        // Get Current Date Time
+
+                        Calendar c = Calendar.getInstance();
+                        Date current = new Date(date);
+                        Long nextDay =  System.currentTimeMillis();
+
+                        Date next = new Date(nextDay);
+
+                        if(!next.after(current)){
+
+
+
                         eventList.add(event);
+                        }
+
                     }
                 }
                 eventListAdapter.notifyDataSetChanged();

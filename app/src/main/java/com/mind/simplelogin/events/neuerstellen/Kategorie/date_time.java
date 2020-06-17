@@ -52,7 +52,7 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Bitte wählen Sie Zeit und Datum aus");
-        weiter.setVisibility(View.INVISIBLE);
+     //   weiter.setVisibility(View.INVISIBLE);
 
 
 
@@ -71,20 +71,25 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
             public void onClick(View v) {
                 DialogFragment timePicker = new TimerPickerFragment();
                 timePicker.show(getSupportFragmentManager(), "time picker");
-                if (!ettime.equals("Zeit anzeigen")&& !etdate.equals("Datum anzeigen")){
-                    weiter.setVisibility(View.VISIBLE);
-                }
+
             }
         });
+       /* if (!ettime.equals("Zeit anzeigen")&& !etdate.equals("Datum anzeigen")){
+            weiter.setVisibility(View.VISIBLE);
+        }*/
 
         weiter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                final String edate = etdate.getText().toString();
-                final String etime = ettime.getText().toString();
+                ettime.setError(null);
+                etdate.setError(null);
 
-                if (etime.equals("Zeit anzeigen" )|| edate.equals("Datum anzeigen")){
+
+                String edate = etdate.getText().toString();
+                String etime = ettime.getText().toString();
+
+                  if (etime.equals("Zeit anzeigen" )|| edate.equals("Datum anzeigen")){
 
                     if (etime.equals("Zeit anzeigen")){
                         ettime.setError("Zeit angeben");
@@ -93,25 +98,51 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
                     if (edate.equals("Datum anzeigen")){
                         etdate.setError("Datum angeben");
                     }
+
                     return;
-                }
-
-                else {
-                    ettime.setError(null);
-                    etdate.setError(null);
-
-
-                    Intent intent = new Intent(date_time.this, ort.class);
-                    intent.putExtra("kategorie", kategorie);
-                    intent.putExtra("zeit", etime);
-                    intent.putExtra("date", edate);
-
-                    System.out.println(etime + " " + edate);
-
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
 
                 }
+                  else {
+
+                      edate +=" ";
+                      edate += etime;
+
+                      // Get Current Date Time
+                      Date current = new Date(edate);
+                      Long nextDay =  System.currentTimeMillis();
+
+                      Date next = new Date(nextDay);
+
+
+
+                      if(next.after(current)){
+
+                          if (current.getDay()<next.getDay() && current.getMonth()<=next.getMonth() && current.getYear()<=next.getYear() ){
+                              etdate.setError("liegt in der Vergangenheit");
+
+                          }
+                          else{
+                              ettime.setError("liegt in der Vergangenheit");
+
+                          }
+
+
+                      }
+                      else {
+                          ettime.setError(null);
+                          etdate.setError(null);
+
+
+                          Intent intent = new Intent(date_time.this, ort.class);
+                          intent.putExtra("kategorie", kategorie);
+                          intent.putExtra("zeit", etime);
+                          intent.putExtra("date", edate);
+                          startActivity(intent);
+                          overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+                      }
+
+                  }
             }
         });
 
@@ -209,7 +240,7 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        String currentDateString = DateFormat.getDateInstance(DateFormat.LONG).format(c.getTime());
         etdate.setText(currentDateString);
     }
 
