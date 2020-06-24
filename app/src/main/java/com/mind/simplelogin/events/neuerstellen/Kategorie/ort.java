@@ -21,6 +21,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
+import com.mind.simplelogin.events.chat.ChatMessage;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.util.ArrayList;
@@ -142,6 +143,8 @@ public class ort extends AppCompatActivity {
                             final List<String> teilnehmer = new ArrayList<>();
                             teilnehmer.add(username);
 
+                            final List<ChatMessage> chat = new ArrayList<>();
+
 
                             Map<String,Object> event = new HashMap<>();
 
@@ -154,6 +157,7 @@ public class ort extends AppCompatActivity {
                             event.put("Kosten", kosten);
                             event.put("Private", finalPrivat);
                             event.put("Max", i);
+                            event.put("Chat", chat);
 
 
                             fStore.collection("event").add(event).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

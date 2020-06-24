@@ -121,6 +121,11 @@
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
+        <activity
+                android:name=".events.chat.ChatRoom"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
 
     </application>
 
