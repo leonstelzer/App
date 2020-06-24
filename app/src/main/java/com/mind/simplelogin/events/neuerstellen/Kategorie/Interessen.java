@@ -55,9 +55,6 @@ public class Interessen extends AppCompatActivity{
         interessen.add(new Interessenitem("Sonstiges", R.drawable.fragezeichen));
 
 
-
-
-
         interessenview = findViewById(R.id.interessenlist);
         interessenview.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);

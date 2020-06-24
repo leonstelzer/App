@@ -132,11 +132,11 @@ public class ProfilBearbeiten extends AppCompatActivity {
             public void onClick(View v) {
 
                 // get Information from Edit Text or fileuploader()
-                final String eemail = email.getText().toString().trim();
+                //final String eemail = email.getText().toString().trim();
                 final String efullname = fullName.getText().toString();
                 final String eort = ort.getText().toString();
-                final String ebeschreibung = beschreibung.getText().toString();
-                final String etelefonnummer = telefonummer.getText().toString();
+                //final String ebeschreibung = beschreibung.getText().toString();
+                //final String etelefonnummer = telefonummer.getText().toString();
                 final String bild = "";
                 final String image = imageurl != null ? imageurl.toString() : null;
 
@@ -148,10 +148,10 @@ public class ProfilBearbeiten extends AppCompatActivity {
 
                 Map<String, Object> user = new HashMap<>();
                 user.put("Benutername", efullname);
-                user.put("EMail", eemail);
+                //user.put("EMail", eemail);
                 user.put("Ort", eort);
-                user.put("Beschreibung", ebeschreibung);
-                user.put("Telefonnummer", etelefonnummer);
+                //user.put("Beschreibung", ebeschreibung);
+                //user.put("Telefonnummer", etelefonnummer);
 
                 documentReference.update(user);
 
@@ -168,10 +168,10 @@ public class ProfilBearbeiten extends AppCompatActivity {
                 fullName.setText(documentSnapshot.getString("Benutername"));
                 //email.setText(documentSnapshot.getString("EMail"));
                 ort.setText(documentSnapshot.getString("Ort"));
-                telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
+                //telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
 
                 interessen.setText(lstToString((List)documentSnapshot.get("Interessen")));
-                beschreibung.setText(documentSnapshot.getString("Beschreibung"));
+                //beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
 

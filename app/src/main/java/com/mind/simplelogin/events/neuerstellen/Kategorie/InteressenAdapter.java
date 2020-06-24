@@ -79,14 +79,8 @@ public class InteressenAdapter extends RecyclerView.Adapter<InteressenAdapter.In
 
                  context.startActivity(intent);
 
-
-
-
              }
          });
-
-
-
 
 
     }

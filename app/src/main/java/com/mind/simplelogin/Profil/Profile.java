@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -50,11 +51,18 @@ public class Profile extends AppCompatActivity {
     private List<Event> eventList2 ;
     private EventListAdapter eventListAdapter;
 
+    private RecyclerView RecyclerProfile;
+    ProfilAdapter RecyclerViewAdapter;
+    RecyclerView.LayoutManager layoutManager;
+
+    int []arr={R.drawable.ic_runningsvg,R.drawable.ic_fussballsvg, R.drawable.ic_badmintonsvg, R.drawable.ic_pokernsvg,
+            R.drawable.ic_kinosvg, R.drawable.ic_playstation_4, R.drawable.ic_barsvg, R.drawable.ic_foodsvg};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile2);
         bearbeiten      = findViewById(R.id.bearbeiten);
         fullName = findViewById(R.id.tv_name);
         email    = findViewById(R.id.tvEmail);
@@ -65,6 +73,14 @@ public class Profile extends AppCompatActivity {
         user = findViewById(R.id.User);
         eevent= findViewById(R.id.eevent);
         tevent = findViewById(R.id.tevent);
+
+        RecyclerProfile = findViewById(R.id.RecyclerProfile);
+        layoutManager = new GridLayoutManager(this,2);
+        RecyclerProfile.setLayoutManager(layoutManager);
+        RecyclerViewAdapter = new ProfilAdapter(arr);
+        RecyclerProfile.setAdapter(RecyclerViewAdapter);
+        RecyclerProfile.setHasFixedSize(true);
+
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -102,7 +118,7 @@ public class Profile extends AppCompatActivity {
                 //email.setText(documentSnapshot.getString("EMail"));
                 ort.setText(documentSnapshot.getString("Ort"));
                 //telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
-                interessen.setText(lstToString((List)documentSnapshot.get("Interessen")));
+                //interessen.setText(lstToString((List)documentSnapshot.get("Interessen")));
 
                 //beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
@@ -131,8 +147,16 @@ public class Profile extends AppCompatActivity {
                         if(usid.equals(event1)) {
                             Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                             eventList.add(event);
-                            eevent.setText(String.valueOf(eventList.size()));
+                            //eevent.setText(String.valueOf(eventList.size()));
+
                             eventListAdapter.notifyDataSetChanged();
+
+                            //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
+
+
+
+
+
                         }
                     }
 
@@ -175,7 +199,7 @@ public class Profile extends AppCompatActivity {
                                                 Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                                                 eventList2.add(event);
                                                 eventListAdapter.notifyDataSetChanged();
-                                                tevent.setText(String.valueOf(eventList2.size()));
+                                                //tevent.setText(String.valueOf(eventList2.size()));
 
 
                                             }
@@ -189,6 +213,9 @@ public class Profile extends AppCompatActivity {
                     }
                 }}
         });
+
+
+
     }
     private String lstToString(List<String> lst) {
         StringBuilder sb = new StringBuilder();

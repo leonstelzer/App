@@ -10,7 +10,7 @@
             android:id="@+id/rellay1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/grad"
+            android:background="@drawable/grad2"
             android:paddingBottom="20dp">
 
         <RelativeLayout
@@ -37,8 +37,6 @@
                 android:textSize="32sp" />
 
 
-
-
     </RelativeLayout>
 
     <LinearLayout
@@ -54,10 +52,10 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@color/followingBg"
+                android:background="@drawable/grad2"
                 android:gravity="center"
-                android:paddingBottom="5dp"
-                android:paddingTop="5dp">
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
 
             <LinearLayout
                     android:layout_width="wrap_content"

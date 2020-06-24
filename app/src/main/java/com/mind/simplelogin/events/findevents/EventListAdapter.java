@@ -54,8 +54,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         final String kategorie = eventList.get(i).getKategorie();
         String date = eventList.get(i).getDatum();
         String time = eventList.get(i).getZeit();
-        date +=" ";
-        date += time;
+        //date +=" ";
+        //date += time;
 
         // Get Current Date Time
         Date current = new Date(date);

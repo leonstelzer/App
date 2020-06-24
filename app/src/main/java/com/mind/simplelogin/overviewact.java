@@ -85,9 +85,6 @@ public class overviewact extends AppCompatActivity implements View.OnClickListen
     List<String>interessen=new ArrayList<>();
 
 
-
-
-
     @Override
     public void onClick(View view) {
         clicked = !clicked;
