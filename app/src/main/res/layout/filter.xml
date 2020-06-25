@@ -55,7 +55,7 @@
                     />
 
 
-            <EditText
+            <AutoCompleteTextView
                     android:id="@+id/interessen"
                     android:layout_width="306dp"
                     android:layout_height="wrap_content"
@@ -63,6 +63,7 @@
                     android:layout_centerHorizontal="true"
                     android:drawablePadding="30dp"
                     android:inputType="text"
+                    android:completionThreshold="1"
                     android:padding="10dp"
                     android:hint="Interessen"
                     />

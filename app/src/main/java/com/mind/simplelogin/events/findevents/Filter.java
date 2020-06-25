@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -20,9 +21,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.events.DatePickerFragment;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessenitem;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -31,8 +34,11 @@ public class Filter extends AppCompatActivity implements DatePickerDialog.OnDate
     ImageView date;
     TextView etdate;
     Button bestätigen;
-    AutoCompleteTextView ort;
-    EditText interessen;
+    AutoCompleteTextView ort,interessen;
+    private static final String[] COUNTRIES = new String[]{
+            "Fussball", "Pokern", "Badminton", "Bar besuch", "Essen","Joggen", "Kino", "Tischtennis", "Zocken", "Darts",
+            "Schwimmbad", "Handball", "Spazieren", "Fitnessstudio", "Konzert","Billiard", "Shoppen", "Volleyball", "Zoo/Tierpark", "Casino","Sonstiges"
+    };
 
 
 
@@ -58,7 +64,15 @@ public class Filter extends AppCompatActivity implements DatePickerDialog.OnDate
                 datePicker.show(getSupportFragmentManager(), "date picker");
             }
         });
+
+        String[] inti = getResources().getStringArray(R.array.interessen);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.custom_list_item, R.id.text_view_list_item, inti);
+        interessen.setAdapter(adapter);
+
     }
+
+
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {

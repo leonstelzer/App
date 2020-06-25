@@ -64,7 +64,6 @@
                     android:id="@+id/date"
                     android:layout_width="88dp"
                     android:layout_height="74dp"
-                    android:layout_below="@+id/etKategorie"
                     android:layout_marginStart="15dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="35dp"
