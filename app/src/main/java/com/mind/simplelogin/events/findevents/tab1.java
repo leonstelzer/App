@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.media.Image;
@@ -19,11 +20,14 @@ import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.google.firebase.firestore.DocumentChange;
+import com.mind.simplelogin.Startseite;
+import com.mind.simplelogin.Userliste.findFriends;
 import com.mind.simplelogin.events.DatePickerFragment;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.google.firebase.firestore.EventListener;
@@ -35,6 +39,7 @@ import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.Userliste.UsersListAdapter;
 
 import java.sql.Time;
+import java.text.BreakIterator;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,7 +53,7 @@ import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 
 import javax.annotation.Nullable;
-public class tab1 extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class tab1 extends Fragment  {
 
     public tab1() {
         // Required empty public constructor
@@ -59,8 +64,6 @@ public class tab1 extends Fragment implements DatePickerDialog.OnDateSetListener
     private List<Event> eventList ;
     private EventListAdapter eventListAdapter;
     ImageView filter;
-    TextView etdate;
-    Dialog myDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,7 +75,8 @@ public class tab1 extends Fragment implements DatePickerDialog.OnDateSetListener
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowPopup(v);
+                Intent intent = new Intent(tab1.this.getActivity(), Filter.class);
+                startActivity(intent);
             }
         });
         mFirestore = FirebaseFirestore.getInstance();
@@ -81,8 +85,6 @@ public class tab1 extends Fragment implements DatePickerDialog.OnDateSetListener
         events.setHasFixedSize(true);
         events.setLayoutManager(new LinearLayoutManager((this.getContext())));
         events.setAdapter(eventListAdapter);
-        myDialog = new Dialog(this.getContext());
-        etdate = myDialog.findViewById(R.id.searchdate);
 
 
         mFirestore.collection("event").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -130,59 +132,5 @@ public class tab1 extends Fragment implements DatePickerDialog.OnDateSetListener
         return RootView;
     }
 
-    public void ShowPopup(View v) {
-        TextView txtclose, etdate;
-        ImageView bestätigen, date;
-        AutoCompleteTextView ort;
 
-
-        myDialog.setContentView(R.layout.custompopup);
-        txtclose =(TextView) myDialog.findViewById(R.id.txtclose);
-        txtclose.setText("X");
-        bestätigen = (ImageView) myDialog.findViewById(R.id.done);
-        etdate = myDialog.findViewById(R.id.searchdate);
-        date = (ImageView) myDialog.findViewById(R.id.date);
-        ort = myDialog.findViewById(R.id.searchplace);
-        ort.setAdapter(new PlaceAutoSuggestAdapter(this.getContext() ,android.R.layout.simple_list_item_1));
-
-        date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment datePicker = new DatePickerFragment();
-                datePicker.show(getFragmentManager(), "date picker");
-            }
-        });
-
-        txtclose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        myDialog.show();
-
-        bestätigen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
-        });
-
-    }
-
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.YEAR, year);
-        c.set(Calendar.MONTH, month);
-        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.LONG).format(c.getTime());
-        etdate.setText(currentDateString);
-    }
-
-    @Override
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-    }
 }
