@@ -2,6 +2,7 @@ package com.mind.simplelogin.events.Freundeeinladen;
 
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.events.Freundeeinladen.Eventid;
+import com.mind.simplelogin.events.chat.ChatMessage;
 
 import java.util.Comparator;
 import java.util.List;
@@ -99,8 +100,13 @@ public class Event extends Eventid {
         this.Private = Private;
     }
 
+    public List<ChatMessage> getChat() {return chat;}
+
+    public void setChat(List<ChatMessage> chat) {this.chat=chat;}
+
     String Ort;
     List<String> Teilnehmer;
+    List<ChatMessage> chat;
     String Zeit;
     String Datum;
     String Kategorie;

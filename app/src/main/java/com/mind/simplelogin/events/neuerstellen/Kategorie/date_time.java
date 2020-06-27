@@ -62,8 +62,6 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
             public void onClick(View v) {
                 DialogFragment datePicker = new DatePickerFragment();
                 datePicker.show(getSupportFragmentManager(), "date picker");
-
-
             }
         });
         time.setOnClickListener(new View.OnClickListener() {
@@ -119,29 +117,21 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
 
                           if (current.getDay()<next.getDay() && current.getMonth()<=next.getMonth() && current.getYear()<=next.getYear() ){
                               etdate.setError("liegt in der Vergangenheit");
-
                           }
                           else{
                               ettime.setError("liegt in der Vergangenheit");
-
                           }
-
-
                       }
                       else {
                           ettime.setError(null);
                           etdate.setError(null);
-
-
                           Intent intent = new Intent(date_time.this, ort.class);
                           intent.putExtra("kategorie", kategorie);
                           intent.putExtra("zeit", etime);
                           intent.putExtra("date", edate);
                           startActivity(intent);
                           overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
                       }
-
                   }
             }
         });
@@ -229,11 +219,7 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
             image.setImageResource(R.drawable.fragezeichen);
 
         }
-
-
     }
-
-
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         Calendar c = Calendar.getInstance();
@@ -243,7 +229,6 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
         String currentDateString = DateFormat.getDateInstance(DateFormat.LONG).format(c.getTime());
         etdate.setText(currentDateString);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
@@ -253,8 +238,6 @@ public class date_time extends AppCompatActivity implements DatePickerDialog.OnD
         }
         return super.onOptionsItemSelected(item);
     }
-
-
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         if (minute < 10) ettime.setText(hourOfDay+":0"+minute);
