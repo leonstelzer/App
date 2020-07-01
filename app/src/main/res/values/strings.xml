@@ -10,4 +10,31 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string-array name="interessen">
+        <item>Fussball</item>
+        <item>Pokern</item>
+        <item>Bar besuch</item>
+        <item>Essen</item>
+        <item>Joggen</item>
+        <item>Kino</item>
+        <item>Tischtennis</item>
+        <item>Zocken</item>
+        <item>Darts</item>
+        <item>Schwimmbad</item>
+        <item>Handball</item>
+        <item>Spazieren</item>
+        <item>Fitnessstudio</item>
+        <item>Konzert</item>
+        <item>Billiard</item>
+        <item>Shoppen</item>
+        <item>Volleyball</item>
+        <item>Zoo/Tierpark</item>
+        <item>Joggen</item>
+        <item>Casino</item>
+        <item>Sonstiges</item>
+
+
+
+    </string-array>
+
 </resources>
