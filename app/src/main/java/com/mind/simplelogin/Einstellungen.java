@@ -20,10 +20,9 @@ import com.mind.simplelogin.Freundesliste.yourFriends;
 import com.mind.simplelogin.Login.MainActivity;
 import com.mind.simplelogin.Login.RegisterActivity;
 import com.mind.simplelogin.Profil.ProfilBearbeiten;
-import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.Userliste.UsersListAdapter;
-import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessen;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.InteressenProfil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,7 +70,7 @@ public class Einstellungen extends AppCompatActivity {
         profilbearbeiten.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Einstellungen.this, Interessen.class);
+                Intent intent = new Intent(Einstellungen.this, InteressenProfil.class);
                 startActivity(intent);
             }
         });

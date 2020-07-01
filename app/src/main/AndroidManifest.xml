@@ -107,6 +107,11 @@
             android:label="Preferences"
             />
         <activity
+                android:name=".events.neuerstellen.Kategorie.InteressenProfil"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
+        <activity
                 android:name=".events.neuerstellen.Kategorie.date_time"
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
