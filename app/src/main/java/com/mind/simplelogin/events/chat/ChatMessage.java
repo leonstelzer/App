@@ -40,8 +40,8 @@ public class ChatMessage {
         this.messageUser = messageUser;
     }
 
-    public String getMessageTime() {
-        return String.valueOf(messageTime);
+    public long getMessageTime() {
+        return messageTime;
     }
 
     public void setMessageTime(long messageTime) {

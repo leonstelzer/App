@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -70,7 +71,10 @@ public class ChatRoom extends AppCompatActivity {
         final String eventid = getIntent().getStringExtra("eventid");
 
         final DocumentReference documentReference1 = fStore.collection("event").document(eventid);
-        //reload(documentReference1);
+        reload(documentReference1);
+        adapter = new ChatListAdapter(this.getApplicationContext(), chatMessageList);
+        listOfMessages = (ListView)findViewById(R.id.list_of_messages);
+        listOfMessages.setAdapter(adapter);
 
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -78,22 +82,20 @@ public class ChatRoom extends AppCompatActivity {
                                    public void onClick(View view) {
                                        String text = input.getText().toString();
                                        ChatMessage cm = new ChatMessage(text, fAuth.getCurrentUser().getUid());
-
-                                       //reload(documentReference1);
                                        chatMessageList.add(cm);
 
-                                       List<Map<String,String>> list=new ArrayList<>();
+                                       List<Object> list=new ArrayList<>();
                                        for (ChatMessage c: chatMessageList) {
-                                           Map<String,String> message=new HashMap<>();
-                                           message.put("name",c.getMessageUser());
-                                           message.put("zeit",c.getMessageTime());
-                                           message.put("text",c.getMessageText());
-                                           list.add(message);
+                                           //List<Object> message=new ArrayList<>();
+                                           list.add(c.getMessageUser());
+                                           list.add(c.getMessageTime());
+                                           list.add(c.getMessageText());
+                                           //list.add(message);
                                        }
 
                                        documentReference1.update("Chat", list);
                                        input.setText("");
-
+                                       reload(documentReference1);
                                    }});
     }
 
@@ -102,40 +104,21 @@ public class ChatRoom extends AppCompatActivity {
         doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                List<Map<String, String>> out = (List) documentSnapshot.get("Chat");
-                for(Map<String, String> cm : out) {
-                    String text = cm.get("text");
-                    String name = cm.get("name");
-                    String time = cm.get("zeit");
-                    chatMessageList.add(new ChatMessage(text, name, Long.parseLong(time)));
+                List<Object> out = (List) documentSnapshot.get("Chat");
+                for(int i=0; i<out.size(); i=i+3) {
+                    String text = (String) out.get(i+2);
+                    String name = (String) out.get(i+0);
+                    long time = (long) out.get(i+1);
+                    chatMessageList.add(new ChatMessage(text, name, time));
                 }
+                adapter.notifyDataSetChanged();
             }
         });
     }
 
     public void displayChatMessages() {
         listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-
-        FirebaseListAdapter<ChatMessage> adapter = new FirebaseListAdapter<ChatMessage>(this, ChatMessage.class,
-                R.layout.message, FirebaseDatabase.getInstance().getReference()) {
-            @Override
-            protected void populateView(View v, ChatMessage model, int position) {
-                // Get references to the views of message.xml
-                TextView messageText = (TextView)v.findViewById(R.id.message_text);
-                TextView messageUser = (TextView)v.findViewById(R.id.message_user);
-                TextView messageTime = (TextView)v.findViewById(R.id.message_time);
-
-                // Set their text
-                messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
-
-                // Format the date before showing it
-                messageTime.setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
-                        Long.parseLong(model.getMessageTime())));
-            }
-        };
-
-        if (adapter.getCount()>0) listOfMessages.setAdapter(adapter);
+        listOfMessages.setAdapter(adapter);
     }
 
 
