@@ -379,12 +379,21 @@ public class allevent extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-
+                    final Users myuser = doc.getDocument().toObject(Users.class);
+                    final String username = doc.getDocument().toObject(Users.class).getBenutername();
+                    chat.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(allevent.this, ChatRoom.class);
+                            intent.putExtra("benutzername", username);
+                            intent.putExtra("eventid", eventid);
+                            startActivity(intent);
+                        }
+                    });
                     String id = doc.getDocument().getId();
 
                     if(id.equals(userId)) {
-                        final Users myuser = doc.getDocument().toObject(Users.class);
-                        final String username = doc.getDocument().toObject(Users.class).getBenutername();
+
 
                         teilnehmen.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -457,14 +466,7 @@ public class allevent extends AppCompatActivity {
             }
         });
 
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(allevent.this, ChatRoom.class);
-                intent.putExtra("eventid", eventid);
-                startActivity(intent);
-            }
-        });
+
     }
 
     private String lstToString(List<String> lst) {

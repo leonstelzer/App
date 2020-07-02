@@ -44,6 +44,11 @@
                 android:theme="@style/AppTheme.FullScreen"
                 android:label="Preferences"
                 />
+        <activity
+                android:name=".events.findevents.tab1"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
 
         <activity
                 android:name=".Einstellungen"

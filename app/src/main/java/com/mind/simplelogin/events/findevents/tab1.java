@@ -77,6 +77,7 @@ public class tab1 extends Fragment  {
             public void onClick(View v) {
                 Intent intent = new Intent(tab1.this.getActivity(), Filter.class);
                 startActivity(intent);
+
             }
         });
         mFirestore = FirebaseFirestore.getInstance();

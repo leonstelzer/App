@@ -69,6 +69,8 @@ public class ChatRoom extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         final String eventid = getIntent().getStringExtra("eventid");
+        final String username = getIntent().getStringExtra("username");
+
 
         final DocumentReference documentReference1 = fStore.collection("event").document(eventid);
         reload(documentReference1);

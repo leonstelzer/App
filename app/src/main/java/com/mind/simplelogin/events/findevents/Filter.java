@@ -2,6 +2,7 @@ package com.mind.simplelogin.events.findevents;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -20,8 +21,11 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.Startseite;
 import com.mind.simplelogin.events.DatePickerFragment;
 import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessenitem;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.date_time;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.ort;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 import java.text.DateFormat;
@@ -52,6 +56,7 @@ public class Filter extends AppCompatActivity implements DatePickerDialog.OnDate
         ort = findViewById(R.id.ort);
         interessen = findViewById(R.id.interessen);
 
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Filtereinstellungen");
@@ -69,6 +74,26 @@ public class Filter extends AppCompatActivity implements DatePickerDialog.OnDate
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.custom_list_item, R.id.text_view_list_item, inti);
         interessen.setAdapter(adapter);
+
+
+
+
+
+        bestätigen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Filter.this, findevents.class);
+                String edate = etdate.getText().toString();
+                String inter = interessen.getText().toString();
+                String loc = ort.getText().toString();
+
+                intent.putExtra("interesse", inter);
+                intent.putExtra("ort", loc);
+                intent.putExtra("date", edate);
+                startActivity(intent);
+
+            }
+        });
 
     }
 
