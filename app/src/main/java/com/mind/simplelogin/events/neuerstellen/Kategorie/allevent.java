@@ -381,15 +381,7 @@ public class allevent extends AppCompatActivity {
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
                     final Users myuser = doc.getDocument().toObject(Users.class);
                     final String username = doc.getDocument().toObject(Users.class).getBenutername();
-                    chat.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(allevent.this, ChatRoom.class);
-                            intent.putExtra("benutzername", username);
-                            intent.putExtra("eventid", eventid);
-                            startActivity(intent);
-                        }
-                    });
+                    System.out.println(username);
                     String id = doc.getDocument().getId();
 
                     if(id.equals(userId)) {
@@ -437,6 +429,25 @@ public class allevent extends AppCompatActivity {
                 }
             }
         });
+
+        final DocumentReference userNameRef = fStore.collection("users").document(userId);
+        userNameRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(final DocumentSnapshot documentSnapshot) {
+                chat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Users myuser = (Users) documentSnapshot.toObject(Users.class);
+                        Intent intent = new Intent(allevent.this, ChatRoom.class);
+                        intent.putExtra("benutzername", myuser.getBenutername());
+                        System.out.println(myuser.getBenutername());
+                        intent.putExtra("eventid", eventid);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
+
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
