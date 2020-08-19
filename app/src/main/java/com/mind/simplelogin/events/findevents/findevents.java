@@ -1,22 +1,30 @@
 package com.mind.simplelogin.events.findevents;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 
+import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.Startseite;
+import com.mind.simplelogin.Userliste.findFriends;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessen;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 public class findevents extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private TabItem tab1,tab2,tab3;
+    private TabItem tab1, tab2,tab3;
     public PagerAdapter pagerAdapter;
+    private View profil, freunde, erstellen, events;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +36,63 @@ public class findevents extends AppCompatActivity {
         tab3 = findViewById(R.id.tab3);
         viewPager = findViewById(R.id.viewpager);
 
+
+        profil      = findViewById(R.id.profil);
+        profil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(findevents.this, Profile.class);
+                startActivity(intent);
+            }
+        });
+
+        erstellen = findViewById(R.id.erstellen);
+        erstellen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(findevents.this, Interessen.class);
+                startActivity(intent);
+
+            }
+        });
+
+        freunde = findViewById(R.id.finden);
+        freunde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(findevents.this, findFriends.class);
+                startActivity(intent);
+
+            }
+        });
+        events = findViewById(R.id.events);
+        events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(findevents.this, com.mind.simplelogin.events.findevents.findevents.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+
+     //   final String interessen = getIntent().getStringExtra("interesse");
+     //   final String ort = getIntent().getStringExtra("ort");
+     //   final String date = getIntent().getStringExtra("date");
+
+
         pagerAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-        System.out.println("ANZAHL AN TABS : "+ pagerAdapter.getCount());
         viewPager.setAdapter(pagerAdapter);
-        System.out.println("SET ADAPTER");
+
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
                 if (tab.getPosition()== 0) {
+            //        Bundle newBundle = new Bundle();
+            //        newBundle.putString("interesse", "interesse");
                     pagerAdapter.notifyDataSetChanged();
                 }
                 else if (tab.getPosition()== 1) {
@@ -46,8 +101,6 @@ public class findevents extends AppCompatActivity {
                 else if (tab.getPosition()== 2) {
                     pagerAdapter.notifyDataSetChanged();
                 }
-
-
 
             }
 

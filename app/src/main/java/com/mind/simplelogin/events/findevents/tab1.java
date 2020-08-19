@@ -70,6 +70,10 @@ public class tab1 extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View RootView = inflater.inflate(R.layout.fragment_tab1, container, false);
+        if(getArguments() != null){
+            String yourText = getArguments().getString("interessen");
+            System.out.println(yourText);
+        }
         events = RootView.findViewById(R.id.eventlist);
         filter = RootView.findViewById(R.id.filter);
         filter.setOnClickListener(new View.OnClickListener() {
@@ -94,21 +98,17 @@ public class tab1 extends Fragment  {
 
                 if (e != null) {
 
-                }
-                eventList.clear();
-                eventListAdapter.notifyDataSetChanged();
+                    }
+                    eventList.clear();
+                    eventListAdapter.notifyDataSetChanged();
 
-                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() == DocumentChange.Type.ADDED){
-                        final String eventid = doc.getDocument().getId();
-                        System.out.println(eventid);
-                        Event event = doc.getDocument().toObject(Event.class).withId(eventid);
-                        String date = doc.getDocument().toObject(Event.class).getDatum();
-                        String time = doc.getDocument().toObject(Event.class).getZeit();
-                       // date +=" ";
-                      //  date += time;
-
-                        // Get Current Date Time
+                    for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() == DocumentChange.Type.ADDED){
+                            final String eventid = doc.getDocument().getId();
+                            System.out.println(eventid);
+                            Event event = doc.getDocument().toObject(Event.class).withId(eventid);
+                            String date = doc.getDocument().toObject(Event.class).getDatum();
+                            String time = doc.getDocument().toObject(Event.class).getZeit();
 
                         Calendar c = Calendar.getInstance();
                         Date current = new Date(date);

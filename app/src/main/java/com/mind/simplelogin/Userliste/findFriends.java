@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
 import com.google.firebase.firestore.DocumentChange;
@@ -18,8 +19,11 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.R;
 import com.mind.simplelogin.Freundesliste.yourFriends;
+import com.mind.simplelogin.Startseite;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessen;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +37,8 @@ public class findFriends extends AppCompatActivity {
     private FirebaseFirestore mFirestore;
     private List<Users> usersList ;
     private UsersListAdapter usersListAdapter;
+    private View profil, freunde, erstellen, events;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,44 @@ public class findFriends extends AppCompatActivity {
                         usersListAdapter.notifyDataSetChanged();
                     }
                 }
+            }
+        });
+
+        profil      = findViewById(R.id.profil);
+        profil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(findFriends.this, Profile.class);
+                startActivity(intent);
+            }
+        });
+
+        erstellen = findViewById(R.id.erstellen);
+        erstellen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(findFriends.this, Interessen.class);
+                startActivity(intent);
+
+            }
+        });
+
+        freunde = findViewById(R.id.finden);
+        freunde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(findFriends.this, findFriends.class);
+                startActivity(intent);
+
+            }
+        });
+        events = findViewById(R.id.events);
+        events.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(findFriends.this, com.mind.simplelogin.events.findevents.findevents.class);
+                startActivity(intent);
+
             }
         });
 

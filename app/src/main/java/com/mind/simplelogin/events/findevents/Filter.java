@@ -82,6 +82,7 @@ public class Filter extends AppCompatActivity implements DatePickerDialog.OnDate
         bestätigen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent(Filter.this, findevents.class);
                 String edate = etdate.getText().toString();
                 String inter = interessen.getText().toString();
@@ -91,6 +92,7 @@ public class Filter extends AppCompatActivity implements DatePickerDialog.OnDate
                 intent.putExtra("ort", loc);
                 intent.putExtra("date", edate);
                 startActivity(intent);
+
 
             }
         });
