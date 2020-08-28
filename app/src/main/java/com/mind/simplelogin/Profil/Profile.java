@@ -28,6 +28,7 @@ import com.mind.simplelogin.Startseite;
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.findevents.EventListAdapter;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.InteressenProfilItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -50,13 +51,14 @@ public class Profile extends AppCompatActivity {
     private List<Event> eventList ;
     private List<Event> eventList2 ;
     private EventListAdapter eventListAdapter;
+    int [] array;
 
     private RecyclerView RecyclerProfile;
     ProfilAdapter RecyclerViewAdapter;
     RecyclerView.LayoutManager layoutManager;
 
-    int []arr={R.drawable.ic_runningsvg,R.drawable.ic_fussballsvg, R.drawable.ic_badmintonsvg, R.drawable.ic_pokernsvg,
-            R.drawable.ic_kinosvg, R.drawable.ic_playstation_4, R.drawable.ic_barsvg, R.drawable.ic_foodsvg};
+    //int []arr={R.drawable.ic_runningsvg,R.drawable.ic_fussballsvg, R.drawable.ic_badmintonsvg, R.drawable.ic_pokernsvg,
+    //        R.drawable.ic_kinosvg, R.drawable.ic_playstation_4, R.drawable.ic_barsvg, R.drawable.ic_foodsvg, R.drawable.fussballneu};
 
 
     @Override
@@ -74,12 +76,93 @@ public class Profile extends AppCompatActivity {
         eevent= findViewById(R.id.eevent);
         tevent = findViewById(R.id.tevent);
 
-        RecyclerProfile = findViewById(R.id.RecyclerProfile);
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        userId = fAuth.getCurrentUser().getUid();
+        final DocumentReference documentReference = fStore.collection("users").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+
+                List<String> interessen = (List)documentSnapshot.get("Interessen");
+                ArrayList<Integer> bilder = new ArrayList<>();
+                if(
+                    interessen == null
+                ){
+                    System.out.println("interessen = null");
+                    array = new int[0];
+                }
+                else
+                {
+
+                for(String as: interessen)
+                {
+                    switch (as) {
+                        case "Fussball":bilder.add(R.drawable.fussballneu);
+                        break;
+                        case"Pokern":bilder.add(R.drawable.ic_pokernsvg);
+                            break;
+                        case"Badminton":bilder.add(R.drawable.badminton);
+                            break;
+                            case"Bar besuch":bilder.add(R.drawable.ic_barsvg);
+                            break;
+                            case"Essen":bilder.add(R.drawable.essenneu);
+                            break;
+                            case"Joggen":bilder.add(R.drawable.laufenneu);
+                            break;
+                            case"Kino":bilder.add(R.drawable.ic_kinosvg);
+                            break;
+                            case"Tischtennis":bilder.add(R.drawable.tischtennis);
+                            break;
+                            case"Zocken":bilder.add(R.drawable.ic_playstation_4);
+                            break;
+                            case"Darts":bilder.add(R.drawable.darts);
+                            break;
+                            case"Schwimmbad":bilder.add(R.drawable.schwimmbad);
+                            break;
+                            case"Handball":bilder.add(R.drawable.handball);
+                            break;
+                            case"Spazieren":bilder.add(R.drawable.laufen);
+                            break;
+                            case"Fitnessstudio":bilder.add(R.drawable.fitness);
+                            break;
+                            case"Konzert":bilder.add(R.drawable.konzert);
+                            break;
+                            case"Billiard":bilder.add(R.drawable.pool);
+                            break;
+                            case"Shoppen":bilder.add(R.drawable.shoppen);
+                            break;
+                            case"Volleyball":bilder.add(R.drawable.volleyball);
+                            break;
+                            case"Zoo/Tierpark":bilder.add(R.drawable.zoo);break;
+                            case"Casino":bilder.add(R.drawable.casino);
+                            break;case"Sonstiges":bilder.add(R.drawable.fragezeichen);
+                    }
+                }
+
+                array = new int[bilder.size()];
+                for (int i = 0;
+                     i < bilder.size();
+                     i++)
+                {
+            array [i] = bilder.get(i);
+                }
+
+                    RecyclerProfile = findViewById(R.id.RecyclerProfile);
+                    RecyclerProfile.setLayoutManager(layoutManager);
+                    RecyclerViewAdapter = new ProfilAdapter(array);
+                    RecyclerProfile.setAdapter(RecyclerViewAdapter);
+                    RecyclerProfile.setHasFixedSize(true);
+
+            }}
+        });
+
+        //RecyclerProfile = findViewById(R.id.RecyclerProfile);
         layoutManager = new GridLayoutManager(this,2);
-        RecyclerProfile.setLayoutManager(layoutManager);
-        RecyclerViewAdapter = new ProfilAdapter(arr);
-        RecyclerProfile.setAdapter(RecyclerViewAdapter);
-        RecyclerProfile.setHasFixedSize(true);
+        //RecyclerProfile.setLayoutManager(layoutManager);
+        //RecyclerViewAdapter = new ProfilAdapter(array);
+        //RecyclerProfile.setAdapter(RecyclerViewAdapter);
+        //RecyclerProfile.setHasFixedSize(true);
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -90,7 +173,6 @@ public class Profile extends AppCompatActivity {
         FirebaseAuth.AuthStateListener fAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-
 
             }
         };
@@ -110,8 +192,8 @@ public class Profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        final DocumentReference documentReference = fStore.collection("users").document(userId);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+        final DocumentReference documentReference2 = fStore.collection("users").document(userId);
+        documentReference2.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 fullName.setText(documentSnapshot.getString("Benutername"));

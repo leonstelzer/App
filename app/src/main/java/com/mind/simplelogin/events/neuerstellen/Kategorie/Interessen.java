@@ -25,7 +25,6 @@ public class Interessen extends AppCompatActivity{
         setContentView(R.layout.interessen);
 
         progressBar = findViewById(R.id.seekbar);
-
         progressBar.setProgress(25);
 
 

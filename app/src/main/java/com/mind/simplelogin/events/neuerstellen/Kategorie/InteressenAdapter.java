@@ -25,8 +25,6 @@ public class InteressenAdapter extends RecyclerView.Adapter<InteressenAdapter.In
     public Context context;
 
 
-
-
     public static class InteressenViewHolder extends RecyclerView.ViewHolder  {
         public ImageView image;
         public TextView name;

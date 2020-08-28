@@ -14,8 +14,8 @@ import java.text.FieldPosition;
 
 public class ProfilAdapter extends RecyclerView.Adapter<ProfilAdapter.MyViewHolder> {
 
-    int []arr;
-    public ProfilAdapter(int[]arr){this.arr = arr;}
+    int []array;
+    public ProfilAdapter(int[]arr){this.array = arr;}
 
     @NonNull
     @Override
@@ -30,12 +30,12 @@ public class ProfilAdapter extends RecyclerView.Adapter<ProfilAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder viewHolder, int i) {
-        viewHolder.imageView.setImageResource(arr[i]);
+        viewHolder.imageView.setImageResource(array[i]);
     }
 
     @Override
     public int getItemCount() {
-        return arr.length;
+        return array.length;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

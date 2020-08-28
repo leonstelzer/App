@@ -90,12 +90,8 @@ public class overviewact extends AppCompatActivity implements View.OnClickListen
         clicked = !clicked;
         switch (view.getId()) {
             case R.id.btrunning:
-                //ColorDrawable buttonColor = (ColorDrawable) button.getColorFilter();
-                //int colorId = buttonColor.getColor();
-                //if(colorId == Color.BLACK){
-                //// hier immer einzeln prüfen, ob Farbe auf Schwarz steht.
+
             if(clicked){
-             //   running.getColorFilter().equals(new ColorFilter(buttonColor.BLACK, PorterDuff.Mode.SRC_ATOP))) {
                 interessen.add("joggen");
                 running.setColorFilter(ContextCompat.getColor(this,R.color.address));
                 ;;

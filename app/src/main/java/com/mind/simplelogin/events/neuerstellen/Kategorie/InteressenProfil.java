@@ -1,5 +1,6 @@
 package com.mind.simplelogin.events.neuerstellen.Kategorie;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,9 +9,21 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.mind.simplelogin.Einstellungen;
+import com.mind.simplelogin.Freundesliste.yourFriends;
+import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,10 +33,18 @@ public class InteressenProfil extends AppCompatActivity{
     RecyclerView interessenview;
     RecyclerView.LayoutManager layoutManager;
     InteressenProfilAdapter mAdapter;
+    public ImageView weiter;
+    FirebaseFirestore fStore;
+    String userId;
+    FirebaseAuth fAuth;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interessen_profil);
+        fStore = FirebaseFirestore.getInstance();
+        fAuth = FirebaseAuth.getInstance();
+        userId = fAuth.getCurrentUser().getUid();
 
 
         ArrayList<InteressenProfilItem> interessen = new ArrayList<>();
@@ -56,10 +77,37 @@ public class InteressenProfil extends AppCompatActivity{
         interessenview.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         mAdapter = new InteressenProfilAdapter(getApplicationContext(),interessen);
+        weiter = findViewById(R.id.bestätigen);
 
         interessenview.setLayoutManager(layoutManager);
         interessenview.setAdapter(mAdapter);
         Collections.sort(interessen, InteressenProfilItem.myname);
+
+        final ArrayList<InteressenProfilItem> toupdate = interessen;
+
+        weiter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ArrayList<String> selected = new ArrayList<>();
+                for(
+                        int i = 0;
+                        i < toupdate.size();
+                        i++
+                )
+                {
+                    if(toupdate.get(i).isSelected)
+                    {selected.add(toupdate.get(i).getName());
+                    };
+                }
+
+                DocumentReference doc = fStore.collection("users").document(userId);
+                doc.update("Interessen", selected);
+
+                Intent intent = new Intent(InteressenProfil.this, Profile.class);
+                startActivity(intent);
+            }
+        });
 
 
         Toolbar toolbar = findViewById(R.id.toolbar);
