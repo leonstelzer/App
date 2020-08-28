@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+            android:id="@+id/events"
+            android:enabled="true"
+            android:icon="@drawable/ic_search"
+            android:title="Events suchen"
+            app:showAsAction="ifRoom" />
+    <item
+            android:id="@+id/erstellen"
+            android:enabled="true"
+            android:icon="@drawable/ic_add"
+            android:title="Events erstellen"
+            app:showAsAction="ifRoom" />
+    <item
+            android:id="@+id/finden"
+            android:enabled="true"
+            android:icon="@drawable/ic_person_add"
+            android:title="Freunde finden"
+            app:showAsAction="ifRoom" />
+    <item
+            android:id="@+id/profil"
+    android:enabled="true"
+    android:icon="@drawable/ic_personprofile"
+    android:title="Profil"
+    app:showAsAction="ifRoom" />
+</menu>

@@ -36,10 +36,7 @@ import java.util.List;
 
 public class Startseite extends AppCompatActivity {
 
-    private LinearLayout profil;
-    private LinearLayout findevents;
-    private LinearLayout erstellen;
-    private LinearLayout friends;
+
     private ImageView benachrichtigung,exit;
     private CardView numbercontainer;
     SpaceNavigationView navigationView;
@@ -49,6 +46,7 @@ public class Startseite extends AppCompatActivity {
     private int benachCount;
     private Users myUser;
 
+    private View  profil, freunde, erstellen, events;
 
 
 
@@ -76,8 +74,8 @@ public class Startseite extends AppCompatActivity {
             }
         });
 
-        friends = findViewById(R.id.friends);
-        friends.setOnClickListener(new View.OnClickListener() {
+        freunde = findViewById(R.id.finden);
+        freunde.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Startseite.this, findFriends.class);
@@ -85,8 +83,8 @@ public class Startseite extends AppCompatActivity {
 
             }
         });
-        findevents = findViewById(R.id.findevevents);
-        findevents.setOnClickListener(new View.OnClickListener() {
+        events = findViewById(R.id.events);
+        events.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Startseite.this, com.mind.simplelogin.events.findevents.findevents.class);

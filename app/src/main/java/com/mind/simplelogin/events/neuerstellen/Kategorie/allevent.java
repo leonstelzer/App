@@ -379,12 +379,13 @@ public class allevent extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-
+                    final Users myuser = doc.getDocument().toObject(Users.class);
+                    final String username = doc.getDocument().toObject(Users.class).getBenutername();
+                    System.out.println(username);
                     String id = doc.getDocument().getId();
 
                     if(id.equals(userId)) {
-                        final Users myuser = doc.getDocument().toObject(Users.class);
-                        final String username = doc.getDocument().toObject(Users.class).getBenutername();
+
 
                         teilnehmen.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -428,6 +429,25 @@ public class allevent extends AppCompatActivity {
                 }
             }
         });
+
+        final DocumentReference userNameRef = fStore.collection("users").document(userId);
+        userNameRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(final DocumentSnapshot documentSnapshot) {
+                chat.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Users myuser = (Users) documentSnapshot.toObject(Users.class);
+                        Intent intent = new Intent(allevent.this, ChatRoom.class);
+                        intent.putExtra("benutzername", myuser.getBenutername());
+                        System.out.println(myuser.getBenutername());
+                        intent.putExtra("eventid", eventid);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
+
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -457,14 +477,7 @@ public class allevent extends AppCompatActivity {
             }
         });
 
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(allevent.this, ChatRoom.class);
-                intent.putExtra("eventid", eventid);
-                startActivity(intent);
-            }
-        });
+
     }
 
     private String lstToString(List<String> lst) {

@@ -69,6 +69,8 @@ public class ChatRoom extends AppCompatActivity {
         fStore = FirebaseFirestore.getInstance();
 
         final String eventid = getIntent().getStringExtra("eventid");
+        final String username = getIntent().getStringExtra("benutzername");
+
 
         final DocumentReference documentReference1 = fStore.collection("event").document(eventid);
         reload(documentReference1);
@@ -81,7 +83,7 @@ public class ChatRoom extends AppCompatActivity {
                                    @Override
                                    public void onClick(View view) {
                                        String text = input.getText().toString();
-                                       ChatMessage cm = new ChatMessage(text, fAuth.getCurrentUser().getUid());
+                                       ChatMessage cm = new ChatMessage(text, username);
                                        chatMessageList.add(cm);
 
                                        List<Object> list=new ArrayList<>();
@@ -104,10 +106,10 @@ public class ChatRoom extends AppCompatActivity {
         doc.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                List<Object> out = (List) documentSnapshot.get("Chat");
+                List<Object> out = (List<Object>) documentSnapshot.get("Chat");
                 for(int i=0; i<out.size(); i=i+3) {
                     String text = (String) out.get(i+2);
-                    String name = (String) out.get(i+0);
+                    String name = (String) out.get(i);
                     long time = (long) out.get(i+1);
                     chatMessageList.add(new ChatMessage(text, name, time));
                 }

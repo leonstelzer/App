@@ -95,7 +95,7 @@
                     android:drawablePadding="30dp"
                     android:inputType="text"
                     android:padding="10dp"
-                    android:text="Datum anzeigen" />
+                    android:text="" />
 
 
 
