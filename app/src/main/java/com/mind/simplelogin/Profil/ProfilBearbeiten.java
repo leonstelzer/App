@@ -38,6 +38,7 @@ import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.findevents.EventListAdapter;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.InteressenProfil;
 import com.mind.simplelogin.overviewact;
 import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 import com.squareup.picasso.Picasso;
@@ -55,8 +56,8 @@ public class ProfilBearbeiten extends AppCompatActivity {
     Button bestätigen;
     private SharedPreferences speicher;
     private SharedPreferences.Editor editor;
-    TextView fullName, email, interessen, interessen1, eevent, tevent;
-    EditText  beschreibung, telefonummer;
+    TextView fullName, eevent, tevent, interessen, interessen1;
+
     AutoCompleteTextView ort;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -89,30 +90,17 @@ public class ProfilBearbeiten extends AppCompatActivity {
 
         userId = fAuth.getCurrentUser().getUid();
         fullName = findViewById(R.id.tv_name);
-        email = findViewById(R.id.tvEmail);
         bestätigen = findViewById(R.id.btbestätigen);
         ort = findViewById(R.id.tv_address);
-        //telefonummer = findViewById(R.id.tvtelefon);
         interessen = findViewById(R.id.tvInt);
         interessen1 = findViewById(R.id.Int);
+        //telefonummer = findViewById(R.id.tvtelefon);
+
 
         //beschreibung = findViewById(R.id.tvBesc);
         user = findViewById(R.id.User);
 
-        interessen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfilBearbeiten.this, overviewact.class);
-                startActivity(intent);
-            }
-        });
-        interessen1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ProfilBearbeiten.this, overviewact.class);
-                startActivity(intent);
-            }
-        });
+
 
         user.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,6 +112,20 @@ public class ProfilBearbeiten extends AppCompatActivity {
             }
         });
         ort.setAdapter(new PlaceAutoSuggestAdapter(ProfilBearbeiten.this,android.R.layout.simple_list_item_1));
+        interessen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfilBearbeiten.this, InteressenProfil.class);
+                startActivity(intent);
+            }
+        });
+        interessen1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProfilBearbeiten.this, InteressenProfil.class);
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -135,8 +137,6 @@ public class ProfilBearbeiten extends AppCompatActivity {
                 //final String eemail = email.getText().toString().trim();
                 final String efullname = fullName.getText().toString();
                 final String eort = ort.getText().toString();
-                //final String ebeschreibung = beschreibung.getText().toString();
-                //final String etelefonnummer = telefonummer.getText().toString();
                 final String bild = "";
                 final String image = imageurl != null ? imageurl.toString() : null;
 
@@ -170,7 +170,6 @@ public class ProfilBearbeiten extends AppCompatActivity {
                 ort.setText(documentSnapshot.getString("Ort"));
                 //telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
 
-                interessen.setText(lstToString((List)documentSnapshot.get("Interessen")));
                 //beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 

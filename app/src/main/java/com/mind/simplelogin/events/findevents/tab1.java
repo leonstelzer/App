@@ -14,7 +14,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
@@ -69,23 +74,15 @@ public class tab1 extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View RootView = inflater.inflate(R.layout.fragment_tab1, container, false);
         if(getArguments() != null){
             String yourText = getArguments().getString("interessen");
             System.out.println(yourText);
         }
         events = RootView.findViewById(R.id.eventlist);
-        filter = RootView.findViewById(R.id.filter);
-        filter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(tab1.this.getActivity(), Filter.class);
-                startActivity(intent);
-
-            }
-        });
-        mFirestore = FirebaseFirestore.getInstance();
         eventList = new ArrayList<>();
+        mFirestore = FirebaseFirestore.getInstance();
         eventListAdapter = new EventListAdapter(getContext(), eventList);
         events.setHasFixedSize(true);
         events.setLayoutManager(new LinearLayoutManager((this.getContext())));
@@ -134,4 +131,46 @@ public class tab1 extends Fragment  {
     }
 
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menuevents, menu);
+        MenuItem searchitem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) searchitem.getActionView();
+        final List<Event> allEvents = new ArrayList<>();
+        allEvents.addAll(eventList);
+
+        searchitem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                eventList.clear();
+                eventList.addAll(allEvents);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                eventList.clear();
+                eventList.addAll(allEvents);
+                return true;
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                eventListAdapter.getFilter().filter(newText);
+                return false;
+            }
+
+        });
+
+
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 }

@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -105,5 +109,45 @@ public class tab2 extends Fragment {
         return RootView;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menuevents, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+        MenuItem searchitem = menu.findItem(R.id.search);
+        final SearchView searchView = (SearchView) searchitem.getActionView();
+        final List<Event> allEvents = new ArrayList<>();
+        allEvents.addAll(eventList);
+
+        searchitem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                eventList.clear();
+                eventList.addAll(allEvents);
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                eventList.clear();
+                eventList.addAll(allEvents);
+                return true;
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                eventListAdapter.getFilter().filter(newText);
+                return false;
+            }
+
+        });
+
+    }
 
 }

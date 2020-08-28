@@ -70,7 +70,7 @@ public class Einstellungen extends AppCompatActivity {
         profilbearbeiten.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Einstellungen.this, InteressenProfil.class);
+                Intent intent = new Intent(Einstellungen.this, ProfilBearbeiten.class);
                 startActivity(intent);
             }
         });

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,7 +23,9 @@ import com.mind.simplelogin.events.neuerstellen.Kategorie.allevent;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -179,6 +182,50 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
     public int getItemCount() {
         return eventList.size();
     }
+
+    public Filter getFilter() {
+        return searchFilter;
+    }
+
+    private Filter searchFilter = new Filter() {
+
+        private List<Event> filteredList = new ArrayList<>();
+        private List<Event> unfilteredList = new ArrayList<>();
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(eventList);
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                List<Event> allEvents = new ArrayList<>();
+                allEvents.addAll(filteredList);
+                allEvents.addAll(unfilteredList);
+                filteredList.clear();
+                unfilteredList.clear();
+
+                for (Event event: allEvents) {
+                    if (event.getKategorie().toLowerCase().contains(filterPattern)|| event.getOrt().toLowerCase().contains(filterPattern)|| event.getDatum().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(event);
+                    } else {
+                        unfilteredList.add(event);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            eventList.clear();
+            eventList.addAll((Collection<? extends Event>) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{

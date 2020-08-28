@@ -39,8 +39,8 @@
 
     <include
             layout="@layout/bell"
-            android:layout_width="401dp"
-            android:layout_height="721dp" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
 </RelativeLayout>
