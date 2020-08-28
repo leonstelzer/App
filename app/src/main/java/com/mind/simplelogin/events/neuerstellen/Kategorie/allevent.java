@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,8 +19,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -34,6 +37,8 @@ import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.Userliste.UsersListAdapter;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.Freundeeinladen.EventEinladen;
+import com.mind.simplelogin.events.chat.ChatMessage;
+import com.mind.simplelogin.events.chat.ChatRoom;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -358,8 +363,6 @@ public class allevent extends AppCompatActivity {
                                     usersList.remove(username);
                                     teilnehmerAdapter.notifyDataSetChanged();
                                     chat.setVisibility(VISIBLE);
-
-
                                 } else {
                                     teilnehmen.setImageResource(R.drawable.add);
                                 }
@@ -453,7 +456,17 @@ public class allevent extends AppCompatActivity {
                 });
             }
         });
+
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(allevent.this, ChatRoom.class);
+                intent.putExtra("eventid", eventid);
+                startActivity(intent);
+            }
+        });
     }
+
     private String lstToString(List<String> lst) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < lst.size()-1; i++) {
