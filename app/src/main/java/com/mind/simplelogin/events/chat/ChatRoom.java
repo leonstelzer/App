@@ -62,7 +62,6 @@ public class ChatRoom extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Chat");
-        System.out.println("IM ON CREATE");
         chatMessageList = new ArrayList<>();
 
         fAuth = FirebaseAuth.getInstance();
@@ -84,6 +83,17 @@ public class ChatRoom extends AppCompatActivity {
                                    public void onClick(View view) {
                                        String text = input.getText().toString();
                                        ChatMessage cm = new ChatMessage(text, username);
+                                       if (chatMessageList.size()>0) {
+                                           long lastMessage = chatMessageList.get(chatMessageList.size()-1).getMessageTime();
+                                           CharSequence cs1 = DateFormat.format("dd-MM-yyyy", lastMessage);
+                                           long ourMessage = cm.getMessageTime();
+                                           CharSequence cs2 = DateFormat.format("dd-MM-yyyy", ourMessage);
+                                           if (!cs1.toString().equals(cs2.toString())) chatMessageList.add(new ChatMessage());
+                                       } else if (chatMessageList.size()==0) {
+                                           long ourMessage = cm.getMessageTime();
+                                           CharSequence cs2 = DateFormat.format("dd-MM-yyyy", ourMessage);
+                                           chatMessageList.add(new ChatMessage());
+                                       }
                                        chatMessageList.add(cm);
 
                                        List<Object> list=new ArrayList<>();
@@ -94,7 +104,7 @@ public class ChatRoom extends AppCompatActivity {
                                            list.add(c.getMessageText());
                                            //list.add(message);
                                        }
-
+                                       adapter.notifyDataSetChanged();
                                        documentReference1.update("Chat", list);
                                        input.setText("");
                                        reload(documentReference1);
@@ -117,11 +127,4 @@ public class ChatRoom extends AppCompatActivity {
             }
         });
     }
-
-    public void displayChatMessages() {
-        listOfMessages = (ListView)findViewById(R.id.list_of_messages);
-        listOfMessages.setAdapter(adapter);
-    }
-
-
 }

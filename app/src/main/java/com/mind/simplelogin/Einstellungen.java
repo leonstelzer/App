@@ -32,7 +32,7 @@ import javax.annotation.Nullable;
 
 public class Einstellungen extends AppCompatActivity {
 
-    private TextView profilbearbeiten,freundezahl;
+    private TextView profilbearbeiten,interessenAendern,freundezahl;
     private FirebaseFirestore mFirestore;
     private List<Users> usersList ;
     private UsersListAdapter usersListAdapter;
@@ -47,6 +47,7 @@ public class Einstellungen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.einstellungen);
         profilbearbeiten      = findViewById(R.id.profilbearbeiten);
+        interessenAendern = findViewById(R.id.interessenWaehlen);
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
         freundezahl = findViewById(R.id.freundezahl);
@@ -74,6 +75,15 @@ public class Einstellungen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        interessenAendern.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Einstellungen.this, InteressenProfil.class);
+                startActivity(intent);
+            }
+        });
+
 
         mFirestore.collection("users").document(usid).collection("friends").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

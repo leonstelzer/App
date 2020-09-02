@@ -44,16 +44,23 @@ public class ChatListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = layoutInflater.inflate(R.layout.message, null);
-
-        ((TextView) convertView.findViewById(R.id.message_user)).setText(chatList.get(position).getMessageUser());
-        ((TextView) convertView.findViewById(R.id.message_time)).setText(chatList.get(position).getMessageText());
-        ((TextView) convertView.findViewById(R.id.message_text)).setText(DateFormat.format("dd-MM-yyyy (HH:mm:ss)",
-                chatList.get(position).getMessageTime()));
+        ChatMessage cm = chatList.get(position);
+        if (cm.getMessageUser().equals("") && cm.getMessageText().equals("")) {
+            convertView = layoutInflater.inflate(R.layout.message_new_date, null);
+            ((TextView) convertView.findViewById(R.id.message_time)).setText(DateFormat.format("dd-MM-yyyy",
+                    chatList.get(position).getMessageTime()));
+            return convertView;
+        } else {
+            convertView = layoutInflater.inflate(R.layout.message, null);
+            ((TextView) convertView.findViewById(R.id.message_user)).setText(chatList.get(position).getMessageUser());
+            ((TextView) convertView.findViewById(R.id.message_text)).setText(chatList.get(position).getMessageText());
+            ((TextView) convertView.findViewById(R.id.message_time)).setText(DateFormat.format("dd-MM-yyyy (HH:mm)",
+                    chatList.get(position).getMessageTime()));
+        }
         return convertView;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    /*public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView messageText;
         public TextView messageUser;
         public TextView messageTime;
@@ -67,5 +74,5 @@ public class ChatListAdapter extends BaseAdapter {
             messageTime = (TextView)v.findViewById(R.id.message_time);
 
         }
-    }
+    }*/
 }

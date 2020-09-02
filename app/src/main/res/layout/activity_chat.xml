@@ -44,8 +44,9 @@
     <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
+            android:layout_alignStart="@+id/toolbar"
+            android:layout_alignLeft="@+id/toolbar"
+            android:layout_marginTop="60dp"
             android:layout_above="@id/fab"
             android:dividerHeight="16dp"
             android:divider="@android:color/transparent"

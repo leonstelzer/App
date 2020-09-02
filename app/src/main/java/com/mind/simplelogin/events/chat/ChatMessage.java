@@ -21,7 +21,9 @@ public class ChatMessage {
     }
 
     public ChatMessage(){
-
+        this.messageText = "";
+        this.messageUser = "";
+        this.messageTime = new Date().getTime();
     }
 
     public String getMessageText() {
