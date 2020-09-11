@@ -114,9 +114,6 @@ public class tab1 extends Fragment  {
                         Date next = new Date(nextDay);
 
                         if(!next.after(current)){
-
-
-
                         eventList.add(event);
                         }
 
