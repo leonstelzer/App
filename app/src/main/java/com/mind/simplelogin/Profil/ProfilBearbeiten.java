@@ -148,10 +148,8 @@ public class ProfilBearbeiten extends AppCompatActivity {
 
                 Map<String, Object> user = new HashMap<>();
                 user.put("Benutername", efullname);
-                //user.put("EMail", eemail);
                 user.put("Ort", eort);
-                //user.put("Beschreibung", ebeschreibung);
-                //user.put("Telefonnummer", etelefonnummer);
+
 
                 documentReference.update(user);
 
@@ -166,11 +164,7 @@ public class ProfilBearbeiten extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
 
                 fullName.setText(documentSnapshot.getString("Benutername"));
-                //email.setText(documentSnapshot.getString("EMail"));
                 ort.setText(documentSnapshot.getString("Ort"));
-                //telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
-
-                //beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
 
@@ -197,11 +191,10 @@ public class ProfilBearbeiten extends AppCompatActivity {
                         if(usid.equals(event1)) {
                             Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                             eventList.add(event);
+                            eventListAdapter.notifyDataSetChanged();
                             eevent.setText(String.valueOf(eventList.size()));
 
-                            eventListAdapter.notifyDataSetChanged();
 
-                            //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
 
 
 

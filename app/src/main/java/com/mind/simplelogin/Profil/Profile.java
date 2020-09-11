@@ -41,7 +41,7 @@ public class Profile extends AppCompatActivity {
     private ImageView bearbeiten;
     private ImageView back;
     ImageView user;
-    TextView fullName,email, ort, beschreibung, telefonummer, interessen,eevent,tevent;
+    TextView fullName,email, ort, beschreibung, telefonummer, interessen,eevent,tevent,gestartet, teilgenommen;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userId;
@@ -57,10 +57,6 @@ public class Profile extends AppCompatActivity {
     ProfilAdapter RecyclerViewAdapter;
     RecyclerView.LayoutManager layoutManager;
 
-    //int []arr={R.drawable.ic_runningsvg,R.drawable.ic_fussballsvg, R.drawable.ic_badmintonsvg, R.drawable.ic_pokernsvg,
-    //        R.drawable.ic_kinosvg, R.drawable.ic_playstation_4, R.drawable.ic_barsvg, R.drawable.ic_foodsvg, R.drawable.fussballneu};
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +71,8 @@ public class Profile extends AppCompatActivity {
         user = findViewById(R.id.User);
         eevent= findViewById(R.id.eevent);
         tevent = findViewById(R.id.tevent);
+        gestartet = findViewById(R.id.start);
+        teilgenommen = findViewById(R.id.teil);
 
         fStore = FirebaseFirestore.getInstance();
         fAuth = FirebaseAuth.getInstance();
@@ -157,12 +155,7 @@ public class Profile extends AppCompatActivity {
             }}
         });
 
-        //RecyclerProfile = findViewById(R.id.RecyclerProfile);
         layoutManager = new GridLayoutManager(this,2);
-        //RecyclerProfile.setLayoutManager(layoutManager);
-        //RecyclerViewAdapter = new ProfilAdapter(array);
-        //RecyclerProfile.setAdapter(RecyclerViewAdapter);
-        //RecyclerProfile.setHasFixedSize(true);
 
 
         fAuth = FirebaseAuth.getInstance();
@@ -197,12 +190,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 fullName.setText(documentSnapshot.getString("Benutername"));
-                //email.setText(documentSnapshot.getString("EMail"));
                 ort.setText(documentSnapshot.getString("Ort"));
-                //telefonummer.setText(documentSnapshot.getString("Telefonnummer"));
-                //interessen.setText(lstToString((List)documentSnapshot.get("Interessen")));
-
-                //beschreibung.setText(documentSnapshot.getString("Beschreibung"));
                 Picasso.get().load(documentSnapshot.getString("Image")).into(user);
 
 
@@ -225,26 +213,24 @@ public class Profile extends AppCompatActivity {
                     if (doc.getType() == DocumentChange.Type.ADDED){
                         final String eventid = doc.getDocument().getId();
                         final String usid = fAuth.getCurrentUser().getUid();
+
                         String event1 = doc.getDocument().toObject(Event.class).getId();
                         if(usid.equals(event1)) {
                             Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                             eventList.add(event);
-                            //eevent.setText(String.valueOf(eventList.size()));
 
                             eventListAdapter.notifyDataSetChanged();
+                            gestartet.setText(String.valueOf(eventList.size()));
 
-                            //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
-
-
-
-
-
-                        }
+                            }
                     }
 
                 }
             }
         });
+
+
+
 
 
 
@@ -281,6 +267,7 @@ public class Profile extends AppCompatActivity {
                                                 Event event = doc.getDocument().toObject(Event.class).withId(eventid);
                                                 eventList2.add(event);
                                                 eventListAdapter.notifyDataSetChanged();
+                                                teilgenommen.setText(String.valueOf(eventList2.size()));
                                                 //tevent.setText(String.valueOf(eventList2.size()));
 
 

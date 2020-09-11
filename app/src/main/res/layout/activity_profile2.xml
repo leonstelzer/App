@@ -108,10 +108,11 @@
                     android:orientation="vertical">
 
                 <TextView
+                        android:id="@+id/start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="15"
+                        android:text="0"
                         android:textColor="@color/white"
                         android:textSize="25sp" />
 
@@ -149,10 +150,11 @@
                     android:orientation="vertical">
 
                 <TextView
+                        android:id="@+id/teil"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-light"
-                        android:text="26"
+                        android:text="0"
                         android:textColor="@color/white"
                         android:textSize="25sp" />
 

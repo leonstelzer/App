@@ -48,8 +48,9 @@ public class findevents extends AppCompatActivity {
         tab3 = findViewById(R.id.tab3);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Events");
 
+        setTitle("Events");
+        //toolbar.setVisibility(View.INVISIBLE);
 
         viewPager = findViewById(R.id.viewpager);
 

@@ -113,8 +113,10 @@ public class Einstellungen extends AppCompatActivity {
                                         if(user_id.equals(id)) {
                                             Users users = doc.getDocument().toObject(Users.class).withId(user_id);
                                             usersList.add(users);
-                                            freundezahl.setText(String.valueOf(usersList.size()));
                                             usersListAdapter.notifyDataSetChanged();
+
+                                            freundezahl.setText(String.valueOf(usersList.size()));
+
                                         }
                                     }
                                 }

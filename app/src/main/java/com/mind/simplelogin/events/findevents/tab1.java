@@ -75,11 +75,15 @@ public class tab1 extends Fragment  {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+        setMenuVisibility(false);
+        setHasOptionsMenu(true);
+
         View RootView = inflater.inflate(R.layout.fragment_tab1, container, false);
         if(getArguments() != null){
             String yourText = getArguments().getString("interessen");
             System.out.println(yourText);
         }
+
         events = RootView.findViewById(R.id.eventlist);
         eventList = new ArrayList<>();
         mFirestore = FirebaseFirestore.getInstance();
@@ -132,6 +136,7 @@ public class tab1 extends Fragment  {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menuevents, menu);
         MenuItem searchitem = menu.findItem(R.id.search);
+        searchitem.setVisible(false);
         final SearchView searchView = (SearchView) searchitem.getActionView();
         final List<Event> allEvents = new ArrayList<>();
         allEvents.addAll(eventList);
@@ -165,9 +170,6 @@ public class tab1 extends Fragment  {
             }
 
         });
-
-
-
-        super.onCreateOptionsMenu(menu, inflater);
+            super.onCreateOptionsMenu(menu, inflater);
     }
 }
