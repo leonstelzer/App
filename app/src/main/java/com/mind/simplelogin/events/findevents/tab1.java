@@ -134,9 +134,10 @@ public class tab1 extends Fragment  {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menuevents, menu);
-        MenuItem searchitem = menu.findItem(R.id.search);
-        searchitem.setVisible(false);
+        MenuItem searchitem = menu.findItem(R.id.searchEvent);
+        //searchitem.setVisible(false);
         final SearchView searchView = (SearchView) searchitem.getActionView();
         final List<Event> allEvents = new ArrayList<>();
         allEvents.addAll(eventList);
@@ -170,6 +171,5 @@ public class tab1 extends Fragment  {
             }
 
         });
-            super.onCreateOptionsMenu(menu, inflater);
     }
 }
