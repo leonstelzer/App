@@ -44,7 +44,11 @@ public class tab2 extends Fragment {
     FirebaseAuth fAuth;
 
 
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,43 +115,54 @@ public class tab2 extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menuevents, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        MenuItem searchitem = menu.findItem(R.id.search);
-        final SearchView searchView = (SearchView) searchitem.getActionView();
-        final List<Event> allEvents = new ArrayList<>();
-        allEvents.addAll(eventList);
-
-        searchitem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                eventList.clear();
-                eventList.addAll(allEvents);
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-
-                eventList.clear();
-                eventList.addAll(allEvents);
-                return true;
-            }
-        });
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                eventListAdapter.getFilter().filter(newText);
-                return false;
-            }
-
-        });
-
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.searchEvent:
+                //searchitem.setVisible(false);
+                final SearchView searchView = (SearchView) item.getActionView();
+                final List<Event> allEvents = new ArrayList<>();
+                allEvents.addAll(eventList);
+
+                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        eventList.clear();
+                        eventList.addAll(allEvents);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                        eventList.clear();
+                        eventList.addAll(allEvents);
+                        return true;
+                    }
+                });
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        eventListAdapter.getFilter().filter(newText);
+                        eventListAdapter.notifyDataSetChanged();
+                        return false;
+                    }
+
+                });
+                // Do Activity menu item stuff here
+                return true;
+            default:
+                return false;
+        }
+    }
 }
