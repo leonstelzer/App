@@ -1,12 +1,10 @@
 package com.mind.simplelogin.place;
 
+import android.content.Context;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.Filterable;
 
-import android.content.Context;
-import android.widget.Filter;
-
-import com.mind.simplelogin.place.PlaceApi;
 
 import java.util.ArrayList;
 
@@ -23,6 +21,7 @@ public class PlaceAutoSuggestAdapter extends ArrayAdapter implements Filterable 
         super(context,resId);
         this.context=context;
         this.resource=resId;
+
     }
 
     @Override

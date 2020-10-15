@@ -59,6 +59,7 @@ public class ort extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         final String userId = fAuth.getCurrentUser().getUid();
+        ort.setAdapter(new PlaceAutoSuggestAdapter(com.mind.simplelogin.events.neuerstellen.Kategorie.ort.this,android.R.layout.simple_list_item_1));
 
 
         geld.setVisibility(View.INVISIBLE);

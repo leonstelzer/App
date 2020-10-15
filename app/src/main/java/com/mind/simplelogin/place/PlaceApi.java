@@ -1,5 +1,10 @@
 package com.mind.simplelogin.place;
 
+import android.location.Address;
+import android.location.Geocoder;
+import android.util.Log;
+
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,6 +15,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class PlaceApi {
 
@@ -20,7 +27,7 @@ public class PlaceApi {
         try {
             StringBuilder sb=new StringBuilder("https://maps.googleapis.com/maps/api/place/autocomplete/json?");
             sb.append("input="+input);
-            sb.append("&key=AIzaSyD01ZnmCqk5NJw59zHuXbeOcUMxyeCn7Ho");
+            sb.append("&key=AIzaSyCUTBHzrAoMj_9xcqx_g_JkVTe-sMPd6kQ");
             URL url=new URL(sb.toString());
             connection=(HttpURLConnection)url.openConnection();
             InputStreamReader inputStreamReader=new InputStreamReader(connection.getInputStream());
@@ -31,6 +38,8 @@ public class PlaceApi {
             while ((read=inputStreamReader.read(buff))!=-1){
                 jsonResult.append(buff,0,read);
             }
+
+            Log.d("JSon",jsonResult.toString());
         }
         catch (MalformedURLException e){
             e.printStackTrace();
@@ -57,4 +66,7 @@ public class PlaceApi {
 
         return arrayList;
     }
+
+
 }
+
