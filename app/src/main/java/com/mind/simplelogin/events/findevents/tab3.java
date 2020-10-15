@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -39,7 +43,11 @@ public class tab3 extends Fragment {
     private EventListAdapter eventListAdapter;
     FirebaseAuth fAuth;
 
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
 
     @Override
@@ -79,11 +87,6 @@ public class tab3 extends Fragment {
 
                             eventListAdapter.notifyDataSetChanged();
 
-                        //Toast.makeText(yourFriends.this, fAuth.getUid(), Toast.LENGTH_SHORT).show();
-
-
-
-
 
                         }
                     }
@@ -94,7 +97,61 @@ public class tab3 extends Fragment {
 
         return RootView;
     }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.searchEvent:
+                //searchitem.setVisible(false);
+                final SearchView searchView = (SearchView) item.getActionView();
+                final List<Event> allEvents = new ArrayList<>();
+                allEvents.addAll(eventList);
+
+                item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        eventList.clear();
+                        eventList.addAll(allEvents);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                        eventList.clear();
+                        eventList.addAll(allEvents);
+                        return true;
+                    }
+                });
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        eventListAdapter.getFilter().filter(newText);
+                        eventListAdapter.notifyDataSetChanged();
+                        return false;
+                    }
+
+                });
+                // Do Activity menu item stuff here
+                return true;
+            default:
+                return false;
+        }
+    }
 }
+
+
+
+
 
