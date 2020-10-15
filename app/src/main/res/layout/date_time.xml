@@ -146,7 +146,7 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="17dp"
-            android:background="@drawable/bt_uisquare"
+            android:background="@drawable/btbackground"
             android:text="Weiter"
             android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
