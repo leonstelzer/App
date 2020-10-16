@@ -108,7 +108,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:text="Email"
-                            android:textColor="@color/colorPurple"
+                            android:textColor="#409CB8"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -131,7 +131,7 @@
                             android:layout_below="@+id/etUsername"
                             android:layout_margin="15dp"
                             android:text="Passwort"
-                            android:textColor="@color/colorPurple"
+                            android:textColor="#409CB8"
                             android:textSize="14sp"
                             android:textStyle="bold" />
 
@@ -170,7 +170,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/bt_uisquare"
+                        android:background="@drawable/btbackground"
                         android:text="Login"
                         android:textAllCaps="false"
                         android:textColor="@color/colorWhite" />
@@ -199,7 +199,7 @@
                     android:paddingLeft="20dp"
                     android:paddingRight="20dp"
                     android:text="Registrieren"
-                    android:textColor="@color/colorPurple" />
+                    android:textColor="#409CB8" />
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

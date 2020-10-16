@@ -111,19 +111,23 @@ public class Startseite extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();//logout
                 startActivity(new Intent(Startseite.this, MainActivity.class));
+                finish();
             }
         });
+        final String usid = fAuth.getUid();
 
         fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
                 if (e != null) {
                 }
-                for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                    if (doc.getType() == DocumentChange.Type.ADDED){
-                        final String user_id = doc.getDocument().getId();
-                        if (fAuth.getUid().equals(user_id)) {
-                            myUser = doc.getDocument().toObject(Users.class).withId(user_id);
+                if(queryDocumentSnapshots != null) {
+                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                            final String user_id = doc.getDocument().getId();
+                            if (fAuth.getUid().equals(user_id)) {
+                                myUser = doc.getDocument().toObject(Users.class).withId(user_id);
+                            }
                         }
                     }
                 }
@@ -136,46 +140,81 @@ public class Startseite extends AppCompatActivity {
                 final String usid = fAuth.getUid();
 
                 final DocumentReference counterDoc;
-                fStore.collection("users").document(usid).collection("request").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        int receivecount = 0;
+                if(usid != "" || usid != null) {
+                    CollectionReference request;
+                    try{
+                       request =  fStore.collection("users").document(usid).collection("request");
 
-                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                            if (doc.getType() == DocumentChange.Type.ADDED) {
-                                String type = (String) doc.getDocument().get("Type");
-                                final String otherID = (String) doc.getDocument().get("otherid");
-                                if (type.equals("received")) {
-                                    receivecount++;
+                    }
+                    catch (NullPointerException n){
+                        request = null;
+                    }
+                    if(request!=null) {
+
+
+                        request.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                                int receivecount = 0;
+
+                                if (queryDocumentSnapshots != null) {
+
+                                    for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                        if (doc.getType() == DocumentChange.Type.ADDED) {
+                                            String type = (String) doc.getDocument().get("Type");
+                                            final String otherID = (String) doc.getDocument().get("otherid");
+                                            if (type.equals("received")) {
+                                                receivecount++;
+                                            }
+                                        }
+                                    }
+                                }
+                                myUser.setBenachrichtigungCount(receivecount);
+                            }
+
+                        });
+                    }
+
+                    else{
+                        myUser.setBenachrichtigungCount(0);
+                    }
+                }
+
+                CollectionReference request;
+                try{
+                    request =  fStore.collection("users").document(usid).collection("eventeinladung");
+
+                }
+                catch (NullPointerException n){
+                    request = null;
+                }
+                if(request!=null) {
+
+
+                    request.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                            int receivecount = myUser.getBenachrichtigungCount();
+                            if (queryDocumentSnapshots != null) {
+
+                                for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
+                                    if (doc.getType() == DocumentChange.Type.ADDED) {
+                                        receivecount++;
+                                    }
                                 }
                             }
-                        }
-                        myUser.setBenachrichtigungCount(receivecount);
-                    }
-                });
-
-                final DocumentReference currentDoc = fStore.collection("users").document(usid).collection("Beanchrichtigung").document();
-
-                fStore.collection("users").document(usid).collection("eventeinladung").addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                        int receivecount = myUser.getBenachrichtigungCount();
-                        for (DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()) {
-                            if (doc.getType() == DocumentChange.Type.ADDED) {
-                                receivecount++;
+                            myUser.setBenachrichtigungCount(receivecount);
+                            fStore.collection("users").document(usid).update("BenachrichtigungsCount", receivecount);
+                            if (receivecount == 0) {
+                                number.setVisibility(View.INVISIBLE);
+                                numbercontainer.setVisibility(View.INVISIBLE);
+                            } else {
+                                number.setText(String.valueOf(receivecount));
                             }
+
                         }
-                        myUser.setBenachrichtigungCount(receivecount);
-                        fStore.collection("users").document(usid).update("BenachrichtigungsCount", receivecount);
-                        if(receivecount == 0){
-                            number.setVisibility(View.INVISIBLE);
-                            numbercontainer.setVisibility(View.INVISIBLE);
-                        }
-                        else {
-                            number.setText(String.valueOf(receivecount));
-                        }
-                    }
-                });
+                    });
+                }
             }
         });
 
