@@ -142,11 +142,14 @@ public class tab1 extends Fragment  {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
 
+
+
             case R.id.searchEvent:
-                //searchitem.setVisible(false);
                 final SearchView searchView = (SearchView) item.getActionView();
                 final List<Event> allEvents = new ArrayList<>();
                 allEvents.addAll(eventList);
+                //searchitem.setVisible(false);
+
 
                 item.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
                     @Override
@@ -154,8 +157,8 @@ public class tab1 extends Fragment  {
                         eventList.clear();
                         eventList.addAll(allEvents);
                         return true;
-                    }
 
+                }
                     @Override
                     public boolean onMenuItemActionCollapse(MenuItem item) {
 
@@ -163,7 +166,9 @@ public class tab1 extends Fragment  {
                         eventList.addAll(allEvents);
                         return true;
                     }
+
                 });
+
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
@@ -181,6 +186,7 @@ public class tab1 extends Fragment  {
                 // Do Activity menu item stuff here
                 return true;
             default:
+
                 return false;
         }
     }

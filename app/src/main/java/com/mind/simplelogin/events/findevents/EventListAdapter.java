@@ -195,8 +195,17 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(eventList);
-            } else {
+
+                if(filteredList.size()==0){
+                    filteredList.addAll(eventList);
+                }
+                else {
+
+
+                    filteredList.addAll(unfilteredList);
+                }
+
+            }else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
                 List<Event> allEvents = new ArrayList<>();

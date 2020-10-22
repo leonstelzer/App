@@ -1,12 +1,14 @@
 package com.mind.simplelogin.Login;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.text.TextUtils;
 import android.widget.EditText;
@@ -23,11 +25,22 @@ import com.mind.simplelogin.Startseite;
 public class MainActivity extends AppCompatActivity  {
 
     Button btRegister;
-    ImageView circle1;
-    TextView tvLogin;
+
     Button login;
     EditText mEmail,mPassword;
     FirebaseAuth fAuth;
+
+    RelativeLayout rellay1, rellay2;
+
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            rellay1.setVisibility(View.VISIBLE);
+            rellay2.setVisibility(View.VISIBLE);
+        }
+    };
+
 
 
     @Override
@@ -35,12 +48,16 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        rellay1 = (RelativeLayout) findViewById(R.id.rellay1);
+        rellay2 = (RelativeLayout) findViewById(R.id.rellay2);
+
+        handler.postDelayed(runnable, 2000); //2000 is the timeout for the splash
+
+
         btRegister = findViewById(R.id.btRegister);
-        tvLogin = findViewById(R.id.tvLogin);
-        circle1 = findViewById(R.id.circle1);
         login = findViewById(R.id.btLogin);
-        mEmail = findViewById(R.id.etUsername);
-        mPassword = findViewById(R.id.etPassword);
+        mEmail = findViewById(R.id.mEmail);
+        mPassword = findViewById(R.id.mPassword);
         fAuth = FirebaseAuth.getInstance();
 
 

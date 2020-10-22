@@ -88,7 +88,15 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.View
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             if (constraint == null || constraint.length() == 0) {
-                filteredList.addAll(usersList);
+                if(filteredList.size()==0){
+                    filteredList.addAll(usersList);
+                }
+                else {
+
+
+                    filteredList.addAll(unfilteredList);
+                }
+
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
