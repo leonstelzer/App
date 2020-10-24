@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity  {
 
     Button btRegister;
 
-    Button login;
+    Button login, forgot;
     EditText mEmail,mPassword;
     FirebaseAuth fAuth;
 
@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
         btRegister = findViewById(R.id.btRegister);
+        forgot = findViewById(R.id.forgot);
         login = findViewById(R.id.btLogin);
         mEmail = findViewById(R.id.mEmail);
         mPassword = findViewById(R.id.mPassword);
@@ -67,8 +68,15 @@ public class MainActivity extends AppCompatActivity  {
                finish();
         }
 
+        forgot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, forgotpass.class);
+                startActivity(intent);
+            }
+        });
 
-        btRegister    = findViewById(R.id.btRegister);
+
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

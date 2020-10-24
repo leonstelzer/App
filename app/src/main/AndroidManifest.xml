@@ -82,6 +82,11 @@
                 android:label="Preferences"
                 />
         <activity
+                android:name=".Login.forgotpass"
+                android:theme="@style/AppTheme.FullScreen"
+                android:label="Preferences"
+                />
+        <activity
             android:name=".events.findevents.findevents"
             android:theme="@style/AppTheme.FullScreen"
             android:label="Preferences"
