@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity  {
                 String password = mPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(email)) {
-                    mEmail.setError("Benutzername is Required.");
+                    mEmail.setError("Email is Required.");
                     return;
                 }
 
@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity  {
 
                     }
                 });
+
 
             }
         });
