@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -48,8 +47,6 @@ public class Startseite extends AppCompatActivity {
     private Users myUser;
 
     private View  profil, freunde, erstellen, events;
-
-    private Button nextEvent, nearEvents, acceptedEvents;
 
 
 
@@ -117,37 +114,6 @@ public class Startseite extends AppCompatActivity {
                 finish();
             }
         });
-
-        nextEvent = findViewById(R.id.nextEvent);
-        /*
-            Hier das naechste Event herausfinden und in nextEvent schreiben
-         */
-        nextEvent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        acceptedEvents = findViewById(R.id.eventsAccepted);
-        /*
-            Hier die Anzahl der Events heruasfinden
-         */
-        acceptedEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        nearEvents = findViewById(R.id.eventsNear);
-        nearEvents.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         final String usid = fAuth.getUid();
 
         fStore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {

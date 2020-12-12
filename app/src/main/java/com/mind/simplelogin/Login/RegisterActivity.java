@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
@@ -95,26 +94,27 @@ public class RegisterActivity extends AppCompatActivity {
                 final String fullname = ename.getText().toString();
                 final String ort = eort.getText().toString();
                 final List<String> interesssen = new ArrayList<>();
-
+                final String beschreibung = "Bitte noch ausfüllen";
+                final String telefonnummer = "Bitte noch ausfüllen";
                 final String image = null;
 
-                if (TextUtils.isEmpty(email)&& !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    eemail.setError("Korrekte Email angeben");
+                if (TextUtils.isEmpty(email)) {
+                    eemail.setError("Email is Required.");
                     return;
                 }
 
                 if (TextUtils.isEmpty(password)) {
-                    epassswort.setError("Password");
+                    epassswort.setError("Password is Required.");
                     return;
                 } else if (TextUtils.isEmpty(fullname)) {
                     epassswort.setError("Benutzername muss gewählt sein");
                     return;
                 } else if (password.length() < 6) {
-                    epassswort.setError("Password muss mehr als 6 Buchstaben haben");
+                    epassswort.setError("Password Must be >= 6 Characters");
                     return;
                 }
                 else if (TextUtils.isEmpty(ort)) {
-                    epassswort.setError("Ort muss angeben werden");
+                    epassswort.setError("Ort muss angeben werdwen");
                     return;
                 }
 
@@ -133,6 +133,8 @@ public class RegisterActivity extends AppCompatActivity {
                             user.put("EMail", email);
                             user.put("Ort", ort);
                             user.put("Interessen", interesssen);
+                            user.put("Beschreibung", beschreibung);
+                            user.put("Telefonnummer", telefonnummer);
                             user.put("Image",image);
                             user.put("BenachrichtigungsCount", 0);
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -157,8 +159,6 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 
 }
