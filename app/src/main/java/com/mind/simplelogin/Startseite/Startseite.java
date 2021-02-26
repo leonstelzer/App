@@ -1,32 +1,29 @@
-package com.mind.simplelogin;
+package com.mind.simplelogin.Startseite;
 
+import android.animation.ArgbEvaluator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.UploadTask;
 import com.luseen.spacenavigation.SpaceNavigationView;
 import com.mind.simplelogin.Benachrichtigung.Beanchrichtigung;
-import com.mind.simplelogin.Benachrichtigung.BenachrichtigungAdapter;
 import com.mind.simplelogin.Login.MainActivity;
 import com.mind.simplelogin.Profil.Profile;
+import com.mind.simplelogin.R;
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.Userliste.findFriends;
 import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessen;
@@ -45,6 +42,11 @@ public class Startseite extends AppCompatActivity {
     FirebaseAuth fAuth = FirebaseAuth.getInstance();
     private int benachCount;
     private Users myUser;
+    ViewPager viewPager;
+    Adapter adapter;
+    List<Model> models;
+    Integer[] colors = null;
+    ArgbEvaluator argbEvaluator = new ArgbEvaluator();
 
     private View  profil, freunde, erstellen, events;
 
@@ -55,6 +57,58 @@ public class Startseite extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_startseite);
 
+
+        models = new ArrayList<>();
+        models.add(new Model(R.drawable.fitness, "Brochure", "Brochure is an informative paper document (often also used for advertising) that can be folded into a template"));
+        models.add(new Model(R.drawable.fussballneu, "Sticker", "Sticker is a type of label: a piece of printed paper, plastic, vinyl, or other material with pressure sensitive adhesive on one side"));
+        models.add(new Model(R.drawable.handball, "Poster", "Poster is any piece of printed paper designed to be attached to a wall or vertical surface."));
+        models.add(new Model(R.drawable.ic_runningsvg, "Namecard", "Business cards are cards bearing business information about a company or individual."));
+
+        adapter = new Adapter(models, this);
+
+        viewPager = findViewById(R.id.viewPager);
+        viewPager.setAdapter(adapter);
+        viewPager.setPadding(130, 0, 130, 0);
+
+        Integer[] colors_temp = {
+                getResources().getColor(R.color.color1),
+                getResources().getColor(R.color.color2),
+                getResources().getColor(R.color.color3),
+                getResources().getColor(R.color.color4)
+        };
+
+        colors = colors_temp;
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                if (position < (adapter.getCount() -1) && position < (colors.length - 1)) {
+                    viewPager.setBackgroundColor(
+
+                            (Integer) argbEvaluator.evaluate(
+                                    positionOffset,
+                                    colors[position],
+                                    colors[position + 1]
+                            )
+                    );
+                }
+
+                else {
+                    viewPager.setBackgroundColor(colors[colors.length - 1]);
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         profil      = findViewById(R.id.profil);
         profil.setOnClickListener(new View.OnClickListener() {
             @Override

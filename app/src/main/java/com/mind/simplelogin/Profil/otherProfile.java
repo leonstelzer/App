@@ -23,8 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.SetOptions;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.Login.RegisterActivity;
-import com.mind.simplelogin.Startseite;
+import com.mind.simplelogin.Startseite.Startseite;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;

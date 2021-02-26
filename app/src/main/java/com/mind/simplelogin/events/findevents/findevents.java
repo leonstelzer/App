@@ -7,27 +7,14 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.Startseite;
-import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.Userliste.findFriends;
-import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessen;
-import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class findevents extends AppCompatActivity {
 

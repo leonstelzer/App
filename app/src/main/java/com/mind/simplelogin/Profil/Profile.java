@@ -21,18 +21,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mind.simplelogin.Einstellungen;
-import com.mind.simplelogin.Login.MainActivity;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.Login.RegisterActivity;
-import com.mind.simplelogin.Startseite;
+import com.mind.simplelogin.Startseite.Startseite;
 import com.mind.simplelogin.Userliste.Users;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.mind.simplelogin.events.findevents.EventListAdapter;
-import com.mind.simplelogin.events.neuerstellen.Kategorie.InteressenProfilItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nullable;

@@ -1,60 +1,30 @@
 package com.mind.simplelogin.events.findevents;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.google.firebase.firestore.DocumentChange;
-import com.mind.simplelogin.Startseite;
-import com.mind.simplelogin.Userliste.findFriends;
-import com.mind.simplelogin.events.DatePickerFragment;
 import com.mind.simplelogin.events.Freundeeinladen.Event;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mind.simplelogin.R;
-import com.mind.simplelogin.Userliste.Users;
-import com.mind.simplelogin.Userliste.UsersListAdapter;
 
-import java.sql.Time;
-import java.text.BreakIterator;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import com.mind.simplelogin.events.Freundeeinladen.Event;
-import com.mind.simplelogin.events.neuerstellen.Kategorie.ort;
-import com.mind.simplelogin.place.PlaceAutoSuggestAdapter;
 
 
 import javax.annotation.Nullable;
