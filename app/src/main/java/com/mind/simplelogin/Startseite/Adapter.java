@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mind.simplelogin.Profil.Profile;
 import com.mind.simplelogin.R;
+import com.mind.simplelogin.Userliste.findFriends;
+import com.mind.simplelogin.events.neuerstellen.Kategorie.Interessen;
 
 import java.util.List;
 
@@ -55,10 +58,30 @@ public class Adapter extends PagerAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, DetailActivity.class);
-                intent.putExtra("param", models.get(position).getTitle());
-                context.startActivity(intent);
-                // finish();
+                if (position == 0) {
+                    Intent intent = new Intent(context, Interessen.class);
+                    intent.putExtra("param", models.get(position).getTitle());
+                    context.startActivity(intent);
+                    // finish();
+                }
+                if (position == 1) {
+                    Intent intent = new Intent(context, com.mind.simplelogin.events.findevents.findevents.class);
+                    intent.putExtra("param", models.get(position).getTitle());
+                    context.startActivity(intent);
+                    // finish();
+                }
+                if (position == 2) {
+                    Intent intent = new Intent(context, Profile.class);
+                    intent.putExtra("param", models.get(position).getTitle());
+                    context.startActivity(intent);
+                    // finish();
+                }
+                if (position == 3) {
+                    Intent intent = new Intent(context, findFriends.class);
+                    intent.putExtra("param", models.get(position).getTitle());
+                    context.startActivity(intent);
+                    // finish();
+                }
             }
         });
 

@@ -59,10 +59,10 @@ public class Startseite extends AppCompatActivity {
 
 
         models = new ArrayList<>();
-        models.add(new Model(R.drawable.fitness, "Brochure", "Brochure is an informative paper document (often also used for advertising) that can be folded into a template"));
-        models.add(new Model(R.drawable.fussballneu, "Sticker", "Sticker is a type of label: a piece of printed paper, plastic, vinyl, or other material with pressure sensitive adhesive on one side"));
-        models.add(new Model(R.drawable.handball, "Poster", "Poster is any piece of printed paper designed to be attached to a wall or vertical surface."));
-        models.add(new Model(R.drawable.ic_runningsvg, "Namecard", "Business cards are cards bearing business information about a company or individual."));
+        models.add(new Model(R.drawable.sports, "Willkommen", "Starte hier ein Event, auf das du Lust hast"));
+        models.add(new Model(R.drawable.city, "Events in deiner Stadt", "Heute schon was vor? Schau nach was in deiner Stadt geht!"));
+        models.add(new Model(R.drawable.sport2, "Dein nächstes Event", "Dein nächstes Event startet bald. macht dich schonmal fertig"));
+        models.add(new Model(R.drawable.group, "Freunde", "Lerne neue Freunde in deiner Umgebung kennen"));
 
         adapter = new Adapter(models, this);
 
